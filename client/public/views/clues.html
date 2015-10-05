@@ -1,1 +1,75 @@
-<h3> Look at all these clues! </h3>
+<h3>Clue Dashboard</h3>
+<button ng-click= 'showAllClues(); showAll = !showAll' class= 'btn btn-primary' >Show All Clues </button>
+
+<button ng-click= 'showAll = false; hideForm = !hideForm' class= 'btn btn-success' >Add a New Clue </button>
+
+<div ng-show='hideForm'>
+<h3> Let's Make a New Clue!</h3>
+<br>
+<form name= 'addClueForm'>
+  <div class="form-group">
+    <label for="order">Order Number</label>
+    <input ng-model='formInput.order' type="number" class="form-control" placeholder="1" required>
+  </div>
+  <div class="form-group">
+    <label for="clueName">Clue Title</label>
+    <input ng-model='formInput.name' type="text" class="form-control" placeholder="Mystery Creature" required>
+  </div>
+
+  <div class="form-group">
+    <label for="location">Location</label>
+    <input ng-model='formInput.location' type="text" class="form-control" placeholder="Washington Park" required>
+  </div>
+
+  <div class="form-group">
+    <label for="hint">Hints</label>
+    <input ng-model='formInput.hints' type="text" class="form-control" placeholder="It barks" required>
+  </div>
+
+  <div class="form-group">
+    <label for="answer">Answer</label>
+    <input ng-model='formInput.answer' type="text" class="form-control" placeholder="Dog" required>
+  </div>
+</form>
+
+<button ng-hide= 'editing' ng-disabled="addClueForm.$invalid" ng-click='addNewClue()' type="submit" class="btn btn-default">Create Clue</button>
+
+<button ng-show= 'editing' ng-disabled="addClueForm.$invalid" ng-click='updateOne()' type="submit" class="btn btn-default">Update Clue</button>
+
+<button ng-click='editing = false; hideForm = false; showAll = false;' type="submit" class="btn btn-warning">Cancel</button>
+
+<br>
+<br>
+</div>
+<br>
+<br>
+<div ng-show='showAll'>
+<table class='table table-bordered'>
+  <thead>
+    <th> Order</th>
+    <th> Name</th>
+    <th> Location</th>
+    <th> Hints</th>
+    <th> Answer</th>
+    <th> Options</th>
+  </thead>
+  <tbody>
+    <tr ng-repeat = 'clue in allCluesData | orderBy:"order"'>
+    <td> {{clue.order}} </td>
+    <td> {{clue.name}} </td>
+    <td> {{clue.location}} </td>
+    <td> {{clue.hints}} </td>
+    <td> {{clue.answer}} </td>
+    <td>
+      <div class= 'edit-buttons'>
+        <button class ='btn btn-success btn-edit' ng-click= "getOne(clue._id)"><span class="glyphicon glyphicon-pencil"></span></button>
+
+        <button class ='btn-edit btn btn-danger' ng-click = 'deleteOne(clue._id)'><span class="glyphicon glyphicon-trash"></span></button>
+      </div>
+    </td>
+    </tr>
+  </tbody>
+</table>
+
+
+</div>

@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 
 var Clue = new Schema({
+  order: Number,
   name: String,
   location: String,
   answer: String,

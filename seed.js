@@ -3,6 +3,7 @@ var Clue = require('./server/models/clue.js');
 
 var clueSeed = [
 {
+  order: 1,
   name: 'Clue One',
   location: 'Wash Park',
   answer: 'A dog',
