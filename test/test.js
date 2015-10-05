@@ -40,7 +40,7 @@ describe('Compare Numbers', function() {
 
   it('should list ALL clues on /clues GET', function(done) {
     chai.request(server)
-      .get('/api/v1/clues')
+      .get('/clues')
       .end(function(err, res){
         res.should.have.status(200);
         res.should.be.json;
@@ -66,7 +66,7 @@ describe('Compare Numbers', function() {
         });
         newClue.save(function(err, data) {
       chai.request(server)
-        .get('/api/v1/clue/'+data.id)
+        .get('/clue/'+data.id)
         .end(function(err, res){
           res.should.have.status(200);
           res.should.be.json;
@@ -85,7 +85,7 @@ describe('Compare Numbers', function() {
 
   it('should add a SINGLE clue on /clues POST', function(done) {
     chai.request(server)
-      .post('/api/v1/clues')
+      .post('/clues')
       .send({"name": "Test Clue", "location": "Central Park", "answer": "Poochie", "hints": ["woof woof"]})
       .end(function(err, res){
         res.should.have.status(200);
@@ -105,10 +105,10 @@ describe('Compare Numbers', function() {
 
   it('should update a SINGLE clue on /clue/<id> PUT', function(done) {
     chai.request(server)
-      .get('/api/v1/clues')
+      .get('/clues')
       .end(function(err, res){
         chai.request(server)
-          .put('/api/v1/clue/'+res.body[0]._id)
+          .put('/clue/'+res.body[0]._id)
           .send({'name' : 'Poopy Clue', 'location': 'Central Park', 'hints' : ['woof woof'], 'answer': 'Poochie'})
           .end(function(error, res){
             res.should.have.status(200);
@@ -126,10 +126,10 @@ describe('Compare Numbers', function() {
 
   it('should delete a SINGLE clue on /clue/<id> DELETE', function(done) {
     chai.request(server)
-      .get('/api/v1/clues')
+      .get('/clues')
       .end(function(err, res){
         chai.request(server)
-          .delete('/api/v1/clue/'+res.body[0]._id)
+          .delete('/clue/'+res.body[0]._id)
           .end(function(error, response){
             response.should.have.status(200);
             response.should.be.json;
