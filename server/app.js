@@ -48,7 +48,7 @@ app.use(express.static(path.join(__dirname, '../client/public')));
 app.use('/api/v1/', api);
 
 app.use('/', function(req, res){
-  res.sendFile(path.join(__dirname, '../client/views', 'index.html'));
+  res.sendFile(path.join(__dirname, '../client/public/views/', 'index.html'));
 });
 
 // catch 404 and forward to error handler
