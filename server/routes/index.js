@@ -20,6 +20,15 @@ router.get('/clue/:id', function(req, res, next) {
   });
 });
 
+//get one Clue by order number
+router.get('/clueNum/:id', function(req, res, next) {
+  var query = {order: req.params.id};
+  Clue.findOne(query, function(err, clue){
+    res.json(clue);
+  });
+});
+
+
 //post-add one Clue
 router.post('/clues', function(req, res, next) {
   new Clue(req.body)

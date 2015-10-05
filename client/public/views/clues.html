@@ -9,7 +9,7 @@
 <form name= 'addClueForm'>
   <div class="form-group">
     <label for="order">Order Number</label>
-    <input ng-model='formInput.order' type="number" class="form-control" placeholder="1" required>
+    <input ng-model='formInput.order' type="number" class="form-control" placeholder="1" min = '1' required>
   </div>
   <div class="form-group">
     <label for="clueName">Clue Title</label>
@@ -58,7 +58,7 @@
     <td> {{clue.order}} </td>
     <td> {{clue.name}} </td>
     <td> {{clue.location}} </td>
-    <td> {{clue.hints}} </td>
+    <td ng-repeat= 'hint in clue.hints'> {{hint}} </td>
     <td> {{clue.answer}} </td>
     <td>
       <div class= 'edit-buttons'>

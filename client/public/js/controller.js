@@ -66,8 +66,13 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
     $scope.formInput = '';
   };
 
+  $scope.progressClue = function(){
 
-
+    $http.get('/clueNum/1')
+    .then(function(data){
+      $scope.currentClue = data.data;
+    });
+  };
 
 }]);
 

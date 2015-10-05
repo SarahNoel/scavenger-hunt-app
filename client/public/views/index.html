@@ -30,6 +30,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div ng-class="{collapse: isCollapsed}" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="HeaderController">
       <ul class="nav navbar-nav">
+        <li class='header-text' ng-class="{active: isActive('/start')}"><a href="/#/start">Start!</a></li>
+
         <li class='header-text' ng-class="{active: isActive('/loginPage')}"><a href="/#/loginPage">Login</a></li>
 
         <li class='header-text' ng-class="{ active: isActive('/showClues')}"><a href="/#/showClues" ng-click='showAllClues()'>Clues</a></li>

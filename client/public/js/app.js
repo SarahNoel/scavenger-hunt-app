@@ -18,20 +18,23 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     })
     .when('/admin', {
       templateUrl: '../views/admin.html',
-            controller: 'MainController',
-
+      controller: 'MainController',
       access: {restricted: true}
     })
+
     .when('/showClues', {
       templateUrl: '../views/clues.html',
-            controller: 'MainController'
+      controller: 'MainController'
 
     })
     .when('/newClue', {
       templateUrl: '../views/newClue.html',
       access: {restricted: true},
-            controller: 'MainController'
-
+      controller: 'MainController'
+    })
+     .when('/start', {
+      templateUrl: '../views/start.html',
+      controller: 'MainController'
     })
       .otherwise({redirectTo: '/'
     });
