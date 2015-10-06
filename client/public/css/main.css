@@ -1,6 +1,49 @@
 body {
   text-align: center;
+  background-color: #105b63;
+  color: white
 }
+
+.centered{
+  display: table;
+  margin: auto;
+}
+
+.navbar{
+  background-color: #f0f0cd;
+}
+
+.btn-primary{
+  background-color: #7a4d8b;
+  border: #7a4d8b;
+}
+
+.btn-primary:hover,
+.btn-primary:disabled,
+.btn-primary:active,
+.btn-primary:disabled:hover{
+  background-color: #613d6f;
+}
+
+
+.left-clue{
+  float: left;
+}
+
+.right-clue{
+  float: left;
+}
+
+.bottom-clue{
+  clear: both;
+}
+
+input.form-control{
+  width: 50%;
+  display: table;
+  margin: auto;
+}
+
 /* Media Queries */
 @media screen and (max-width: 900px) {
 }

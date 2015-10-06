@@ -1,41 +1,168 @@
-<div ng-hide= 'startSearch; results'>
+<div ng-hide= 'startSearch'>
 
 <h2>Are you ready?</h2>
 <h4>Remember, it's a competition, so use your best sleuth skills!</h4>
 
-<button class= 'btn btn-success' ng-click = 'startSearch = true; progressClue(0)'>Begin!</button>
+<button class= 'btn btn-success' ng-click = 'click = 0; startSearch = true; progressClue(0)'>Begin!</button>
 </div>
 
-<div ng-show='startSearch'>
-<div ng-hide='results'>
 
+
+<div ng-show='startSearch' >
+<div ng-hide='results'>
+<div class ='row-fluid'>
 <h1>Clue #{{currentClue.order}}</h1>
 
 <h2>{{currentClue.name}}</h2>
+<div class ='col-sm-5'>
+<h3>Location: {{currentClue.location}}</h3>
 
-<h3>{{currentClue.location}}</h3>
+<h3>Hint: {{currentClue.hints[0]}}</h3>
+</div>
+
+<div class='col-sm-5'>
+<br>
 
 
-<button class = 'btn btn-warning' ng-click ='hint=true'>Need a Hint?</button>
 
-<h3 ng-show ='hint'>{{currentClue.hints[0]}}</h3>
+<!-- <map center="-34.397, 150.644" zoom="8"></map>
+ -->
+
+
+</div>
+</div>
+<div class = 'bottom-clue'>
+<br>
+<br>
+<button class = 'btn btn-warning' ng-click ='useHint(); click= click+1'>Need another Hint?</button>
+
+<h3 ng-show ='hint'>{{currentClue.hints[click]}}</h3>
 
 
 <button ng-click='quit=true' class= 'btn btn-danger' ng-show = 'hint'>Give Up?</button>
 
-<h3 ng-show = 'quit'>You were looking for {{currentClue.answer}}</h3>
 
 
-<button class= 'btn btn-success' ng-show = 'quit' ng-click='progressClue(currentClue.order); quit = false; hint=false'>Question {{+currentClue.order + 1}}</button>
+
+<h3 ng-show = 'quit'>You were looking for {{currentClue.answer[0]}}</h3>
 </div>
-
+</div>
 </div>
 
 <div ng-show='results'>
 
 <h3>These are your results!</h3>
+<h4> Hints Used: {{hintsUsed}}</h4>
+
+</div>
+
+<div ng-show='userGuessed'>
+ <h3> {{userResults}} </h3>
+
+</div>
+
+<button class= 'btn btn-success' ng-show = 'quit' ng-click='progressClue(currentClue.order); quit = false; hint=false; click = 0'>Next Question</button>
+
+
+<div ng-show='startSearch'>
+<br>
+<input  ng-hide='quit' ng-model='userAnswer' placeholder='Submit Answer'>
+<br>
+<br>
+<button  ng-hide='quit' class= 'btn btn-success' ng-click='guessAnswer(currentClue.answer)'>Submit Answer</button>
+
+<!-- <button ng-click='showImages = !showImages' class = 'btn btn-primary'>Upload Image</button>
+</div>
+
+<!--image upload!-->
+<!-- <div ng-show = 'showImages'>
+
+<div class="row">
+
+
+          <div class="col-md-9" style="margin-bottom: 40px">
+              <h4>Upload Images</h4>
+              <h5>Select Image</h5>
+              <input class = 'centered' type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
+              <h6>The queue</h6>
+              <p>Queue length: {{ uploader.queue.length }}</p>
+
+              <table class="table">
+                  <thead>
+                      <tr>
+                          <th width="50%">Name</th>
+                          <th ng-show="uploader.isHTML5">Size</th>
+                          <th ng-show="uploader.isHTML5">Progress</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr ng-repeat="item in uploader.queue">
+                          <td>
+                              <strong>{{ item.file.name }}</strong>
+                              <-- Image preview -->
+                              <!--auto height-->
+                              <!--<div ng-thumb="{ file: item.file, width: 100 }"></div>
+                              <!--auto width-->
+                              <!--<div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+
+                          </td>
+                          <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                          <td ng-show="uploader.isHTML5">
+                              <div class="progress" style="margin-bottom: 0;">
+                                  <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                              </div>
+                          </td>
+                          <td class="text-center">
+                              <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                              <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                              <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                          </td>
+                          <td nowrap>
+                              <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                  <span class="glyphicon glyphicon-upload"></span> Upload
+                              </button>
+                              <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                                  <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                              </button>
+                              <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                  <span class="glyphicon glyphicon-trash"></span> Remove
+                              </button>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+
+              <div>
+                  <div>
+                      Queue progress:
+                      <div class="progress" style="">
+                          <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                      </div>
+                  </div>
+                  <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                      <span class="glyphicon glyphicon-upload"></span> Upload all
+                  </button>
+                  <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+                      <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+                  </button>
+                  <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                      <span class="glyphicon glyphicon-trash"></span> Remove all
+                  </button>
+              </div>
+
+          </div>
+
+      </div>
+
+  </div>
+
+
+
 
 
 </div>
+
 
 

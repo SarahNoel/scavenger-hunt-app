@@ -22,13 +22,13 @@
   </div>
 
   <div class="form-group">
-    <label for="hint">Hints</label>
+    <label for="hint">Hints(separated by commas)</label>
     <input ng-model='formInput.hints' type="text" class="form-control" placeholder="It barks" required>
   </div>
 
   <div class="form-group">
-    <label for="answer">Answer</label>
-    <input ng-model='formInput.answer' type="text" class="form-control" placeholder="Dog" required>
+    <label for="answer">Answer(give simmilar acceptable answers, separated by commas)</label>
+    <input ng-model='formInput.answer' type="text" class="form-control" placeholder="Dog, a dog, pooch, a pooch, a poochie" required>
   </div>
 </form>
 
@@ -58,8 +58,8 @@
     <td> {{clue.order}} </td>
     <td> {{clue.name}} </td>
     <td> {{clue.location}} </td>
-    <td ng-repeat= 'hint in clue.hints'> {{hint}} </td>
-    <td> {{clue.answer}} </td>
+    <td> {{clue.hints | arrayFilter}} </td>
+    <td> {{clue.answer | arrayFilter}} </td>
     <td>
       <div class= 'edit-buttons'>
         <button class ='btn btn-success btn-edit' ng-click= "getOne(clue._id)"><span class="glyphicon glyphicon-pencil"></span></button>

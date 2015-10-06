@@ -1,43 +1,18 @@
 var app = angular.module('scavengerHunt', ['ngRoute']);
 
+// app.config(function(uiGmapGoogleMapApiProvider) {
+//     uiGmapGoogleMapApiProvider.configure({
+//            key: 'AIzaSyAWPfjYh-56R7wyA-atoO46DH7O2JEfvV0',
+//            v: '3.20', //defaults to latest 3.X anyhow
+//            libraries: 'weather,geometry,visualization'
+//     });
+// });
 
-app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-  $routeProvider
-    .when('/', {
-      templateUrl: '../views/home.html',
-      controller: 'MainController'
-    })
-    .when('/loginPage', {
-      templateUrl: '../views/login.html',
-      controller: 'MainController'
-    })
-    .when('/about', {
-      templateUrl: '../views/about.html',
-            controller: 'MainController'
-
-    })
-    .when('/admin', {
-      templateUrl: '../views/admin.html',
-      controller: 'MainController',
-      access: {restricted: true}
-    })
-
-    .when('/showClues', {
-      templateUrl: '../views/clues.html',
-      controller: 'MainController'
-
-    })
-    .when('/newClue', {
-      templateUrl: '../views/newClue.html',
-      access: {restricted: true},
-      controller: 'MainController'
-    })
-     .when('/start', {
-      templateUrl: '../views/start.html',
-      controller: 'MainController'
-    })
-      .otherwise({redirectTo: '/'
-    });
-
-
-}]);
+// app.run(function ($rootScope, $location, $route, clueServices) {
+//     $rootScope.$on('$routeChangeStart', function (event, next, current) {
+//       if (next.access.restricted && clueServices.isLoggedIn() === false) {
+//         $location.path('/login');
+//         $route.reload();
+//       }
+//     });
+//   });

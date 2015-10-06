@@ -6,15 +6,22 @@ var clueSeed = [
   order: 1,
   name: 'Fluffy Friend',
   location: 'Wash Park',
-  answer: 'a dog',
-  hints: ['It barks']
+  answer: ['a dog', 'dog', 'poochie', 'a poochie', 'puppy', 'a puppy', 'canine', 'a canine'],
+  hints: ["It's hairy", "it should be on a leash", "it barks"]
 },
 {
-  order: 1,
+  order: 2,
   name: 'Not Superman',
   location: 'Capital Building',
-  answer: 'a plane',
-  hints: ['It flies']
+  answer: ['a plane', 'plane', 'airplane', 'an airplane', 'a airplane', 'jet', 'a jet'],
+  hints: ["it flies", "it's not alive", "very expensive", "people fit inside it"]
+},
+{
+  order: 3,
+  name: 'Tex-Mex',
+  location: "Wahoo's Fish Tacos",
+  answer: ['black beans'],
+  hints: ["edible", "in a burrito", "protein", "not meat", "black"]
 }
 
 ];
