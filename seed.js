@@ -4,10 +4,17 @@ var Clue = require('./server/models/clue.js');
 var clueSeed = [
 {
   order: 1,
-  name: 'Clue One',
+  name: 'Fluffy Friend',
   location: 'Wash Park',
-  answer: 'A dog',
+  answer: 'a dog',
   hints: ['It barks']
+},
+{
+  order: 1,
+  name: 'Not Superman',
+  location: 'Capital Building',
+  answer: 'a plane',
+  hints: ['It flies']
 }
 
 ];

@@ -1,13 +1,41 @@
-<div ng-hide= 'startSearch'>
+<div ng-hide= 'startSearch; results'>
 
 <h2>Are you ready?</h2>
 <h4>Remember, it's a competition, so use your best sleuth skills!</h4>
 
-<button class= 'btn btn-success' ng-click = 'startSearch = true; progressClue()'>Begin!</button>
+<button class= 'btn btn-success' ng-click = 'startSearch = true; progressClue(0)'>Begin!</button>
 </div>
 
+<div ng-show='startSearch'>
+<div ng-hide='results'>
+
+<h1>Clue #{{currentClue.order}}</h1>
+
+<h2>{{currentClue.name}}</h2>
+
+<h3>{{currentClue.location}}</h3>
 
 
-<clue-details></clue-details>
+<button class = 'btn btn-warning' ng-click ='hint=true'>Need a Hint?</button>
+
+<h3 ng-show ='hint'>{{currentClue.hints[0]}}</h3>
+
+
+<button ng-click='quit=true' class= 'btn btn-danger' ng-show = 'hint'>Give Up?</button>
+
+<h3 ng-show = 'quit'>You were looking for {{currentClue.answer}}</h3>
+
+
+<button class= 'btn btn-success' ng-show = 'quit' ng-click='progressClue(currentClue.order); quit = false; hint=false'>Question {{+currentClue.order + 1}}</button>
+</div>
+
+</div>
+
+<div ng-show='results'>
+
+<h3>These are your results!</h3>
+
+
+</div>
 
 

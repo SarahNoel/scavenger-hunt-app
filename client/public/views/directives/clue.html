@@ -17,5 +17,7 @@
 <h3 ng-show = 'quit'>{{currentClue.answer}}</h3>
 
 
+<button ng-show = 'quit' ng-click='progressClue(currentClue.order)'>Question {{+currentClue.order + 1}}</button>
+
 
 </div>

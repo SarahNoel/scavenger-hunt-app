@@ -8,6 +8,7 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
   // $scope.showAll = false;
   $scope.formInput = {};
 
+//show all clues
   $scope.showAllClues = function(){
     $http.get('/clues')
     .then(function(data){
@@ -15,6 +16,7 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
     });
   };
 
+//get one clue
   $scope.getOne= function(id){
     $scope.editing = $scope.hideForm = true;
     $scope.showAll = false;
@@ -27,6 +29,7 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
     });
   };
 
+//delete one clue
   $scope.deleteOne = function(id){
     $http.delete('/clue/'+id)
     .then(function(data){
@@ -37,6 +40,7 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
     });
   };
 
+//update a single clue
   $scope.updateOne = function(id){
     var updatedClue= $scope.formInput;
     console.log(updatedClue);
@@ -52,6 +56,7 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
     $scope.showAll = true;
   };
 
+//add a new clue
   $scope.addNewClue = function(){
     $scope.showAll = true;
     $scope.hideForm = false;
@@ -66,12 +71,25 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
     $scope.formInput = '';
   };
 
-  $scope.progressClue = function(){
 
-    $http.get('/clueNum/1')
+//move on to next question
+  $scope.progressClue = function(num){
+    $http.get('/clues')
     .then(function(data){
-      $scope.currentClue = data.data;
+      var length = data.data.length;
+      console.log(num, length);
+      if(num === length){
+        $scope.results = true;
+      }
+      else{
+        num++;
+        $http.get('/clueNum/'+num)
+        .then(function(data){
+          $scope.currentClue = data.data;
+        });
+      }
     });
+
   };
 
 }]);
