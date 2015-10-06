@@ -7,7 +7,9 @@ var Clue = new Schema({
   name: String,
   location: String,
   answer: Array,
-  hints: Array
+  hints: Array,
+  latitude: String,
+  longitude: String
 });
 
 module.exports = mongoose.model('clues', Clue);

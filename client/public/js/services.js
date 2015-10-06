@@ -1,5 +1,4 @@
 app.factory('ClueServices', [ '$http','$q', function($http, $q) {
-  var ClueServices = {};
   var user = null;
 
   return {

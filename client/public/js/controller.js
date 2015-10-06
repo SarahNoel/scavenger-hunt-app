@@ -9,18 +9,22 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
   $scope.login = {};
   $scope.register = {};
   $scope.hintsUsed = 0;
+  $scope.lat = 40;
+  $scope.long = -100;
+  $scope.zoom = 2;
 
   //user login
   $scope.login = function(){
     ClueServices.loginUser($scope.login.username, $scope.login.password)
       .then(function(){
         $location.path('/');
-        $scope.loggedIn = true;
+        $scope.logged = true;
       })
       .catch(function(){
         $scope.error = true;
           $scope.errorMessage = "Invalid user name and/or password.";
       });
+    $scope.displayUserName = $scope.login.username;
   };
 
   $scope.register = function(){
@@ -132,9 +136,7 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
       var length = data.data.length;
       if(num === length){
         $scope.results = true;
-        // $scope.center.lat = 41.850033;
-        // $scope.center.long = -87.6500523;
-
+        $scope.startSearch = false;
 
       }
       else{
@@ -142,8 +144,11 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
         $http.get('/clueNum/'+num)
         .then(function(data){
           $scope.currentClue = data.data;
-          var center = new google.maps.LatLng(41.850033,-87.6500523);
-          $scope.map.setCenter(center);
+          $scope.lat = '39.7';
+          $scope.long= '-104.9706';
+          $scope.zoom= '14';
+
+          // $scope.map.setCenter(center);
         });
       }
     });
@@ -154,29 +159,9 @@ $scope.useHint = function(){
   $scope.hintsUsed++;
 };
 
-
-
-// uiGmapGoogleMapApi.then(function(maps) {
-  // $scope.initMap = function(){
-
-
-  //   var myLatLng = {lat: -25.363, lng: 131.044};
-
-  //   // Create a map object and specify the DOM element for display.
-  //   var map = new google.maps.Map(document.getElementById('map'), {
-  //     center: myLatLng,
-  //     scrollwheel: false,
-  //     zoom: 4
-  //   });
-
-  //   // Create a marker and set its position.
-  //   var marker = new google.maps.Marker({
-  //     map: map,
-  //     position: myLatLng,
-  //     title: 'Hello World!'
-  //   });
-  // };
-// });
+$scope.logCheck = function(){
+  console.log(ClueServices.getUserStatus());
+};
 
 }]);
 

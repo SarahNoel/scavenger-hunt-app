@@ -1,7 +1,12 @@
 body {
   text-align: center;
   background-color: #105b63;
-  color: white
+  color: white;
+  font-family: 'Raleway', sans-serif;
+}
+
+input{
+  color: black;
 }
 
 .centered{
@@ -38,7 +43,7 @@ body {
   clear: both;
 }
 
-input.form-control{
+.small-input{
   width: 50%;
   display: table;
   margin: auto;
