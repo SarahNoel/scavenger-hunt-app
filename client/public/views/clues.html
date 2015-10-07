@@ -4,87 +4,84 @@
 <button ng-click= 'showAll = false; hideForm = !hideForm' class= 'btn btn-success' >Add a New Clue </button>
 
 <div class='container' ng-show='hideForm'>
-<h3> Let's Make a New Clue!</h3>
-<br>
-<form name= 'addClueForm'>
-  <div class="form-group">
-    <label for="order">Order Number</label>
-    <input ng-model='formInput.order' type="number" class="form-control" placeholder="1" min = '1' required>
-  </div>
-
-  <div class="form-group">
-    <label for="clueName">Clue Title</label>
-    <input ng-model='formInput.name' type="text" class="form-control" placeholder="Mystery Creature" required>
-  </div>
-
-  <div class="form-group">
-    <label for="location">Location</label>
-    <input ng-model='formInput.location' type="text" class="form-control" placeholder="Washington Park" required>
-  </div>
-  <button ng-click='findLocale()' class='btn btn-xs btn-default'>Find Location</button><br><br>
-
-  <div class="form-group">
-    <label for="hint">Hints (separated by commas)</label>
-    <input ng-model='formInput.hints' type="text" class="form-control" placeholder="It barks" required>
-  </div>
-
-  <div class="form-group">
-    <label for="answer">Answer (give similar acceptable answers, separated by commas)</label>
-    <input ng-model='formInput.answer' type="text" class="form-control" placeholder="Dog, a dog, pooch, a pooch, a poochie" required>
-  </div>
-
-  <div ng-show='found'>
+  <h3> Let's Make a New Clue!</h3>
+  <br>
+  <form name= 'addClueForm'>
     <div class="form-group">
-      <label for="latitude">Latitude</label>
-      <input ng-model='formInput.latitude' type="text" class="form-control" placeholder="latitude" required>
+      <label for="order">Order Number</label>
+      <input ng-model='formInput.order' type="number" class="form-control" placeholder="1" min = '1' required>
     </div>
 
-     <div class="form-group">
-      <label for="longitude">Longitude</label>
-      <input ng-model='formInput.longitude' type="text" class="form-control" placeholder="longitude" required>
+    <div class="form-group">
+      <label for="clueName">Clue Title</label>
+      <input ng-model='formInput.name' type="text" class="form-control" placeholder="Mystery Creature" required>
     </div>
-  </div>
 
-</form>
+    <div class="form-group">
+      <label for="location">Location</label>
+      <input ng-model='formInput.location' type="text" class="form-control" placeholder="Washington Park" required>
+    </div>
+    <button ng-click='findLocale()' class='btn btn-xs btn-default'>Find Location</button><br><br>
 
-<button ng-hide= 'editing' ng-disabled="addClueForm.$invalid" ng-click='addNewClue()' type="submit" class="btn btn-default">Create Clue</button>
+    <div class="form-group">
+      <label for="hint">Hints (separated by commas)</label>
+      <input ng-model='formInput.hints' type="text" class="form-control" placeholder="It barks" required>
+    </div>
 
-<button ng-show= 'editing' ng-disabled="addClueForm.$invalid" ng-click='updateOne()' type="submit" class="btn btn-default">Update Clue</button>
+    <div class="form-group">
+      <label for="answer">Answer (give similar acceptable answers, separated by commas)</label>
+      <input ng-model='formInput.answer' type="text" class="form-control" placeholder="Dog, a dog, pooch, a pooch, a poochie" required>
+    </div>
 
-<button ng-click='editing = false; hideForm = false; showAll = false;' type="submit" class="btn btn-warning">Cancel</button>
-
-<br>
-<br>
-</div>
-<br>
-<br>
-<div ng-show='showAll'>
-<table class='table table-bordered'>
-  <thead>
-    <th> Order</th>
-    <th> Name</th>
-    <th> Location</th>
-    <th> Hints</th>
-    <th> Answer</th>
-    <th> Options</th>
-  </thead>
-  <tbody>
-    <tr ng-repeat = 'clue in allCluesData | orderBy:"order"'>
-    <td> {{clue.order}} </td>
-    <td> {{clue.name}} </td>
-    <td> {{clue.location}} </td>
-    <td> {{clue.hints | arrayFilter}} </td>
-    <td> {{clue.answer | arrayFilter}} </td>
-    <td>
-      <div class= 'edit-buttons'>
-        <button class ='btn btn-success btn-edit' ng-click= "getOne(clue._id)"><span class="glyphicon glyphicon-pencil"></span></button>
-
-        <button class ='btn-edit btn btn-danger' ng-click = 'deleteOne(clue._id)'><span class="glyphicon glyphicon-trash"></span></button>
+    <div ng-show='found'>
+      <div class="form-group">
+        <label for="latitude">Latitude</label>
+        <input ng-model='formInput.latitude' type="text" class="form-control" placeholder="latitude" required>
       </div>
-    </td>
-    </tr>
-  </tbody>
-</table>
 
+       <div class="form-group">
+        <label for="longitude">Longitude</label>
+        <input ng-model='formInput.longitude' type="text" class="form-control" placeholder="longitude" required>
+      </div>
+    </div>
 
+  </form>
+
+  <button ng-hide= 'editing' ng-disabled="addClueForm.$invalid" ng-click='addNewClue()' type="submit" class="btn btn-default">Create Clue</button>
+
+  <button ng-show= 'editing' ng-disabled="addClueForm.$invalid" ng-click='updateOne()' type="submit" class="btn btn-default">Update Clue</button>
+
+  <button ng-click='editing = false; hideForm = false; showAll = false;' type="submit" class="btn btn-warning">Cancel</button>
+
+  <br><br>
+</div>
+
+<br><br>
+<div ng-show='showAll'>
+  <table class='table table-bordered'>
+    <thead>
+      <th> Order</th>
+      <th> Name</th>
+      <th> Location</th>
+      <th> Hints</th>
+      <th> Answer</th>
+      <th> Options</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat = 'clue in allCluesData | orderBy:"order"'>
+      <td> {{clue.order}} </td>
+      <td> {{clue.name}} </td>
+      <td> {{clue.location}} </td>
+      <td> {{clue.hints | arrayFilter}} </td>
+      <td> {{clue.answer | arrayFilter}} </td>
+      <td>
+        <div class= 'edit-buttons'>
+          <button class ='btn btn-success btn-edit' ng-click= "getOne(clue._id)"><span class="glyphicon glyphicon-pencil"></span></button>
+
+          <button class ='btn-edit btn btn-danger' ng-click = 'deleteOne(clue._id)'><span class="glyphicon glyphicon-trash"></span></button>
+        </div>
+      </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

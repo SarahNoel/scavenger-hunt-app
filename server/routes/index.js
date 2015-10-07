@@ -31,7 +31,6 @@ router.get('/clueNum/:id', function(req, res, next) {
 
 //post-add one Clue
 router.post('/clues', function(req, res, next) {
-  console.log(req.body);
   new Clue(req.body)
   .save(function(err, clue){
     res.json(clue);

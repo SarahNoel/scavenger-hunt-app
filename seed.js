@@ -17,8 +17,8 @@ var clueSeed = [
   location: 'Capital Building',
   answer: ['a plane', 'plane', 'airplane', 'an airplane', 'a airplane', 'jet', 'a jet'],
   hints: ["it flies", "it's not alive", "very expensive", "people fit inside it"],
-  latitude: '39.7',
-  longitude: '-104.9706'
+  latitude: '39.739319',
+  longitude: '-104.988937'
 },
 {
   order: 3,
@@ -26,8 +26,8 @@ var clueSeed = [
   location: "Wahoo's Fish Tacos",
   answer: ['black beans'],
   hints: ["edible", "in a burrito", "protein", "not meat", "black"],
-  latitude: '39.7',
-  longitude: '-104.9706'
+  latitude: '39.748163',
+  longitude: '-104.9863199'
 }
 
 ];

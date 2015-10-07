@@ -2,6 +2,13 @@ app.controller('HeaderController',['$scope', '$location', function($scope, $loca
   $scope.isActive = function (viewLocation) {
     return viewLocation === $location.path();
   };
+
+  $scope.movePath = function(path){
+    console.log(path);
+  };
+
+
+
 }]);
 
 app.controller('MainController',['$scope', '$location', '$http', 'ClueServices', function($scope, $location, $http, ClueServices) {
