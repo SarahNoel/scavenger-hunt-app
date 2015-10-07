@@ -14,10 +14,6 @@ input{
   margin: auto;
 }
 
-.navbar{
-  background-color: #f0f0cd;
-}
-
 .btn-primary{
   background-color: #7a4d8b;
   border: #7a4d8b;
@@ -49,10 +45,64 @@ input{
   margin: auto;
 }
 
+.home-top{
+  width: 1000px;
+  margin: auto;
+  display: table;
+}
+
+.home-image{
+  background-image: url('/img/cap.jpg');
+  height: 500px;
+  background-size: cover;
+  color: black;
+  margin-top: -16px;
+}
+
+.bigger{
+  font-size: 22px
+}
+
+.biggish{
+  font-size: 18px;
+}
+
+ul{
+  list-style: none;
+}
+
+.locale{
+  margin-left: 40px;
+}
 /* Media Queries */
 @media screen and (max-width: 900px) {
+  .home-top{
+  width: 100%;
+
+  }
 }
+
+.home-image{
+  height: 500px;
+  overflow: hidden;
+  color: black;
+  margin-top: -16px;
+  background-image: url('/img/cap.jpg');
+}
+
 @media screen and (max-width: 630px) {
+  .home-top{
+    width: 100%;
+
+  }
+
+  .home-image{
+    background-image: url('/img/cap.jpg');
+    height: 500px;
+    background-size: cover;
+    color: black;
+    margin-top: -16px;
+  }
 
 }
 

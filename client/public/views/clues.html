@@ -3,7 +3,7 @@
 
 <button ng-click= 'showAll = false; hideForm = !hideForm' class= 'btn btn-success' >Add a New Clue </button>
 
-<div ng-show='hideForm'>
+<div class='container' ng-show='hideForm'>
 <h3> Let's Make a New Clue!</h3>
 <br>
 <form name= 'addClueForm'>
@@ -11,6 +11,7 @@
     <label for="order">Order Number</label>
     <input ng-model='formInput.order' type="number" class="form-control" placeholder="1" min = '1' required>
   </div>
+
   <div class="form-group">
     <label for="clueName">Clue Title</label>
     <input ng-model='formInput.name' type="text" class="form-control" placeholder="Mystery Creature" required>
@@ -20,6 +21,7 @@
     <label for="location">Location</label>
     <input ng-model='formInput.location' type="text" class="form-control" placeholder="Washington Park" required>
   </div>
+  <button ng-click='findLocale()' class='btn btn-xs btn-default'>Find Location</button><br><br>
 
   <div class="form-group">
     <label for="hint">Hints (separated by commas)</label>
@@ -30,6 +32,19 @@
     <label for="answer">Answer (give similar acceptable answers, separated by commas)</label>
     <input ng-model='formInput.answer' type="text" class="form-control" placeholder="Dog, a dog, pooch, a pooch, a poochie" required>
   </div>
+
+  <div ng-show='found'>
+    <div class="form-group">
+      <label for="latitude">Latitude</label>
+      <input ng-model='formInput.latitude' type="text" class="form-control" placeholder="latitude" required>
+    </div>
+
+     <div class="form-group">
+      <label for="longitude">Longitude</label>
+      <input ng-model='formInput.longitude' type="text" class="form-control" placeholder="longitude" required>
+    </div>
+  </div>
+
 </form>
 
 <button ng-hide= 'editing' ng-disabled="addClueForm.$invalid" ng-click='addNewClue()' type="submit" class="btn btn-default">Create Clue</button>

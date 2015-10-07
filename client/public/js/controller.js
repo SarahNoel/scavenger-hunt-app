@@ -12,6 +12,7 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
   $scope.lat = 40;
   $scope.long = -100;
   $scope.zoom = 2;
+  $scope.index = 0;
 
   //user login
   $scope.login = function(){
@@ -85,6 +86,10 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
     $scope.showAll = true;
   };
 
+  $scope.findLocale = function(){
+    $scope.found = true;
+  };
+
   //add a new clue
   $scope.addNewClue = function(){
     $scope.showAll = true;
@@ -131,6 +136,7 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
 
   //move on to next question
   $scope.progressClue = function(num){
+    $scope.allHints = $scope.userAnswer = $scope.userResults =  '';
     $http.get('/clues')
     .then(function(data){
       var length = data.data.length;
@@ -144,23 +150,24 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
         $http.get('/clueNum/'+num)
         .then(function(data){
           $scope.currentClue = data.data;
-          $scope.lat = '39.7';
-          $scope.long= '-104.9706';
-          $scope.zoom= '14';
-
-          // $scope.map.setCenter(center);
+          $scope.lat = data.data.latitude;
+          $scope.long = data.data.longitude;
+          $scope.zoom = '14';
         });
       }
     });
   };
 
-$scope.useHint = function(){
-  $scope.hint=true;
+$scope.useHint = function(hints, index){
+  var hintsArray = [];
+  if (index<hints.length) {
+    for (var i = 1; i < index; i++) {
+      hintsArray.push(hints[i]);
+    }
+  $scope.allHints = hintsArray;
+  $scope.hint = true;
   $scope.hintsUsed++;
-};
-
-$scope.logCheck = function(){
-  console.log(ClueServices.getUserStatus());
+  }
 };
 
 }]);
