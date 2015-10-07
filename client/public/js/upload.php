@@ -24,4 +24,8 @@ echo json_encode([
         : $_GET['flowIdentifier'],
     'flowFilename' => isset($_FILES['file']) ? $_FILES['file']['name'] : $_GET['flowFilename'],
     'flowRelativePath' => isset($_FILES['file']) ? $_FILES['file']['tmp_name'] : $_GET['flowRelativePath']
+
+    $temp_dir = 'temp/'.$_POST['flowIdentifier'];
+    $dest_file = $temp_dir.'/'.$_POST['flowFilename'].'.part'.$_POST['flowChunkNumber'];
+
 ]);

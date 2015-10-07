@@ -137,12 +137,17 @@ linear-gradient(45deg, #105b63 25%, transparent 25%) -7px 0;
 
 
 
+/*Map stuff*/
 
-
-
-
-
-
+#map {
+    height: 200px;
+    width: 50%;
+    margin: auto;
+    border-radius: 5px;
+    border: 1px solid silver;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
 
 /* Media Queries */
 @media screen and (max-width: 900px) {

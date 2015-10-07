@@ -1,4 +1,4 @@
-<div ng-hide='results'>
+<div ng-hide='results' class= 'container'>
   <div class ='row-fluid'>
 
     <h1 ng-show='startSearch' >Clue #{{currentClue.order}}</h1>
@@ -28,7 +28,7 @@
       </ul>
       <br>
 
-      <button ng-show='startSearch' class = 'btn btn-warning locale' ng-click ='index = index + 1; useHint(currentClue.hints, index)'>Need another Hint?</button>
+      <button ng-disabled="noHints" ng-show='startSearch' class = 'btn btn-warning locale' ng-click ='index = index + 1; useHint(currentClue.hints, index)'>Need another Hint?</button>
       <br>
       <br>
       <button ng-click='quit=true' class= 'btn btn-danger locale' ng-show = 'hint'>Give Up?</button>
@@ -99,7 +99,7 @@
     </div>
     <div>
 
-      <span ng-hide='hasPic' class="btn btn-primary" flow-btn ng-click='hasPic = true'>Upload File</span>
+      <span ng-hide='hasPic' class="btn btn-primary" flow-btn ng-click='hasPic = true'>Upload Image</span>
     </div>
       <span class="btn btn-warning" ng-show="$flow.files.length" flow-btn flow-attrs="{accept:'image/*'}">Change</span>
       <span class="btn btn-danger" ng-show="$flow.files.length"
@@ -107,9 +107,7 @@
         Remove
       </span>
     </div>
-    <p>
-      Only PNG,GIF,JPG files allowed.
-    </p>
+
   </div>
 </div>
 

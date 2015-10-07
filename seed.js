@@ -7,7 +7,7 @@ var clueSeed = [
   name: 'Fluffy Friend',
   location: 'Wash Park',
   answer: ['a dog', 'dog', 'poochie', 'a poochie', 'puppy', 'a puppy', 'canine', 'a canine'],
-  hints: ["It's hairy", "it should be on a leash", "it barks"],
+  hints: ["It's furry", "it should be on a leash", "it barks"],
   latitude: '39.7',
   longitude: '-104.9706'
 },
@@ -15,8 +15,8 @@ var clueSeed = [
   order: 2,
   name: 'Not Superman',
   location: 'Capital Building',
-  answer: ['a plane', 'plane', 'airplane', 'an airplane', 'a airplane', 'jet', 'a jet'],
-  hints: ["it flies", "it's not alive", "very expensive", "people fit inside it"],
+  answer: ['a flag', 'flag', 'state flag', 'us flag', 'american flag', 'co flag'],
+  hints: ["it flies", "it's not alive", "it's made of fabric", "it's on a pole"],
   latitude: '39.739319',
   longitude: '-104.988937'
 },

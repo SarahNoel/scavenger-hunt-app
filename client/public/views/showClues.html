@@ -1,0 +1,39 @@
+<div class = 'container'>
+<h3>Your Clues</h3>
+<hr>
+  <table class='table table-bordered'>
+    <thead>
+      <th> Order</th>
+      <th> Name</th>
+      <th> Location</th>
+      <th> Hints</th>
+      <th> Answer</th>
+      <th> Options</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat = 'clue in allCluesData | orderBy:"order"'>
+      <td> {{clue.order}} </td>
+      <td> {{clue.name}} </td>
+      <td> {{clue.location}} </td>
+      <td> {{clue.hints | arrayFilter}} </td>
+      <td> {{clue.answer | arrayFilter}} </td>
+      <td>
+        <div class= 'edit-buttons'>
+          <button class ='btn btn-success btn-edit' ng-click= "getOne(clue._id)"><span class="glyphicon glyphicon-pencil"></span></button>
+
+          <button class ='btn-edit btn btn-danger' ng-click = 'deleteOne(clue._id)'><span class="glyphicon glyphicon-trash"></span></button>
+        </div>
+      </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- <div ng-show = 'editing'>
+ <form name= 'addClueForm'>
+EDIT FORM HERE
+  <br><br>
+</div>
+ -->
+
+<a href = '/#/newclue' <button class= 'btn btn-success' >Add a New Clue </button></a>

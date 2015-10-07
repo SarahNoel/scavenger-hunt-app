@@ -2,24 +2,12 @@ app.controller('HeaderController',['$scope', '$location', function($scope, $loca
   $scope.isActive = function (viewLocation) {
     return viewLocation === $location.path();
   };
-
-  $scope.movePath = function(path){
-    console.log(path);
-  };
-
-
-
 }]);
 
-app.controller('MainController',['$scope', '$location', '$http', 'ClueServices', function($scope, $location, $http, ClueServices) {
-  $scope.formInput = {};
+
+app.controller('LoginController',['$scope', '$location', '$http', 'ClueServices', function($scope, $location, $http, ClueServices) {
   $scope.login = {};
   $scope.register = {};
-  $scope.hintsUsed = 0;
-  $scope.lat = 40;
-  $scope.long = -100;
-  $scope.zoom = 2;
-  $scope.index = 0;
 
   //user login
   $scope.login = function(){
@@ -44,10 +32,14 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
         $scope.error = true;
           $scope.errorMessage = "Error, please try again.";
       });
-  };
+    };
+}]);
 
 
-  //show all clues
+app.controller('ClueController',['$scope', '$location', '$http', 'ClueServices', function($scope, $location, $http, ClueServices) {
+  $scope.formInput = {};
+
+ //show all clues
   $scope.showAllClues = function(){
     $http.get('/clues')
     .then(function(data){
@@ -57,8 +49,7 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
 
   //get one clue
   $scope.getOne= function(id){
-    $scope.editing = $scope.hideForm = true;
-    $scope.showAll = false;
+    $scope.editing = true;
     $http.get('/clue/' + id)
     .then(function(data) {
       var clue = data.data;
@@ -92,32 +83,24 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
     $scope.editing = $scope.hideForm = false;
     $scope.showAll = true;
   };
+$scope.showAllClues();
+}]);
 
-  $scope.findLocale = function(){
-    $scope.found = true;
-  };
 
-  //add a new clue
-  $scope.addNewClue = function(){
-    $scope.showAll = true;
-    $scope.hideForm = false;
-    $scope.formInput.hints = $scope.formInput.hints.split(',');
-    for (var i = 0; i < $scope.formInput.hints.length; i++) {$scope.formInput.hints[i] = $scope.formInput.hints[i].trim();
-    }
-    $scope.formInput.answer = $scope.formInput.answer.split(',');
-    for (var j = 0; j < $scope.formInput.answer.length; j++) {$scope.formInput.answer[j] = $scope.formInput.answer[j].trim();
-    }
-    var newClue = $scope.formInput;
-    $http.post('/clues', newClue)
+
+app.controller('GameController',['$scope', '$location', '$http', 'ClueServices', function($scope, $location, $http, ClueServices) {
+  $scope.lat = 40;
+  $scope.long = -100;
+  $scope.zoom = 2;
+  $scope.index = 0;
+
+ //show all clues
+  $scope.showAllClues = function(){
+    $http.get('/clues')
     .then(function(data){
-      $http.get('/clues')
-      .then(function(data){
-        $scope.allCluesData =  data.data;
-      });
+      $scope.allCluesData =  data.data;
     });
-    $scope.formInput = '';
   };
-
   //guess answer
   $scope.guessAnswer = function(answerArray){
     var correct = false;
@@ -140,10 +123,10 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
     }
   };
 
-
   //move on to next question
   $scope.progressClue = function(num){
     $scope.allHints = $scope.userAnswer = $scope.userResults =  '';
+    $scope.noHints = false;
     $http.get('/clues')
     .then(function(data){
       var length = data.data.length;
@@ -166,16 +149,95 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
   };
 
 $scope.useHint = function(hints, index){
-  var hintsArray = [];
-  if (index<hints.length) {
+ var hintsArray = [];
+  if (index <= hints.length) {
     for (var i = 1; i < index; i++) {
       hintsArray.push(hints[i]);
     }
+  }
+  if(hintsArray.length === hints.length-1){
+    $scope.noHints=true;
+  }
   $scope.allHints = hintsArray;
   $scope.hint = true;
   $scope.hintsUsed++;
-  }
 };
 
+}]);
+
+
+app.controller('AddClueController',['$scope', '$location', '$http', 'ClueServices', 'Map', function($scope, $location, $http, ClueServices, Map) {
+  $scope.formInput = {};
+ //show all clues
+  $scope.showAllClues = function(){
+    $http.get('/clues')
+    .then(function(data){
+      $scope.allCluesData =  data.data;
+    });
+  };
+ //add a new clue
+  $scope.addNewClue = function(){
+    $scope.showAll = true;
+    $scope.showWarning = $scope.hideForm = false;
+    $scope.formInput.hints = $scope.formInput.hints.split(',');
+    for (var i = 0; i < $scope.formInput.hints.length; i++) {$scope.formInput.hints[i] = $scope.formInput.hints[i].trim();
+    }
+    $scope.formInput.answer = $scope.formInput.answer.split(',');
+    for (var j = 0; j < $scope.formInput.answer.length; j++) {$scope.formInput.answer[j] = $scope.formInput.answer[j].trim();
+    }
+    var newClue = $scope.formInput;
+    $http.post('/clues', newClue)
+    .then(function(data){
+      $http.get('/clues')
+      .then(function(data){
+        $scope.allCluesData =  data.data;
+      });
+    });
+    $scope.formInput = $scope.place = '';
+  };
+
+
+    $scope.place = {};
+    $scope.search = function() {
+      $scope.showWarning = true;
+      $scope.apiError = false;
+      Map.search($scope.formInput.location)
+      .then(
+          function(res) { // success
+              Map.addMarker(res);
+              $scope.place.name = res.name;
+              $scope.place.lat =  res.geometry.location.lat();
+              $scope.place.lng = res.geometry.location.lng();
+              $scope.formInput.latitude = res.geometry.location.lat();
+              $scope.formInput.longitude = res.geometry.location.lng();
+          },
+          function(status) { // error
+              $scope.apiError = true;
+              $scope.apiStatus = status;
+            }
+        );
+    };
+
+
+    Map.init();
 
 }]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
