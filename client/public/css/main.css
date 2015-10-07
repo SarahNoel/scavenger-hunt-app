@@ -9,6 +9,10 @@ input{
   color: black;
 }
 
+.navbar{
+  background-color: whitesmoke;
+}
+
 .centered{
   display: table;
   margin: auto;
@@ -56,7 +60,8 @@ input{
   height: 500px;
   background-size: cover;
   color: black;
-  margin-top: -16px;
+  margin-top: -18px;
+  border-bottom: thin whitesmoke solid;
 }
 
 .bigger{
@@ -67,6 +72,10 @@ input{
   font-size: 18px;
 }
 
+.lighter{
+  font-weight: lighter;
+}
+
 ul{
   list-style: none;
 }
@@ -74,6 +83,67 @@ ul{
 .locale{
   margin-left: 40px;
 }
+
+.thumbnail {
+    line-height: 20px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    word-break: normal;
+}
+.thumbnail img {
+    max-width: 200px;
+    max-height: 150px;
+}
+
+.left-align{
+  text-align: left
+}
+
+
+.drop{
+  width: 100%
+}
+
+/*zig-zag border*/
+
+
+.zigzag-edges {
+    position: relative;
+    background: #105b63;
+}
+
+.zigzag-edges:after {
+    content: ' ';
+    display: block;
+    height: 14px;
+    position: absolute;
+    left: 0;
+    right: 0;
+
+}
+
+.zigzag-edges:after{
+    bottom: -14px;
+
+    background:
+linear-gradient(135deg, #105b63 25%, transparent 25%),
+linear-gradient(225deg, #105b63 25%, transparent 25%),
+linear-gradient(315deg, #105b63 25%, transparent 25%) -7px 0,
+linear-gradient(45deg, #105b63 25%, transparent 25%) -7px 0;
+    background-size: 14px 14px;
+    background-color: #DCDCDB;
+
+}
+
+
+
+
+
+
+
+
+
+
 /* Media Queries */
 @media screen and (max-width: 900px) {
   .home-top{
@@ -85,9 +155,6 @@ ul{
 .home-image{
   height: 500px;
   overflow: hidden;
-  color: black;
-  margin-top: -16px;
-  background-image: url('/img/cap.jpg');
 }
 
 @media screen and (max-width: 630px) {
@@ -97,11 +164,8 @@ ul{
   }
 
   .home-image{
-    background-image: url('/img/cap.jpg');
     height: 500px;
     background-size: cover;
-    color: black;
-    margin-top: -16px;
   }
 
 }

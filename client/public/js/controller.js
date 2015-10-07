@@ -122,7 +122,7 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
   $scope.guessAnswer = function(answerArray){
     var correct = false;
     for (var i = 0; i < answerArray.length; i++) {
-      if($scope.userAnswer.trim()===answerArray[i].trim()){
+      if($scope.userAnswer.toLowerCase().trim()===answerArray[i].trim()){
         correct = true;
         break;
       }
@@ -177,5 +177,5 @@ $scope.useHint = function(hints, index){
   }
 };
 
-}]);
 
+}]);

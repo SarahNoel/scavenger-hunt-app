@@ -29,8 +29,6 @@ app.config(['$routeProvider', function($routeProvider) {
       templateUrl: '../views/start.html',
       controller: 'MainController',
       access: {restricted: false}
-    })
-      .otherwise({redirectTo: '/'
     });
 
 
