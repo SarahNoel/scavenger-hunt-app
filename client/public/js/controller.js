@@ -24,16 +24,16 @@ app.controller('LoginController',['$scope', '$location', '$http', 'LoginServices
   };
 
   // // add new game
-  $scope.addNewGame = function(){
-    $scope.gameError = '';
-    $http.post('/games', $scope.gameInput)
-    .catch(function(){
-      $scope.gameError = "Error!  That game name already exists.  Try a different name.";})
-    .then(function(data){
-      $scope.gameInput = '';
+  // $scope.addNewGame = function(){
+  //   $scope.gameError = '';
+  //   $http.post('/games', $scope.gameInput)
+  //   .catch(function(){
+  //     $scope.gameError = "Error!  That game name already exists.  Try a different name.";})
+  //   .then(function(data){
+  //     $scope.gameInput = '';
 
-    });
-  };
+  //   });
+  // };
 
   $scope.addNewGame = function(){
     $scope.gameError = '';
@@ -42,13 +42,13 @@ app.controller('LoginController',['$scope', '$location', '$http', 'LoginServices
     }
     else{
       LoginServices.registerGame($scope.gameInput)
-        .then(function(res){
+        .then(function(){
           console.log('success!');
           $location.path('/#/newclue');
+        })
+        .catch(function(){
+          // $scope.gameError = "Error!  That game name already exists.  Try a different name.";
         });
-        // .catch(function(){
-        //   $scope.gameError = "Error!  That game name already exists.  Try a different name.";
-        // });
       }
   };
 
@@ -126,6 +126,28 @@ $scope.useHint = function(hints, index){
   $scope.hintsUsed++;
 };
 
+
+  //show all games
+  $scope.showGames = function(){
+    $http.get('/games')
+      .then(function(data){
+        console.log('all games: ', data.data);
+      $scope.allGamesData = data.data;
+    });
+  };
+
+  //show one game
+   $scope.showOneGame = function(gameid){
+    $http.get('/game/'+gameid)
+      .then(function(data){
+        console.log('clues: ', data.data.name);
+        $scope.gameName= data.data.name;
+        $scope.gamePicked = true;
+    });
+  };
+
+
+
 }]);
 
 
@@ -181,7 +203,7 @@ app.controller('ClueController',['$scope', '$location', '$http', 'Map', 'ClueSer
   };
 
   //add a new clue
-  $scope.addNewClue = function(){
+  $scope.addNewClue = function(gameid){
     $scope.showAll = true;
     $scope.showWarning = $scope.hideForm = false;
     $scope.formInput.hints = $scope.formInput.hints.split(',');
@@ -191,9 +213,7 @@ app.controller('ClueController',['$scope', '$location', '$http', 'Map', 'ClueSer
     for (var j = 0; j < $scope.formInput.answer.length; j++) {$scope.formInput.answer[j] = $scope.formInput.answer[j].trim();
     }
     var newClue = $scope.formInput;
-
-
-    $http.post('/clues', newClue)
+    $http.post('/clues/'+ gameid, newClue)
     .then(function(data){
       $http.get('/clues')
       .then(function(data){
@@ -216,27 +236,8 @@ app.controller('ClueController',['$scope', '$location', '$http', 'Map', 'ClueSer
     });
   };
 
-  $scope.showGames = function(){
-    $http.get('/games')
-      .then(function(data){
-      $scope.allGamesData = data.data;
-    });
-  };
-
-
-
-
-
-
-
-
-
-
-
-
-
   //on-load functions
-  // Map.init();
+  Map.init();
   $scope.showAllClues();
 
 }]);

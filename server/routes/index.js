@@ -1,27 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
+var mongoose = require('mongoose-q')(require('mongoose'));
 var Clue = mongoose.model('clues');
 var User = mongoose.model('users');
 var Game = mongoose.model('games');
 var passport = require('passport');
 var local = require('passport-local');
-
-
-// get all games
-router.get('/games', function(req, res, next) {
-  Game.find(function(err, game){
-    res.json(game);
-  });
-});
-
-//make new game
-router.post('/games', function(req, res, next) {
-  new Game(req.body)
-  .save(function(err, game){
-    res.json(game);
-  });
-});
 
 
 // get all clues
@@ -73,14 +57,71 @@ router.delete('/clue/:id', function(req, res, next){
   });
 });
 
-//save clue to game
-router.post('/games/:game/:clue', function(req, res,next){
 
-
-
+//make new game
+router.post('/games', function(req, res, next) {
+  new Game(req.body)
+  .save(function(err, game){
+    res.json(game);
+  });
 });
 
+// get all games
+router.get('/games', function(req, res, next) {
+  Game.find()
+    .populate('clues')
+    .exec(function(err, games){
+    if(err){
+    }
+    else{
+      res.json(games);
+    }
+  });
+});
 
+//get single game information
+router.get('/game/:id', function(req, res, next){
+  Game.findById(req.params.id)
+    .populate('clues')
+    .exec(function(err, game){
+    if(err){
+    }
+    else{
+      res.json(game);
+    }
+  });
+});
+
+//save clue to game
+router.post('/clues/:gameid', function(req, res,next){
+  var newClue = new Clue(req.body);
+  newClue.save();
+  var id = req.params.gameid;
+  var update = {$push:{clues : newClue}};
+  var options = {new:true};
+  Game.findByIdAndUpdateQ(id, update, options)
+    .then(function(data){
+      res.json(data);
+    })
+    .catch(function(err){
+      res.send({'Error!' : err});
+    })
+      .done();
+  });
+
+  //get all clues from a game
+router.get('/:gameid/clues', function(req, res, next){
+ Game.findById(req.params.gameid)
+  .populate('clues')
+  .exec(function(err, game){
+    if(err){
+      res.json(err);
+    }
+    else{
+      res.json(game.clues);
+    }
+  });
+});
 
 
 

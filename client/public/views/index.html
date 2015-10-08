@@ -12,7 +12,7 @@
   </head>
 
 <!--HEADER-->
-  <body flow-prevent-drop>
+<body flow-prevent-drop>
 
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -36,7 +36,9 @@
 
         <li ng-click='showAllClues()' class='header-text' ng-class="{ active: isActive('/showClues')}"><a ng-href="/#/showClues" >Clue Dashboard</a></li>
 
-        <li class='header-text' ng-class="{active: isActive('/loginPage')}"><a href="/#/loginPage">Login</a></li>
+        <li class='header-text' ng-class="{active: isActive('/loginPage')}"><a href="/#/loginPage">Game Login</a></li>
+
+        <li ng-show='gamePicked'class='header-text' >Currently editing: {{gameName}}</li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

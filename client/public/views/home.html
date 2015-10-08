@@ -1,3 +1,6 @@
+<h3 ng-show='gamePicked'class='header-text' >Currently editing: {{gameName}}</h3>
+
+
 <div class = 'home-top'>
   <div class ='home-image'>
   <br>
@@ -23,3 +26,6 @@
 </div>
 
 
+<button ng-click='showGames()' class='btn btn-primary'>Get Games!</button>
+
+<button ng-click='showOneGame("game._id")' class='btn btn-primary'>Get One Game!</button>
