@@ -23,15 +23,6 @@
       <input ng-model='formInput.answer' type="text" class="form-control" placeholder="Dog, a dog, pooch, a pooch, a poochie" required>
     </div>
 
-    <div ng-show='found'>
-
-        <input ng-model='formInput.latitude' type="text" class="form-control" placeholder="latitude" required>
-        <input ng-model='place.name' type="text" class="form-control">
-        <input ng-model='formInput.longitude' type="text" class="form-control" placeholder="longitude" required>
-
-    </div>
-
-
 </form>
 
 </div>
@@ -45,7 +36,7 @@
             <input name="place" type="text" class="form-control" placeholder="Washington Park"
             ng-model="formInput.location" required autofocus />
             <span class="input-group-btn">
-                <button class="btn btn-primary">Verify Location</button>
+                <button class="btn btn-success">Verify Location</button>
             </span>
         </div>
     </form>
@@ -55,26 +46,21 @@
 
     <div class="form-group">
         <label for="resLat">Latitude</label>
-        <input name="resLat" class="form-control" ng-model="place.lat" required />
+        <input name="resLat" class="form-control" ng-model="formInput.latitude" required />
 
     </div>
     <div class="form-group">
         <label for="resLng">Longitude</label>
-        <input name="resLng" class="form-control" ng-model="place.lng" required />
+        <input name="resLng" class="form-control" ng-model="formInput.longitude" required />
         </div>
     </div>
-
-
 </div>
 
-
-
-
- <a ng-href='/#/showClues'><button ng-disabled="addClueForm.$invalid" ng-click='addNewClue()' type="submit" class="btn btn-primary">Create Clue</button></a>
+ <a ng-href='/#/showClues'><button ng-disabled="addClueForm.$invalid" ng-click='addNewClue()' type="submit" class="btn btn-primary marginal">Create Clue</button></a>
 
 </form>
 
-  <a ng-href='/#/showClues'><button class="btn btn-warning">Cancel</button></a>
+  <a ng-href='/#/showClues'><button class="btn btn-warning marginal">Cancel</button></a>
 
   <br><br>
 

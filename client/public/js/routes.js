@@ -21,8 +21,8 @@ app.config(['$routeProvider', function($routeProvider) {
       access: {restricted: true}
     })
     .when('/newclue', {
-      templateUrl: '../views/clues.html',
-      controller: 'AddClueController',
+      templateUrl: '../views/addClue.html',
+      controller: 'ClueController',
       access: {restricted: true}
     })
      .when('/start', {

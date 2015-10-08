@@ -21,6 +21,7 @@ input{
 .btn-primary{
   background-color: #7a4d8b;
   border: #7a4d8b;
+  padding: 8px;
 }
 
 .btn-primary:hover,
@@ -28,8 +29,13 @@ input{
 .btn-primary:active,
 .btn-primary:disabled:hover{
   background-color: #613d6f;
+  padding: 8px;
+
 }
 
+.marginal{
+  margin: 5px;
+}
 
 .left-clue{
   float: left;
@@ -61,7 +67,6 @@ input{
   background-size: cover;
   color: black;
   margin-top: -18px;
-  border-bottom: thin whitesmoke solid;
 }
 
 .bigger{
@@ -102,6 +107,10 @@ ul{
 
 .drop{
   width: 100%
+}
+
+.bottom{
+  margin-bottom: 50px;
 }
 
 /*zig-zag border*/

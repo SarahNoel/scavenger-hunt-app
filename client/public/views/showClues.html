@@ -1,4 +1,4 @@
-<div class = 'container'>
+<div class = 'container' ng-hide='editing'>
 <h3>Your Clues</h3>
 <hr>
   <table class='table table-bordered'>
@@ -29,11 +29,77 @@
   </table>
 </div>
 
-<!-- <div ng-show = 'editing'>
- <form name= 'addClueForm'>
-EDIT FORM HERE
-  <br><br>
-</div>
- -->
+<a href = '/#/newclue' ><button ng-hide='editing' class='btn btn-success'>Add a New Clue </button></a>
+<div>
 
-<a href = '/#/newclue' <button class= 'btn btn-success' >Add a New Clue </button></a>
+
+<div class='container'>
+  <h3 ng-show='editing'> Edit Your Clue</h3>
+  <br>
+  <form name= 'addClueForm' ng-show='editing'>
+    <div class="form-group">
+      <label for="order">Order Number</label>
+      <input ng-model='formInput.order' type="number" class="form-control" placeholder="1" min = '1' required>
+    </div>
+
+    <div class="form-group">
+      <label for="clueName">Clue Title</label>
+      <input ng-model='formInput.name' type="text" class="form-control" placeholder="Furry Friend" required>
+    </div>
+
+    <div class="form-group">
+      <label for="hint">Hints (separated by commas)</label>
+      <input ng-model='formInput.hints' type="text" class="form-control" placeholder="It's furry, it barks, it should be on a leash" required>
+    </div>
+
+    <div class="form-group">
+      <label for="answer">Answer (give similar acceptable answers, separated by commas)</label>
+      <input ng-model='formInput.answer' type="text" class="form-control" placeholder="Dog, a dog, puppy, a puppy, puppies" required>
+    </div>
+
+</form>
+
+</div>
+
+<!--Update Form-->
+<br>
+<div class="container">
+
+    <form name="searchForm" novalidate
+    ng-submit="search()" ng-show='editing'>
+        <div class="input-group">
+            <input name="place" type="text" class="form-control" placeholder="Washington Park"
+            ng-model="formInput.location" required autofocus />
+            <span class="input-group-btn">
+                <button class="btn btn-success">Verify Location</button>
+            </span>
+        </div>
+    </form>
+
+    <p ng-show='showWarning'> If this isn't the correct location, be more specific in your search (add city, zipcode, etc). </p>
+
+    <div id="map"></div>
+
+    <div class="form-group" ng-show='editing'>
+        <label for="resLat">Latitude</label>
+        <input name="resLat" class="form-control" ng-model="formInput.latitude" required />
+
+    </div>
+    <div class="form-group" ng-show='editing'>
+        <label for="resLng">Longitude</label>
+        <input name="resLng" class="form-control" ng-model="formInput.longitude" required />
+        </div>
+    </div>
+</div>
+
+  <div>
+
+   <button ng-show='editing' ng-disabled="addClueForm.$invalid" ng-click='updateOne(id); editing = false' type="submit" class="btn btn-primary marginal">Update Clue</button>
+
+  <button ng-show='editing' ng-click='editing=false; showWarning = false' class="btn btn-warning marginal">Cancel</button>
+  </div>
+  <br><br>
+
+</div>
+
+

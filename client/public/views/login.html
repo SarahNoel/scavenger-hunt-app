@@ -14,7 +14,7 @@
       <input type="password" class="form-control small-input" placeholder="password" ng-model="login.password" required>
     </div>
 
-    <button class='btn btn-primary' ng-click="login(); adminUser = true" ng-disabled="loginForm.$invalid">Login</button>
+    <button class='btn btn-primary' ng-click="login(); adminUser = true">Login</button>
   </form>
 </div>
 
@@ -45,6 +45,6 @@
 
 <br>
 <br>
-<button class='btn btn-danger' ng-click='logout()'>Logout</button>
+<button ng-disabled='loggedIn === false' class='btn btn-danger' ng-click='logout()'>Logout</button>
 
 </div>
