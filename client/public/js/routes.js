@@ -5,9 +5,14 @@ app.config(['$routeProvider', function($routeProvider) {
       controller: 'GameController',
       access: {restricted: false}
     })
-    .when('/loginPage', {
-      templateUrl: '../views/login.html',
-      controller: 'LoginController',
+    // .when('/loginPage', {
+    //   templateUrl: '../views/login.html',
+    //   controller: 'LoginController',
+    //   access: {restricted: false}
+    // })
+     .when('/loginPage', {
+      templateUrl: '../views/gamelogin.html',
+      controller: 'ClueController',
       access: {restricted: false}
     })
     .when('/about', {
@@ -28,13 +33,17 @@ app.config(['$routeProvider', function($routeProvider) {
      .when('/start', {
       templateUrl: '../views/start.html',
       controller: 'GameController',
-      access: {restricted: false}
+      access: {restricted: true}
     })
      .when('/showClues', {
       templateUrl: '../views/showClues.html',
       controller: 'ClueController',
       access: {restricted: true}
-    });
-
-
+    })
+     .when('/makegame', {
+      templateUrl: '../views/practice.html',
+      controller: 'LoginController',
+      access: {restricted: false}
+    })
+     .otherwise('/');
 }]);

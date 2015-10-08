@@ -11,13 +11,13 @@
       <div ng-hide= 'startSearch'>
 
         <h2>Are you ready?</h2>
+        <hr>
         <h4>Remember, it's a competition, so use your best sleuth skills!</h4>
 
         <button class= 'btn btn-success' ng-click = 'index = 1; startSearch = true; progressClue(0);'>Begin!</button>
       </div>
 
       <h3 class='locale' ng-show='startSearch' >Location:
-
       <br>
        {{currentClue.location}}</h3>
       <br>
@@ -44,10 +44,10 @@
     <div class='col-sm-5'>
       <br>
       <br>
-      <map center="{{lat}}, {{long}}" zoom="{{zoom}}" style="display:block; width: 100%; height:100%">
-        <marker position = '[{{lat}}, {{long}}]'/>
+      <map center="{{currentClue.latitude}}, {{currentClue.longitude}}" zoom="{{zoom}}" style="display:block; width: 100%; height:100%">
+        <marker position = '[{{currentClue.latitude}}, {{currentClue.longitude}}]'/>
       </map>
-
+      <br>
     </div>
   </div>
 

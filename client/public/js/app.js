@@ -13,11 +13,11 @@ app.config(['flowFactoryProvider', function (flowFactoryProvider) {
   });
 }]);
 
-// app.run(function ($rootScope, $location, $route, clueServices) {
-//     $rootScope.$on('$routeChangeStart', function (event, next, current) {
-//       if (next.access.restricted && clueServices.isLoggedIn() === false) {
-//         $location.path('/login');
-//         $route.reload();
-//       }
-//     });
-//   });
+app.run(['$rootScope', '$location', '$route', 'LoginServices', function ($rootScope, $location, $route, LoginServices) {
+  $rootScope.$on('$routeChangeStart', function (event, next, current) {
+    if (next.access.restricted && LoginServices.isLoggedIn() === false) {
+      $route.reload();
+      $location.path('/');
+    }
+  });
+}]);

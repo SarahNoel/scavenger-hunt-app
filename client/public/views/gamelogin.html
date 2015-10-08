@@ -1,0 +1,26 @@
+<div class="container">
+  <h2>Login to an Existing Game</h2>
+  <hr>
+  <form name='gameLoginForm'>
+  <div class='form'>
+    <div class='form-group'>
+      <label>Game Name<br>(Game Names are case sensitive)</label>
+      <input type="text" class="form-control small-input" placeholder="Billy's birthday" ng-model="gameLogin.name" required>
+    </div>
+
+    <div class='form-group'>
+      <label>Password<br> (either play or edit)</label>
+      <input type="password" class="form-control small-input" placeholder="password" ng-model="gameLogin.password" required>
+    </div>
+
+    <button class='btn btn-primary' ng-disabled="gameLoginForm.$invalid" ng-click="gameLogin()">Login</button>
+  </form>
+</div>
+
+<br>
+
+    <a href = '/#/makegame'> <button class='btn btn-warning'>Create New Game</button></a>
+
+</div>
+
+

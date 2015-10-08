@@ -1,9 +1,27 @@
 var express = require('express');
 var router = express.Router();
-var Clue = require('../models/clue.js');
-var User = require('../models/user.js');
+var mongoose = require('mongoose');
+var Clue = mongoose.model('clues');
+var User = mongoose.model('users');
+var Game = mongoose.model('games');
 var passport = require('passport');
 var local = require('passport-local');
+
+
+// get all games
+router.get('/games', function(req, res, next) {
+  Game.find(function(err, game){
+    res.json(game);
+  });
+});
+
+//make new game
+router.post('/games', function(req, res, next) {
+  new Game(req.body)
+  .save(function(err, game){
+    res.json(game);
+  });
+});
 
 
 // get all clues
@@ -54,6 +72,34 @@ router.delete('/clue/:id', function(req, res, next){
     res.json(clue);
   });
 });
+
+//save clue to game
+router.post('/games/:game/:clue', function(req, res,next){
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 router.post('/register', function(req, res) {
   User.register(new User({ username: req.body.username }), req.body.password, function(err, account) {

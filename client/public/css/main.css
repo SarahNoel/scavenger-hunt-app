@@ -90,11 +90,14 @@ ul{
 }
 
 .thumbnail {
-    line-height: 20px;
-    margin-bottom: 5px;
-    overflow: hidden;
-    word-break: normal;
+  line-height: 20px;
+  margin-bottom: 5px;
+  overflow: hidden;
+  word-break: normal;
+  width: 50%;
+  margin: auto;
 }
+
 .thumbnail img {
     max-width: 200px;
     max-height: 150px;

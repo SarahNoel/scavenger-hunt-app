@@ -1,4 +1,48 @@
-app.factory('ClueServices', [ '$http','$q', function($http, $q) {
+app.factory('ClueServices', ['$http', '$q', function($http, $q){
+  return{
+    guessAnswer: function(userAnswer, answerArray){
+      var correct = false;
+      for (var i = 0; i < answerArray.length; i++) {
+        if(userAnswer.toLowerCase().trim()===answerArray[i].trim()){
+          correct = true;
+          break;
+        }
+        else{
+          correct = false;
+        }
+      }
+      return correct;
+    },
+
+
+    // progressClue: function(results){
+    // $http.get('/clues')
+    //   .then(function(data){
+    //     var length = data.data.length;
+    //     if(num === length){
+    //       $scope.results = true;
+    //       $scope.startSearch = false;
+
+    //   }
+    //   else{
+    //     num++;
+    //     $http.get('/clueNum/'+num)
+    //     .then(function(data){
+    //       $scope.currentClue = data.data;
+    //       $scope.lat = data.data.latitude;
+    //       $scope.long = data.data.longitude;
+    //       $scope.zoom = '14';
+    //     });
+    //   }
+    // }
+
+
+    // }
+  };
+}]);
+
+
+app.factory('LoginServices', [ '$http','$q', function($http, $q) {
   var user = null;
 
   return {
@@ -13,10 +57,13 @@ app.factory('ClueServices', [ '$http','$q', function($http, $q) {
     getUserStatus: function(){
       return user;
     },
-    registerUser: function(username, password){
+
+    registerGame: function(newGame){
+      console.log(newGame);
       var q = $q.defer();
-      $http.post('/register', {username: username, password: password})
+      $http.post('/games', newGame)
         .success(function(data, status) {
+          console.log(data);
           if (status === 200 && data.status) {
             user = true;
             q.resolve();
@@ -30,9 +77,10 @@ app.factory('ClueServices', [ '$http','$q', function($http, $q) {
         });
         return q.promise;
     },
-    loginUser: function(username, password){
+
+    loginGame: function(){
       var q = $q.defer();
-      $http.post('/login', {username: username, password: password})
+      $http.post('/login', {name: $scope.gameLoginForm.name, password: $scope.gameLoginForm})
         .success(function(data, status){
           if (status === 200 && data.status){
             user = true;
@@ -49,7 +97,8 @@ app.factory('ClueServices', [ '$http','$q', function($http, $q) {
         });
         return q.promise;
     },
-    logoutUser: function(){
+
+    logoutGame: function(){
       var q = $q.defer();
       $http.get('/logout')
       .success(function(data){

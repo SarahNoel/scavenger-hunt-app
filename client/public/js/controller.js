@@ -1,3 +1,4 @@
+//shows which tab is active
 app.controller('HeaderController',['$scope', '$location', function($scope, $location) {
   $scope.isActive = function (viewLocation) {
     return viewLocation === $location.path();
@@ -5,13 +6,13 @@ app.controller('HeaderController',['$scope', '$location', function($scope, $loca
 }]);
 
 
-app.controller('LoginController',['$scope', '$location', '$http', 'ClueServices', function($scope, $location, $http, ClueServices) {
+//Login functions
+app.controller('LoginController',['$scope', '$location', '$http', 'LoginServices', function($scope, $location, $http, LoginServices) {
   $scope.login = {};
   $scope.register = {};
 
-  //user login
   $scope.login = function(){
-    ClueServices.loginUser($scope.login.username, $scope.login.password)
+    LoginServices.loginGame($scope.gameInput)
       .then(function(){
         $location.path('/');
       })
@@ -22,27 +23,48 @@ app.controller('LoginController',['$scope', '$location', '$http', 'ClueServices'
     $scope.displayUserName = $scope.login.username;
   };
 
-  $scope.register = function(){
-    ClueServices.registerUser($scope.register.username, $scope.register.password)
-      .then(function(){
-        $location.path('/');
-      })
-      .catch(function(){
-        $scope.error = true;
-          $scope.errorMessage = "Error, please try again.";
-      });
-    };
-    $scope.logout = function(){
-    ClueServices.logoutUser();
+  // // add new game
+  $scope.addNewGame = function(){
+    $scope.gameError = '';
+    $http.post('/games', $scope.gameInput)
+    .catch(function(){
+      $scope.gameError = "Error!  That game name already exists.  Try a different name.";})
+    .then(function(data){
+      $scope.gameInput = '';
+
+    });
+  };
+
+  $scope.addNewGame = function(){
+    $scope.gameError = '';
+    if($scope.gameInput.playPassword === $scope.gameInput.editPassword){
+      $scope.gameError = "Error!  Edit password and play password must be different.";
+    }
+    else{
+      LoginServices.registerGame($scope.gameInput)
+        .then(function(res){
+          console.log('success!');
+          $location.path('/#/newclue');
+        });
+        // .catch(function(){
+        //   $scope.gameError = "Error!  That game name already exists.  Try a different name.";
+        // });
+      }
+  };
+
+
+
+  $scope.logout = function(){
+    LoginServices.logoutGame();
     };
 }]);
 
 
-
-//game controller
+//game functions
 app.controller('GameController',['$scope', '$location', '$http', 'ClueServices', function($scope, $location, $http, ClueServices) {
-  $scope.lat = 40;
-  $scope.long = -100;
+  $scope.currentClue = {};
+  $scope.currentClue.latitude = 40;
+  $scope.currentClue.longitude = -100;
   $scope.zoom = 2;
   $scope.index = 0;
 
@@ -53,23 +75,15 @@ app.controller('GameController',['$scope', '$location', '$http', 'ClueServices',
       $scope.allCluesData =  data.data;
     });
   };
+
   //guess answer
   $scope.guessAnswer = function(answerArray){
-    var correct = false;
-    for (var i = 0; i < answerArray.length; i++) {
-      if($scope.userAnswer.toLowerCase().trim()===answerArray[i].trim()){
-        correct = true;
-        break;
-      }
-      else{
-        correct = false;
-      }
-    }
+    var correct = ClueServices.guessAnswer($scope.userAnswer, answerArray);
     if(correct === false){
       $scope.userGuessed = true;
       $scope.userResults = "Sorry, that's incorrect.  Try again!";
     }
-    else{
+    else if(correct === true){
       $scope.userGuessed = $scope.quit = true;
       $scope.userResults = "You guessed "+ $scope.userAnswer + ". That's correct!";
     }
@@ -85,15 +99,12 @@ app.controller('GameController',['$scope', '$location', '$http', 'ClueServices',
       if(num === length){
         $scope.results = true;
         $scope.startSearch = false;
-
       }
       else{
         num++;
         $http.get('/clueNum/'+num)
         .then(function(data){
           $scope.currentClue = data.data;
-          $scope.lat = data.data.latitude;
-          $scope.long = data.data.longitude;
           $scope.zoom = '14';
         });
       }
@@ -102,7 +113,6 @@ app.controller('GameController',['$scope', '$location', '$http', 'ClueServices',
 
 $scope.useHint = function(hints, index){
  var hintsArray = [];
-
   if (index <= hints.length) {
     for (var i = 1; i < index; i++) {
       hintsArray.push(hints[i]);
@@ -118,12 +128,14 @@ $scope.useHint = function(hints, index){
 
 }]);
 
-app.controller('ClueController',['$scope', '$location', '$http', 'ClueServices', 'Map', function($scope, $location, $http, ClueServices, Map) {
+
+//clue functions
+app.controller('ClueController',['$scope', '$location', '$http', 'Map', 'ClueServices', function($scope, $location, $http, Map, ClueServices) {
   $scope.formInput = {};
   $scope.place = {};
+  $scope.gameInput = {};
 
-
- //show all clues
+  //show all clues
   $scope.showAllClues = function(){
     $http.get('/clues')
     .then(function(data){
@@ -137,7 +149,6 @@ app.controller('ClueController',['$scope', '$location', '$http', 'ClueServices',
     $http.get('/clue/' + id)
     .then(function(data) {
       var clue = data.data;
-      console.log(clue);
       $scope.formInput = clue;
       $scope.id = clue._id;
     });
@@ -158,26 +169,18 @@ app.controller('ClueController',['$scope', '$location', '$http', 'ClueServices',
   $scope.updateOne = function(id){
     var updatedClue= $scope.formInput;
     $http.put('/clue/' + this.id, updatedClue)
-     .then(function(data){
-      $http.get('/clues')
       .then(function(data){
-        $scope.allCluesData =  data.data;
+        $http.get('/clues')
+          .then(function(data){
+            $scope.allCluesData =  data.data;
+          });
       });
-    });
     $scope.formInput = '';
     $scope.editing = $scope.hideForm = false;
     $scope.showAll = true;
   };
-$scope.showAllClues();
- //show all clues
-  $scope.showAllClues = function(){
-    $http.get('/clues')
-    .then(function(data){
-      $scope.allCluesData =  data.data;
-    });
-  };
 
- //add a new clue
+  //add a new clue
   $scope.addNewClue = function(){
     $scope.showAll = true;
     $scope.showWarning = $scope.hideForm = false;
@@ -188,6 +191,8 @@ $scope.showAllClues();
     for (var j = 0; j < $scope.formInput.answer.length; j++) {$scope.formInput.answer[j] = $scope.formInput.answer[j].trim();
     }
     var newClue = $scope.formInput;
+
+
     $http.post('/clues', newClue)
     .then(function(data){
       $http.get('/clues')
@@ -198,6 +203,7 @@ $scope.showAllClues();
     $scope.formInput = $scope.place = '';
   };
 
+  //find lat and long based on user input
   $scope.search = function() {
     $scope.showWarning = true;
     $scope.apiError = false;
@@ -207,9 +213,31 @@ $scope.showAllClues();
             Map.addMarker(res);
             $scope.formInput.latitude = res.geometry.location.lat();
             $scope.formInput.longitude = res.geometry.location.lng();
-        });
-    };
-  Map.init();
+    });
+  };
+
+  $scope.showGames = function(){
+    $http.get('/games')
+      .then(function(data){
+      $scope.allGamesData = data.data;
+    });
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //on-load functions
+  // Map.init();
+  $scope.showAllClues();
 
 }]);
 
