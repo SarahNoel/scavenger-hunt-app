@@ -65,7 +65,9 @@ app.use('/', function(req, res){
 
 // passport config
 passport.use(new LocalStrategy(User.authenticate()));
+
 passport.serializeUser(User.serializeUser());
+
 passport.deserializeUser(User.deserializeUser());
 
 // catch 404 and forward to error handler

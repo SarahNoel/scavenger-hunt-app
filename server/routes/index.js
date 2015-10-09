@@ -97,6 +97,8 @@ router.put('/game/:id', function(req, res, next) {
 
 //get all games from a user
 router.get('/game/user/:userid', function(req, res, next){
+  console.log('hiiiii');
+  console.log(req.user);
  User.findById(req.params.userid)
   .populate('games')
   .exec(function(err, games){

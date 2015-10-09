@@ -23,7 +23,7 @@ app.controller('MainController',['$scope', '$location', '$http', 'Map', 'LoginSe
           $scope.disabled = false;
           $scope.userName = userName;
           $scope.loginForm = {};
-          Map.init();
+          // Map.init();
 
         })
         // handle error
@@ -58,7 +58,7 @@ app.controller('MainController',['$scope', '$location', '$http', 'Map', 'LoginSe
         .then(function () {
           $location.path('/');
           $scope.registerForm = {};
-          Map.init();
+          // Map.init();
         })
         // handle error
         .catch(function () {
@@ -176,6 +176,7 @@ app.controller('MainController',['$scope', '$location', '$http', 'Map', 'LoginSe
 
   //show user specific games
   $scope.showUserGames = function(id){
+    console.log('tester')
     $http.get('/game/user/' + id)
       .catch(function(){
         $scope.gameError = "Error!";})

@@ -21,7 +21,6 @@ router.post('/register', function(req, res) {
 
 //user login
 router.post('/login', function(req, res, next) {
-  console.log("made it here!");
   passport.authenticate('local', function(err, user, info) {
     if (err) {
       return res.status(500).json({err: err});
