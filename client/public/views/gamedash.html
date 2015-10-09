@@ -1,0 +1,178 @@
+<div class = 'container' ng-hide='editing'>
+<h3>Your Games</h3>
+
+<button class= 'btn btn-default' ng-click ='showUserGames("5617ef66267102313f4da6b2")'>Show all Games</button>
+<hr>
+  <table class='table table-bordered' ng-hide='editing'>
+    <thead>
+      <th> Game Name</th>
+      <th> Play Password</th>
+      <th> Number of Clues</th>
+      <th> Edit Options</th>
+
+    </thead>
+    <tbody>
+      <tr ng-repeat = 'game in allGamesData track by $index'>
+      <td>{{game.name}}</td>
+      <td>{{game.playPassword}}</td>
+      <td> {{game.clues.length}}</td>
+      <td>
+
+        <div class= 'edit-buttons'>
+          <button ng-hide='editing' class ='btn btn-warning btn-edit' ng-click= "showOneGame(game._id); showGameClues(game._id)"><span class="glyphicon glyphicon-pencil"></span></button>
+
+          <button class ='btn-edit btn btn-danger' ng-click = 'deleteOneGame(game._id, "5617ef66267102313f4da6b2")'><span class="glyphicon glyphicon-trash"></span></button>
+        </div>
+
+      </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<a ng-hide='editing' href = '/#/newgame' ><button ng-hide='editing' class='btn btn-success'>Add a New Game </button></a>
+<div>
+
+<!--Update Game-->
+
+<div class='container' ng-show='editing'>
+  <h3> Edit Your Game</h3>
+  <br>
+    <form name= 'editGameForm'>
+    <div class="form-group">
+      <label>Game Name</label>
+      <input ng-model='editGameInput.name' type="text" class="form-control small-input" placeholder="My Treasure Hunt!" required>
+    </div>
+
+    <div class="form-group">
+      <label>Password for Players</label>
+      <input ng-model='editGameInput.playPassword' type="text" class="form-control small-input" placeholder="Use this password to play" required>
+    </div>
+
+<h5>{{gameError}}</h5>
+
+<br>
+
+</form>
+
+</div>
+
+<div class= 'container' ng-show = 'editing'>
+<h3>Your Clues</h3>
+<hr>
+  <table class='table table-bordered'>
+    <thead>
+      <th> Order</th>
+      <th> Name</th>
+      <th> Location</th>
+      <th> Hints</th>
+      <th> Answer</th>
+      <th> Options</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat = 'clue in gameClues | orderBy:"order"'>
+      <td> {{clue.order}} </td>
+      <td> {{clue.name}} </td>
+      <td> {{clue.location}} </td>
+      <td> {{clue.hints | arrayFilter}} </td>
+      <td> {{clue.answer | arrayFilter}} </td>
+
+      <td>
+        <div class= 'edit-buttons'>
+          <button class ='btn btn-success btn-edit' ng-click= "getOne(clue._id); "><span class="glyphicon glyphicon-pencil"></span></button>
+
+          <button class ='btn-edit btn btn-danger' ng-click = 'deleteOne(clue._id)'><span class="glyphicon glyphicon-trash"></span></button>
+        </div>
+      </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+    <a href = '/#/newclue'><button ng-show='editing' type="submit" class="btn btn-primary marginal">Add New Clue</button></a>
+
+   <button ng-show='editing' ng-disabled="editGameForm.$invalid" ng-click='updateOneGame(editGameInput._id, "5617ef66267102313f4da6b2"); editing = false' type="submit" class="btn btn-primary marginal">Update Game</button>
+
+  <button ng-show='editing' ng-click='editing=false; showWarning = false' class="btn btn-warning marginal">Cancel</button>
+  </div>
+  <br><br>
+
+</div>
+
+                  <!--edit clues area-->
+
+
+<div class='container'>
+  <h3 ng-show='editClue'> Edit Your Clue</h3>
+  <br>
+  <form name= 'addClueForm' ng-show='editClue'>
+    <div class="form-group">
+      <label for="order">Order Number</label>
+      <input ng-model='formInput.order' type="number" class="form-control" placeholder="1" min = '1' required>
+    </div>
+
+    <div class="form-group">
+      <label for="clueName">Clue Title</label>
+      <input ng-model='formInput.name' type="text" class="form-control" placeholder="Furry Friend" required>
+    </div>
+
+    <div class="form-group">
+      <label for="hint">Hints (separated by commas)</label>
+      <input ng-model='formInput.hints' type="text" class="form-control" placeholder="It's furry, it barks, it should be on a leash" required>
+    </div>
+
+    <div class="form-group">
+      <label for="answer">Answer (give similar acceptable answers, separated by commas)</label>
+      <input ng-model='formInput.answer' type="text" class="form-control" placeholder="Dog, a dog, puppy, a puppy, puppies" required>
+    </div>
+
+</form>
+
+</div>
+
+<!--Update Form-->
+<br>
+<div class="container">
+
+    <form name="searchForm" novalidate
+    ng-submit="search()" ng-show='editClue'>
+        <div class="input-group">
+            <input name="place" type="text" class="form-control" placeholder="Washington Park"
+            ng-model="formInput.location" required autofocus />
+            <span class="input-group-btn">
+                <button class="btn btn-success">Verify Location</button>
+            </span>
+        </div>
+    </form>
+
+    <p ng-show='showWarning'> If this isn't the correct location, be more specific in your search (add city, zipcode, etc). </p>
+
+    <div id="map"></div>
+
+    <div class="form-group" ng-show='editClue'>
+        <label for="resLat">Latitude</label>
+        <input name="resLat" class="form-control" ng-model="formInput.latitude" required />
+
+    </div>
+    <div class="form-group" ng-show='editClue'>
+        <label for="resLng">Longitude</label>
+        <input name="resLng" class="form-control" ng-model="formInput.longitude" required />
+        </div>
+    </div>
+</div>
+
+  <div>
+
+   <button ng-show='editClue' ng-disabled="addClueForm.$invalid" ng-click='updateOne(id); editClue = false' type="submit" class="btn btn-primary marginal">Update Clue</button>
+
+  <button ng-show='editClue' ng-click='editClue=false; showWarning = false' class="btn btn-warning marginal">Cancel</button>
+  </div>
+  <br><br>
+
+</div>
+
+
+
+

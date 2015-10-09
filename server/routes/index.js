@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
+var mongoose =  require('mongoose-q')(require('mongoose'));
 var Clue = mongoose.model('clues');
 var User = mongoose.model('users');
 var Game = mongoose.model('games');
 
 
-
+                        ///CLUES///
 // get all clues
 router.get('/clues', function(req, res, next) {
   Clue.find(function(err, clues){
@@ -25,15 +25,6 @@ router.get('/clue/:id', function(req, res, next) {
 router.get('/clueNum/:id', function(req, res, next) {
   var query = {order: req.params.id};
   Clue.findOne(query, function(err, clue){
-    res.json(clue);
-  });
-});
-
-
-//post-add one Clue
-router.post('/clues', function(req, res, next) {
-  new Clue(req.body)
-  .save(function(err, clue){
     res.json(clue);
   });
 });
@@ -57,48 +48,17 @@ router.delete('/clue/:id', function(req, res, next){
 });
 
 
-//make new game
-router.post('/games', function(req, res, next) {
-  new Game(req.body)
-  .save(function(err, game){
-    res.json(game);
-  });
-});
 
-// get all games
-router.get('/games', function(req, res, next) {
-  Game.find()
-    .populate('clues')
-    .exec(function(err, games){
-    if(err){
-    }
-    else{
-      res.json(games);
-    }
-  });
-});
+                        ///GAMES///
 
-//get single game information
-router.get('/game/:id', function(req, res, next){
-  Game.findById(req.params.id)
-    .populate('clues')
-    .exec(function(err, game){
-    if(err){
-    }
-    else{
-      res.json(game);
-    }
-  });
-});
-
-//save clue to game
-router.post('/clues/:gameid', function(req, res,next){
-  var newClue = new Clue(req.body);
-  newClue.save();
-  var id = req.params.gameid;
-  var update = {$push:{clues : newClue}};
+//save new game to user
+router.post('/game/:userid', function(req, res, next) {
+  var newGame = new Game(req.body);
+  newGame.save();
+  var id = req.params.userid;
+  var update = {$push:{games : newGame}};
   var options = {new:true};
-  Game.findByIdAndUpdateQ(id, update, options)
+  User.findByIdAndUpdateQ(id, update, options)
     .then(function(data){
       res.json(data);
     })
@@ -108,8 +68,49 @@ router.post('/clues/:gameid', function(req, res,next){
       .done();
   });
 
-  //get all clues from a game
-router.get('/:gameid/clues', function(req, res, next){
+
+//delete one game
+router.delete('/game/:gameid', function(req, res, next){
+  var query = {'_id': req.params.gameid};
+  Game.findOneAndRemove(query, function(error, game){
+    res.json(game);
+  });
+});
+
+//get one Game
+router.get('/game/:id', function(req, res, next) {
+  Game.findById(req.params.id, function(err, game){
+    res.json(game);
+  });
+});
+
+//put-update one Game
+router.put('/game/:id', function(req, res, next) {
+  var query = {'_id':req.params.id};
+  var update = req.body;
+  var options = {new: true};
+  Game.findOneAndUpdate(query, update, options, function(err, game){
+    res.json(game);
+  });
+});
+
+
+//get all games from a user
+router.get('/game/user/:userid', function(req, res, next){
+ User.findById(req.params.userid)
+  .populate('games')
+  .exec(function(err, games){
+    if(err){
+      res.json(err);
+    }
+    else{
+      res.json(games);
+    }
+  });
+});
+
+//get all clues from a game
+router.get('/gameclues/:gameid', function(req, res, next){
  Game.findById(req.params.gameid)
   .populate('clues')
   .exec(function(err, game){
@@ -122,5 +123,21 @@ router.get('/:gameid/clues', function(req, res, next){
   });
 });
 
+//save clue to game
+router.post('/clues/:gameid', function(req, res,next){
+  var newClue = new Clue(req.body);
+  newClue.save();
+  var id = req.params.gameid;
+  var update = {$push:{clues : newClue}};
+  var options = {new:true};
+  Game.findByIdAndUpdate(id, update, options)
+    .then(function(data){
+      res.json(data);
+    })
+    .catch(function(err){
+      res.send({'Error!' : err});
+    })
+      .done();
+  });
 
 module.exports = router;

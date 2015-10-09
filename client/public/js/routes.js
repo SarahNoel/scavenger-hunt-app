@@ -2,22 +2,22 @@ app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
     .when('/', {
       templateUrl: '../views/home.html',
-      controller: 'LoginController',
+      controller: 'MainController',
       access: {restricted: false}
     })
-    // .when('/loginPage', {
-    //   templateUrl: '../views/login.html',
-    //   controller: 'LoginController',
-    //   access: {restricted: false}
-    // })
+    .when('/newgame', {
+      templateUrl: '../views/practice.html',
+      controller: 'MainController',
+      access: {restricted: true}
+    })
      .when('/loginPage', {
       templateUrl: '../views/login.html',
-      controller: 'LoginController',
+      controller: 'MainController',
       access: {restricted: false}
     })
     .when('/about', {
       templateUrl: '../views/about.html',
-      controller: 'GameController',
+      controller: 'MainController',
       access: {restricted: false}
     })
     .when('/admin', {
@@ -27,23 +27,33 @@ app.config(['$routeProvider', function($routeProvider) {
     })
     .when('/newclue', {
       templateUrl: '../views/addClue.html',
-      controller: 'ClueController',
+      controller: 'MainController',
       access: {restricted: true}
     })
      .when('/start', {
       templateUrl: '../views/start.html',
-      controller: 'GameController',
+      controller: 'MainController',
       access: {restricted: true}
     })
      .when('/showClues', {
       templateUrl: '../views/showClues.html',
-      controller: 'ClueController',
+      controller: 'MainController',
       access: {restricted: true}
     })
-     .when('/makegame', {
-      templateUrl: '../views/practice.html',
-      controller: 'LoginController',
-      access: {restricted: false}
+     .when('/gamedash', {
+      templateUrl: '../views/gamedash.html',
+      controller: 'MainController',
+      access: {restricted: true}
+    })
+     .when('/gameedit', {
+      templateUrl: '../views/gameEdit.html',
+      controller: 'MainController',
+      access: {restricted: true}
+    })
+      .when('/addClues', {
+      templateUrl: '../views/addClue.html',
+      controller: 'MainController',
+      access: {restricted: true}
     })
      .otherwise('/');
 }]);

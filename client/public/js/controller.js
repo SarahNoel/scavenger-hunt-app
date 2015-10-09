@@ -1,5 +1,5 @@
 //Login functions
-app.controller('LoginController',['$scope', '$location', '$http', 'LoginServices', function($scope, $location, $http, LoginServices) {
+app.controller('MainController',['$scope', '$location', '$http', 'Map', 'LoginServices', 'ClueServices', function($scope, $location, $http, Map, LoginServices, ClueServices) {
   $scope.loginForm = {};
   $scope.register = {};
 
@@ -19,10 +19,12 @@ app.controller('LoginController',['$scope', '$location', '$http', 'LoginServices
         // handle success
         .then(function () {
           var userName = $scope.loginForm.username;
-          // $location.path('/');
+          $location.path('/gamedash');
           $scope.disabled = false;
           $scope.userName = userName;
           $scope.loginForm = {};
+          Map.init();
+
         })
         // handle error
         .catch(function () {
@@ -56,6 +58,7 @@ app.controller('LoginController',['$scope', '$location', '$http', 'LoginServices
         .then(function () {
           $location.path('/');
           $scope.registerForm = {};
+          Map.init();
         })
         // handle error
         .catch(function () {
@@ -68,7 +71,7 @@ app.controller('LoginController',['$scope', '$location', '$http', 'LoginServices
 
 
 
-}]); //end Login Controller
+// }]); //end Login Controller
 
 
 // //show all games
@@ -80,15 +83,7 @@ app.controller('LoginController',['$scope', '$location', '$http', 'LoginServices
 //     });
 //   };
 
-//   //show one game
-//    $scope.showOneGame = function(gameid){
-//     $http.get('/game/'+gameid)
-//       .then(function(data){
-//         $scope.gameName= data.data.name;
-//         $scope.gamePicked = true;
-//         console.log($scope.data.data);
-//     });
-//   };
+
 
 //   $scope.gameLogin = function(){
 //     $scope.loginError = '';
@@ -126,17 +121,7 @@ app.controller('LoginController',['$scope', '$location', '$http', 'LoginServices
 
 
 
-  // // add new game
-  // $scope.addNewGame = function(){
-  //   $scope.gameError = '';
-  //   $http.post('/games', $scope.gameInput)
-  //   .catch(function(){
-  //     $scope.gameError = "Error!  That game name already exists.  Try a different name.";})
-  //   .then(function(data){
-  //     $scope.gameInput = '';
 
-  //   });
-  // };
 
   // $scope.addNewGame = function(){
   //   $scope.gameError = '';
@@ -160,12 +145,71 @@ app.controller('LoginController',['$scope', '$location', '$http', 'LoginServices
 
 
 //game functions
-app.controller('GameController',['$scope', '$location', '$http', 'ClueServices', function($scope, $location, $http, ClueServices) {
+// app.controller('GameController',['$scope', '$location', '$http', 'ClueServices', function($scope, $location, $http, ClueServices) {
   $scope.currentClue = {};
   $scope.currentClue.latitude = 40;
   $scope.currentClue.longitude = -100;
   $scope.zoom = 2;
   $scope.index = 0;
+  $scope.editGameInput = {};
+
+  //show one game
+  $scope.showOneGame = function(gameid){
+    $scope.editing = true;
+    $http.get('/game/'+gameid)
+      .then(function(data){
+        $scope.editGameInput= data.data;
+    });
+  };
+
+  // add new game to user
+  $scope.addNewGame = function(id){
+    $scope.gameError = '';
+    $http.post('/game/' + id, $scope.gameInput)
+    .catch(function(){
+      $scope.gameError = "Error!";})
+    .then(function(data){
+      $location.path('/gamedash');
+
+    });
+  };
+
+  //show user specific games
+  $scope.showUserGames = function(id){
+    $http.get('/game/user/' + id)
+      .catch(function(){
+        $scope.gameError = "Error!";})
+      .then(function(data){
+        $scope.allGamesData = data.data.games;
+      });
+  };
+
+  //delete one game
+  $scope.deleteOneGame = function(id, userid){
+    $http.delete('/game/'+id)
+      .then(function(data){
+        $http.get('/game/user/' + userid)
+          .then(function(data){
+          $scope.allGamesData = data.data.games;
+        });
+      });
+    };
+
+  //update one game
+  $scope.updateOneGame = function(id, userid){
+    $http.put('/game/'+ id, $scope.editGameInput)
+      .then(function(data){
+        $http.get('/game/user/' + userid)
+          .then(function(data){
+            $scope.allGamesData = data.data.games;
+        });
+    });
+  };
+
+  //show game specific clues
+  $scope.showUserClues = function(gameid){
+    $http.get('/game/'+gameid);
+  };
 
  //show all clues
   $scope.showAllClues = function(){
@@ -226,47 +270,26 @@ $scope.useHint = function(hints, index){
 };
 
 
-  //show all games
-  $scope.showGames = function(){
-    $http.get('/games')
-      .then(function(data){
-        console.log('all games: ', data.data);
-      $scope.allGamesData = data.data;
-    });
-  };
-
-  //show one game
-   $scope.showOneGame = function(gameid){
-    $http.get('/game/'+gameid)
-      .then(function(data){
-        console.log('clues: ', data.data.name);
-        $scope.gameName= data.data.name;
-        $scope.gamePicked = true;
-    });
-  };
+// }]);
 
 
-
-}]);
-
-
-//clue functions
-app.controller('ClueController',['$scope', '$location', '$http', 'Map', 'ClueServices', function($scope, $location, $http, Map, ClueServices) {
+// //clue functions
+// app.controller('ClueController',['$scope', '$location', '$http', 'Map', 'ClueServices', function($scope, $location, $http, Map, ClueServices) {
   $scope.formInput = {};
   $scope.place = {};
   $scope.gameInput = {};
 
-  //show all clues
-  $scope.showAllClues = function(){
-    $http.get('/clues')
+  //show all game clues
+  $scope.showGameClues = function(gameid){
+    $http.get('/gameclues/'+ gameid)
     .then(function(data){
-      $scope.allCluesData =  data.data;
+      $scope.gameClues =  data.data;
     });
   };
 
   //get one clue
   $scope.getOne= function(id){
-    $scope.editing = true;
+    $scope.editClue = true;
     $http.get('/clue/' + id)
     .then(function(data) {
       var clue = data.data;
@@ -336,7 +359,7 @@ app.controller('ClueController',['$scope', '$location', '$http', 'Map', 'ClueSer
   };
 
   //on-load functions
-  Map.init();
+  // Map.init();
   $scope.showAllClues();
 
 }]);
