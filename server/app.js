@@ -16,10 +16,11 @@ var expressSession = require('express-session');
 var databaseSeed = require('../seed');
 databaseSeed();
 
-var User = require('./models/user');
+var User = mongoose.model('users');
 
 // *** routes *** //
 var routes = require('./routes/index.js');
+var userRoutes = require('./routes/userApi.js');
 
 // *** express instance *** //
 var app = express();
@@ -56,6 +57,7 @@ app.use(passport.session());
 
 // *** main routes *** //
 app.use('/', routes);
+app.use('/user/', userRoutes);
 
 app.use('/', function(req, res){
   res.sendFile(path.join(__dirname, '../client/public/views/', 'index.html'));
@@ -72,6 +74,7 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
+
 
 
 // *** error handlers *** //

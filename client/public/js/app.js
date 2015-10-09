@@ -17,7 +17,7 @@ app.config(['flowFactoryProvider', function (flowFactoryProvider) {
 //   $rootScope.$on('$routeChangeStart', function (event, next, current) {
 //     if (next.access.restricted && LoginServices.isLoggedIn() === false) {
 //       $route.reload();
-//       $location.path('/');
+//       $location.path('/loginPage');
 //     }
 //   });
 // }]);

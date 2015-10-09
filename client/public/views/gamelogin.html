@@ -5,14 +5,16 @@
   <div class='form'>
     <div class='form-group'>
       <label>Game Name<br>(Game Names are case sensitive)</label>
-      <input type="text" class="form-control small-input" placeholder="Billy's birthday" ng-model="gameLogin.name" required>
+      <input type="text" class="form-control small-input" placeholder="My Scavenger Hunt" ng-model="gameLoginInput.name" required>
     </div>
 
     <div class='form-group'>
       <label>Password<br> (either play or edit)</label>
-      <input type="password" class="form-control small-input" placeholder="password" ng-model="gameLogin.password" required>
+      <input type="password" class="form-control small-input" placeholder="password" ng-model="gameLoginInput.password" required>
     </div>
 
+    {{loginError}}
+    <br>
     <button class='btn btn-primary' ng-disabled="gameLoginForm.$invalid" ng-click="gameLogin()">Login</button>
   </form>
 </div>

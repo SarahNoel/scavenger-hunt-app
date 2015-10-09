@@ -2,7 +2,7 @@ app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
     .when('/', {
       templateUrl: '../views/home.html',
-      controller: 'GameController',
+      controller: 'LoginController',
       access: {restricted: false}
     })
     // .when('/loginPage', {
@@ -11,8 +11,8 @@ app.config(['$routeProvider', function($routeProvider) {
     //   access: {restricted: false}
     // })
      .when('/loginPage', {
-      templateUrl: '../views/gamelogin.html',
-      controller: 'ClueController',
+      templateUrl: '../views/login.html',
+      controller: 'LoginController',
       access: {restricted: false}
     })
     .when('/about', {

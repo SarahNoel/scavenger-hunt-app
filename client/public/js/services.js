@@ -54,65 +54,92 @@ app.factory('LoginServices', [ '$http','$q', function($http, $q) {
         return false;
       }
     },
+
     getUserStatus: function(){
       return user;
     },
 
-    registerGame: function(newGame){
-      console.log(newGame);
-      var q = $q.defer();
-      $http.post('/games', newGame)
-        .success(function(data, status) {
-          console.log(data);
-          if (status === 200 && data.status) {
-            user = true;
-            q.resolve();
-          }
-          else {
-            q.reject();
-          }
-        })
-        .error(function(data){
-          q.reject();
-        });
-        return q.promise;
-    },
-
-    loginGame: function(){
-      var q = $q.defer();
-      $http.post('/login', {name: $scope.gameLoginForm.name, password: $scope.gameLoginForm})
-        .success(function(data, status){
-          if (status === 200 && data.status){
-            user = true;
-            q.resolve();
-          }
-          else{
-            user = false;
-            q.reject();
-          }
-        })
-        .error(function(){
-          user = false;
-          q.reject();
-        });
-        return q.promise;
-    },
-
-    logoutGame: function(){
-      var q = $q.defer();
-      $http.get('/logout')
-      .success(function(data){
-        user = false;
-        q.resolve();
+    register: function(username, password){
+      // create a new instance of deferred
+      var deferred = $q.defer();
+      // send a post request to the server
+      $http.post('/user/register', {username:username, password:password})
+      // handle success
+      .success(function (data, status) {
+        if(status === 200 && data.status){
+          $http.post('/user/login', {username: username, password: password})
+            // handle success
+            .success(function (data, status) {
+              if(status === 200 && data.status){
+                user = true;
+                console.log(user);
+                deferred.resolve();
+              }
+          });
+        } else {
+          deferred.reject();
+        }
       })
-      .error(function(data){
-        user = false;
-        q.reject();
+      // handle error
+      .error(function (data) {
+        deferred.reject();
       });
-      return q.promise;
+    // return promise object
+    return deferred.promise;
+  },
+
+    login: function(username, password){
+      // create a new instance of deferred
+      var deferred = $q.defer();
+
+      // send a post request to the server
+      $http.post('/user/login', {username: username, password: password})
+        // handle success
+        .success(function (data, status) {
+          if(status === 200 && data.status){
+            user = true;
+            console.log(user);
+            deferred.resolve();
+          } else {
+            user = false;
+            console.log(user);
+
+            deferred.reject();
+          }
+        })
+        // handle error
+        .error(function (data) {
+          user = false;
+          deferred.reject();
+        });
+
+      // return promise object
+      return deferred.promise;
+    },
+
+    logout: function() {
+      // create a new instance of deferred
+      var deferred = $q.defer();
+
+      // send a get request to the server
+      $http.get('/user/logout')
+        // handle success
+        .success(function (data) {
+          user = false;
+          deferred.resolve();
+        })
+        // handle error
+        .error(function (data) {
+          user = false;
+          deferred.reject();
+        });
+      // return promise object
+      return deferred.promise;
     }
-  };
-}]);
+
+  }; //end return
+
+}]); //end login services
 
 
 

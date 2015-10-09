@@ -1,27 +1,130 @@
-//shows which tab is active
-app.controller('HeaderController',['$scope', '$location', function($scope, $location) {
-  $scope.isActive = function (viewLocation) {
-    return viewLocation === $location.path();
-  };
-}]);
-
-
 //Login functions
 app.controller('LoginController',['$scope', '$location', '$http', 'LoginServices', function($scope, $location, $http, LoginServices) {
-  $scope.login = {};
+  $scope.loginForm = {};
   $scope.register = {};
 
-  $scope.login = function(){
-    LoginServices.loginGame($scope.gameInput)
-      .then(function(){
-        $location.path('/');
-      })
-      .catch(function(){
-        $scope.error = true;
-          $scope.errorMessage = "Invalid user name and/or password.";
-      });
-    $scope.displayUserName = $scope.login.username;
-  };
+  console.log(LoginServices.getUserStatus());
+
+   $scope.isActive = function (viewLocation) {
+      return viewLocation === $location.path();
+   };
+
+    //user login
+    $scope.login = function () {
+      $scope.error = false;
+      $scope.disabled = true;
+
+      // call login from service
+      LoginServices.login($scope.loginForm.username, $scope.loginForm.password)
+        // handle success
+        .then(function () {
+          var userName = $scope.loginForm.username;
+          // $location.path('/');
+          $scope.disabled = false;
+          $scope.userName = userName;
+          $scope.loginForm = {};
+        })
+        // handle error
+        .catch(function () {
+          $scope.error = true;
+          $scope.errorMessage = "Invalid username and/or password";
+          $scope.disabled = false;
+          $scope.loginForm = {};
+        });
+
+    };
+
+    //user logout
+    $scope.logout = function () {
+      // call logout from service
+      LoginServices.logout()
+        .then(function () {
+          $location.path('/loginPage');
+        });
+      };
+
+
+    //register User
+    $scope.register = function () {
+
+      // initial values
+      $scope.error = false;
+
+      // call register from service
+      LoginServices.register($scope.registerForm.username, $scope.registerForm.password)
+        // handle success
+        .then(function () {
+          $location.path('/');
+          $scope.registerForm = {};
+        })
+        // handle error
+        .catch(function () {
+          $scope.error = true;
+          $scope.errorMessage = "Something went wrong!";
+          $scope.registerForm = {};
+        });
+
+    };
+
+
+
+}]); //end Login Controller
+
+
+// //show all games
+//   $scope.showGames = function(){
+//     $http.get('/games')
+//       .then(function(data){
+//         console.log('all games: ', data.data);
+//       $scope.allGamesData = data.data;
+//     });
+//   };
+
+//   //show one game
+//    $scope.showOneGame = function(gameid){
+//     $http.get('/game/'+gameid)
+//       .then(function(data){
+//         $scope.gameName= data.data.name;
+//         $scope.gamePicked = true;
+//         console.log($scope.data.data);
+//     });
+//   };
+
+//   $scope.gameLogin = function(){
+//     $scope.loginError = '';
+//     var allGames;
+//     var found;
+//     var gameName = $scope.gameLoginInput.name;
+//     var password = $scope.gameLoginInput.password;
+//     $http.get('/games')
+//       .then(function(data){
+//         allGames = data.data;
+//         for (var i = 0; i < allGames.length; i++) {
+//             console.log(allGames[i]);
+//           if(allGames[i].name === gameName){
+//             found = true;
+//             if(allGames[i].playPassword === password){
+//               $scope.loginError= 'player!';
+//               return;
+//             }
+//             else if(allGames[i].editPassword === password){
+//               $scope.loginError= 'admin!';
+//               return;
+//             }
+//             else{
+//               $scope.loginError = 'Incorrect password';
+//               return;
+//             }
+//           }
+//           else{
+//             $scope.loginError = "Game not found";
+//           }
+//         }
+
+//     });
+//   };
+
+
 
   // // add new game
   // $scope.addNewGame = function(){
@@ -35,29 +138,25 @@ app.controller('LoginController',['$scope', '$location', '$http', 'LoginServices
   //   });
   // };
 
-  $scope.addNewGame = function(){
-    $scope.gameError = '';
-    if($scope.gameInput.playPassword === $scope.gameInput.editPassword){
-      $scope.gameError = "Error!  Edit password and play password must be different.";
-    }
-    else{
-      LoginServices.registerGame($scope.gameInput)
-        .then(function(){
-          console.log('success!');
-          $location.path('/#/newclue');
-        })
-        .catch(function(){
-          // $scope.gameError = "Error!  That game name already exists.  Try a different name.";
-        });
-      }
-  };
+  // $scope.addNewGame = function(){
+  //   $scope.gameError = '';
+  //   if($scope.gameInput.playPassword === $scope.gameInput.editPassword){
+  //     $scope.gameError = "Error!  Edit password and play password must be different.";
+  //   }
+  //   else{
+  //     LoginServices.registerGame($scope.gameInput)
+  //       .then(function(){
+  //         console.log('success!');
+  //         $location.path('/#/newclue');
+  //       })
+  //       .catch(function(){
+  //         // $scope.gameError = "Error!  That game name already exists.  Try a different name.";
+  //       });
+  //     }
+  // };
 
 
-
-  $scope.logout = function(){
-    LoginServices.logoutGame();
-    };
-}]);
+// ]);
 
 
 //game functions
