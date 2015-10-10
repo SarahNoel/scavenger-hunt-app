@@ -1,5 +1,6 @@
-
-  <form name= 'addClueForm'>
+  <h3 ng-show='editClue'> Edit Your Clue</h3>
+  <br>
+  <form name= 'addClueForm' ng-show='editClue'>
     <div class="form-group">
       <label for="order">Order Number</label>
       <input ng-model='formInput.order' type="number" class="form-control" placeholder="1" min = '1' required>
@@ -7,29 +8,28 @@
 
     <div class="form-group">
       <label for="clueName">Clue Title</label>
-      <input ng-model='formInput.name' type="text" class="form-control" placeholder="Mystery Creature" required>
+      <input ng-model='formInput.name' type="text" class="form-control" placeholder="Furry Friend" required>
     </div>
-
 
     <div class="form-group">
       <label for="hint">Hints (separated by commas)</label>
-      <input ng-model='formInput.hints' type="text" class="form-control" placeholder="It barks" required>
+      <input ng-model='formInput.hints' type="text" class="form-control" placeholder="It's furry, it barks, it should be on a leash" required>
     </div>
 
     <div class="form-group">
       <label for="answer">Answer (give similar acceptable answers, separated by commas)</label>
-      <input ng-model='formInput.answer' type="text" class="form-control" placeholder="Dog, a dog, pooch, a pooch, a poochie" required>
+      <input ng-model='formInput.answer' type="text" class="form-control" placeholder="Dog, a dog, puppy, a puppy, puppies" required>
     </div>
 
 </form>
 
 </div>
 
-<br>
-<div class="container">
+<!--Update Form-->
+ <br>
 
     <form name="searchForm" novalidate
-    ng-submit="search()">
+    ng-submit="search()" ng-show='editClue'>
         <div class="input-group">
             <input name="place" type="text" class="form-control" placeholder="Washington Park"
             ng-model="formInput.location" required autofocus />
@@ -39,23 +39,22 @@
         </div>
     </form>
 
-  <p ng-show='showWarning'> If this isn't the correct location, be more specific in your search (add city, zipcode, etc). </p>
+    <p ng-show='showWarning'> If this isn't the correct location, be more specific in your search (add city, zipcode, etc). </p>
 
     <div id="map"></div>
 
-    <div class="form-group">
+    <div class="form-group" ng-show='editClue'>
         <label for="resLat">Latitude</label>
         <input name="resLat" class="form-control" ng-model="formInput.latitude" required />
 
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-show='editClue'>
         <label for="resLng">Longitude</label>
         <input name="resLng" class="form-control" ng-model="formInput.longitude" required />
         </div>
     </div>
 </div>
 
- <a ng-href='/#/gamedash'><button ng-disabled="addClueForm.$invalid" ng-click='addNewClue("56181b16d08168f25297ddd8")' type="submit" class="btn btn-primary marginal">Create Clue</button></a>
+  <div>
 
-</form>
-
+   <button ng-show='editClue' ng-disabled="addClueForm.$invalid" ng-click='updateOne(id); editClue = false' type="submit" class="btn btn-primary marginal">Update Clue</button> -->

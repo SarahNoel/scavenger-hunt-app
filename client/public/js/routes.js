@@ -6,7 +6,7 @@ app.config(['$routeProvider', function($routeProvider) {
       access: {restricted: false}
     })
     .when('/newgame', {
-      templateUrl: '../views/practice.html',
+      templateUrl: '../views/newGamePage.html',
       controller: 'MainController',
       access: {restricted: true}
     })

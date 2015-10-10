@@ -175,7 +175,3 @@ app.directive('addClue', function() {
     }]
   };
 });
-
-
-
-

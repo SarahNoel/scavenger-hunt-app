@@ -236,27 +236,3 @@ $scope.useHint = function(hints, index){
 //   // $scope.showAllClues();
 
 }]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
