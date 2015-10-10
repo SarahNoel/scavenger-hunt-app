@@ -1,0 +1,38 @@
+
+<div class="container">
+
+  <div ng-hide='registering'><!--START HIDE on register-->
+    <h2>User Login</h2>
+    <hr>
+
+      <login-details></login-details>
+
+    <br>
+
+     <button ng-click='registering=true; errorMessage = ""' class='btn btn-warning' >Register a New User?</button>
+    <br>
+    <br>
+
+  </div><!--END HIDE on register-->
+
+
+  <div ng-show='registering'><!--START SHOW on register-->
+  <br>
+
+    <register-details></register-details>
+
+    <button class='btn btn-warning' ng-click='registering=false; errorMessage = ""'>Already have an account?</button>
+    <br>
+    <br>
+  </div><!--END SHOW on register-->
+
+  <button class='btn btn-danger' ng-click='logout()'>Logout</button>
+
+  <div ng-show='error'><h4>{{errorMessage}}</h4></div>
+  <br>
+  </div>
+
+  <br>
+  <br>
+
+</div><!--end container-->

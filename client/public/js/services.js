@@ -143,7 +143,7 @@ app.factory('LoginServices', [ '$http','$q', function($http, $q) {
 
 
 
-app.service('Map', function($q) {
+app.service('MapServices', function($q) {
 
     this.init = function() {
         var options = {
