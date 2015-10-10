@@ -1,14 +1,10 @@
-app.directive('headerDetails', function() {
+app.directive('clueDetails', function() {
   return {
     restrict:'E',
-    templateUrl: 'views/directives/header.html',
-    controller: ['$scope', '$location', function($scope, $location) {
-    $scope.isActive = function (viewLocation) {
-      return viewLocation === $location.path();
-      };
-    }]
+    templateUrl: 'views/directives/clue.html',
   };
 });
+<<<<<<< HEAD
 
 app.directive('registerDetails', function() {
   return {
@@ -175,3 +171,5 @@ app.directive('addClue', function() {
     }]
   };
 });
+=======
+>>>>>>> parent of b099446... login and edit clue directives

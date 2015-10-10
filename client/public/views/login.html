@@ -1,0 +1,52 @@
+<div class="container">
+
+<div ng-hide='registering'>
+  <h2>User Login</h2>
+  <hr>
+  <form name='loginFormName'>
+  <div class='form'>
+    <div class='form-group'>
+      <label for="email-input-register">Email address</label>
+      <input type="email" class="form-control small-input" placeholder="user@gmail.com" ng-model="loginForm.username" required>
+    </div>
+
+    <div class='form-group'>
+      <label for="password-input-login">Password</label>
+      <input type="password" class="form-control small-input" placeholder="password" ng-model="loginForm.password" required>
+    </div>
+
+  </form>
+  <button  ng-disabled="loginFormName.$invalid" class='btn btn-primary' ng-click="login()">Login</button>
+
+</div>
+ <div ng-show='error'>{{errorMessage}}</div>
+<br>
+  <button ng-click='registering=true' class='btn btn-warning' >Register a New User?</button>
+</div>
+
+<div ng-show='registering'>
+  <h2>Register New User</h2>
+  <hr>
+    <form name='registerFormName'>
+      <div class='form'>
+        <div class='form-group'>
+          <label for="email-input-register">Email address</label>
+          <input type="email" class="form-control small-input" placeholder="register@gmail.com" ng-model="registerForm.username" required>
+        </div>
+        <div class='form-group'>
+          <label for="password-input-register">Password</label>
+          <input type="password" class="form-control small-input"placeholder="Password" ng-model="registerForm.password" required>
+        </div>
+      </div>
+    </form>
+    <button class='btn btn-primary' ng-click="register()">Register</button>
+    <br>
+    <br>
+    <button class='btn btn-warning' ng-click='registering=false'>Already have an account?</button>
+
+</div>
+
+<br>
+<button class='btn btn-danger' ng-click='logout()'>Logout</button>
+
+</div>
