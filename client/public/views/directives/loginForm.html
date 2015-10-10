@@ -1,0 +1,18 @@
+
+<form name='loginFormName'>
+  <div class='form'>
+    <div class='form-group'>
+      <label for="email-input-register">Email address</label>
+      <input type="email" class="form-control small-input" placeholder="user@gmail.com" ng-model="loginForm.username" required>
+    </div>
+
+    <div class='form-group'>
+      <label for="password-input-login">Password</label>
+      <input type="password" class="form-control small-input" placeholder="password" ng-model="loginForm.password" required>
+    </div>
+
+</form>
+
+<button ng-disabled="loginFormName.$invalid" class='btn btn-primary' ng-click="login()">Login</button>
+
+

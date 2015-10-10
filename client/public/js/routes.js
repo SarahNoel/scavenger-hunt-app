@@ -11,7 +11,7 @@ app.config(['$routeProvider', function($routeProvider) {
       access: {restricted: true}
     })
      .when('/loginPage', {
-      templateUrl: '../views/login.html',
+      templateUrl: '../views/loginPage.html',
       controller: 'MainController',
       access: {restricted: false}
     })
