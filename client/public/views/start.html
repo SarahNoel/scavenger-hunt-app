@@ -74,6 +74,31 @@
 
 <!--uploader-->
 
+<div ng-show='startSearch' class="container bottom" flow-init="{target: '/upload'}"
+     flow-files-submitted="$flow.upload()"
+     flow-file-success="$file.msg = $message">
+  <h3>Upload a Picture</h3>
+  <hr class="soften"/>
 
-<photo-uploader></photo-uploader>
+  <div>
+    <div class="thumbnail" ng-hide="$flow.files.length">
+      <img src="/img/placeholder.png" />
+    </div>
+      <div class="drop" flow-drop ng-class="dropClass">
+    <div class="thumbnail" ng-show="$flow.files.length">
+      <img flow-img="$flow.files[0]" />
+    </div>
+    <div>
+      <br>
+      <span ng-hide='hasPic' class="btn btn-primary" flow-btn ng-click='hasPic = true'>Upload Image</span>
+    </div>
+      <span class="btn btn-warning" ng-show="$flow.files.length" flow-btn flow-attrs="{accept:'image/*'}">Change</span>
+      <span class="btn btn-danger" ng-show="$flow.files.length"
+         ng-click="$flow.cancel(); hasPic = false">
+        Remove
+      </span>
+    </div>
+
+  </div>
+</div>
 

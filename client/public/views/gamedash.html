@@ -1,11 +1,6 @@
 <div class = 'container' ng-hide='editing'>
 <h3>Your Games</h3>
 
-
-<!-- <game-table></game-table> -->
-
-
-
 <button class= 'btn btn-default' ng-click ='showUserGames("5617ef66267102313f4da6b2")'>Show all Games</button>
 <hr>
   <table class='table table-bordered' ng-hide='editing'>
@@ -33,20 +28,14 @@
       </tr>
     </tbody>
   </table>
-<!-- </div> -->
+</div>
 
 <a ng-hide='editing' href = '/#/newgame' ><button ng-hide='editing' class='btn btn-success'>Add a New Game </button></a>
 <div>
 
 <!--Update Game-->
 
-<div >
-
-<!-- <edit-game></edit-game> -->
-
-</div>
-
-<div >
+<div class='container' ng-show='editing'>
   <h3> Edit Your Game</h3>
   <br>
     <form name= 'editGameForm'>
@@ -68,12 +57,9 @@
 
 </div>
 
-<div class= 'container' >
+<div class= 'container' ng-show = 'editing'>
 <h3>Your Clues</h3>
 <hr>
-
-
-<!-- <edit-clue-table></edit-clue-table> -->
   <table class='table table-bordered'>
     <thead>
       <th> Order</th>
@@ -105,11 +91,11 @@
 
 <br>
 
-    <a href = '/#/newclue'><button type="submit" class="btn btn-primary marginal">Add New Clue</button></a>
+    <a href = '/#/newclue'><button ng-show='editing' type="submit" class="btn btn-primary marginal">Add New Clue</button></a>
 
-   <button  ng-disabled="editGameForm.$invalid" ng-click='updateOneGame(editGameInput._id, "5617ef66267102313f4da6b2"); editing = false' type="submit" class="btn btn-primary marginal">Update Game</button>
+   <button ng-show='editing' ng-disabled="editGameForm.$invalid" ng-click='updateOneGame(editGameInput._id, "5617ef66267102313f4da6b2"); editing = false' type="submit" class="btn btn-primary marginal">Update Game</button>
 
-  <button  ng-click='editing=false; showWarning = false' class="btn btn-warning marginal">Cancel</button>
+  <button ng-show='editing' ng-click='editing=false; showWarning = false' class="btn btn-warning marginal">Cancel</button>
   </div>
   <br><br>
 
