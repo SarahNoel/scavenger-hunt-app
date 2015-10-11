@@ -10,6 +10,65 @@ app.directive('headerDetails', function() {
   };
 });
 
+// app.directive('userGameTable', function() {
+//   return {
+//     restrict:'E',
+//     templateUrl: 'views/directives/gameTable.html',
+//     controller: ['$scope', '$location', '$http', function($scope, $location, $http) {
+
+//       $scope.showUserGames = function(id){
+//         $http.get('/game/user/' + id)
+//           .catch(function(){
+//             $scope.gameError = "Error!";})
+//           .then(function(data){
+//             $scope.allGamesData = data.data.games;
+//           });
+//       };
+
+//       //delete one game
+//       $scope.deleteOneGame = function(id, userid){
+//         $http.delete('/game/'+id)
+//           .then(function(data){
+//             $http.get('/game/user/' + userid)
+//               .then(function(data){
+//               $scope.allGamesData = data.data.games;
+//             });
+//           });
+//         };
+
+//       //show one game
+//       $scope.showOneGame = function(gameid){
+//         // $scope.editing = true;
+//         $http.get('/game/'+gameid)
+//           .then(function(data){
+//             $scope.editGameInput= data.data;
+//         });
+//       };
+
+//       //show all game clues
+//       $scope.showGameClues = function(gameid){
+//         $http.get('/gameclues/'+ gameid)
+//           .then(function(data){
+//             $scope.gameClues =  data.data;
+//           });
+//       };
+
+//       //update one game
+//       $scope.updateOneGame = function(id, userid){
+//         $http.put('/game/'+ id, $scope.editGameInput)
+//           .then(function(data){
+//             $http.get('/game/user/' + userid)
+//               .then(function(data){
+//                 $scope.allGamesData = data.data.games;
+//             });
+//         });
+//       };
+
+//       $scope.showUserGames("5617ef66267102313f4da6b2");
+//     }]
+//   };
+// });
+
 app.directive('updateClueDetails', function() {
   return {
     restrict:'E',
@@ -52,17 +111,17 @@ app.directive('updateClueDetails', function() {
       // };
 
       //update a single clue
-      $scope.updateOne = function(id){
+      $scope.updateOne = function(id, gameid){
         var updatedClue= $scope.formInput;
         $http.put('/clue/' + this.id, updatedClue)
           .then(function(data){
-            $http.get('/clues')
+            $http.get('/gameclues/' + gameid)
               .then(function(data){
-                $scope.allCluesData =  data.data;
+                $scope.gameClues =  data.data;
               });
           });
         $scope.formInput = '';
-        $scope.editing = $scope.hideForm = false;
+        $scope.hideForm = $scope.showWarning = false;
         $scope.showAll = true;
       };
 
@@ -242,11 +301,11 @@ app.directive('addClue', function() {
       };
 
       //update a single clue
-      $scope.updateOne = function(id){
+      $scope.updateOne = function(id, gameid){
         var updatedClue= $scope.formInput;
         $http.put('/clue/' + this.id, updatedClue)
           .then(function(data){
-            $http.get('/clues')
+            $http.get('/gameclues/' + gameid)
               .then(function(data){
                 $scope.allCluesData =  data.data;
               });

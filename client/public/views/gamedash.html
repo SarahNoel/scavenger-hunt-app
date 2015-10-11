@@ -1,8 +1,10 @@
 <div class = 'container' ng-hide='editing'>
 <h3>Your Games</h3>
 
-<button class= 'btn btn-default' ng-click ='showUserGames("5617ef66267102313f4da6b2")'>Show all Games</button>
+<!-- <button class= 'btn btn-default' ng-click ='showUserGames("5617ef66267102313f4da6b2")'>Show all Games</button> -->
 <hr>
+
+<!-- <user-game-table></user-game-table> -->
   <table class='table table-bordered' ng-hide='editing'>
     <thead>
       <th> Game Name</th>
@@ -26,14 +28,14 @@
       </tr>
     </tbody>
   </table>
-</div>
+<!-- </div> -->
 
 <a ng-hide='editing' href = '/#/newgame' ><button ng-hide='editing' class='btn btn-success'>Add a New Game </button></a>
 <div>
 
 <!--Update Game-->
 
-<div class='container' ng-show='editing'>
+<div class='container' ng-hide='notEditing'>
   <h3> Edit Your Game</h3>
   <br>
     <form name= 'editGameForm'>
@@ -53,9 +55,12 @@
 
 </form>
 
+ <button ng-hide='notEditing' ng-disabled="editGameForm.$invalid" ng-click='updateOneGame(editGameInput._id, "5617ef66267102313f4da6b2"); editing = false' type="submit" class="btn btn-primary marginal">Update Game</button>
+
+
 </div>
 
-<div class= 'container' ng-show = 'editing'>
+<div class= 'container' ng-hide='notEditing'>
 <h3>Your Clues</h3>
 <hr>
   <table class='table table-bordered'>
@@ -89,11 +94,9 @@
 
 <br>
 
-    <a href = '/#/newclue'><button ng-show='editing' type="submit" class="btn btn-primary marginal">Add New Clue</button></a>
+  <a href = '/#/newclue'><button ng-hide='notEditing' type="submit" class="btn btn-primary marginal">Add New Clue</button></a>
 
-   <button ng-show='editing' ng-disabled="editGameForm.$invalid" ng-click='updateOneGame(editGameInput._id, "5617ef66267102313f4da6b2"); editing = false' type="submit" class="btn btn-primary marginal">Update Game</button>
-
-  <button ng-show='editing' ng-click='editing=false; showWarning = false' class="btn btn-warning marginal">Cancel</button>
+  <button ng-hide='notEditing' ng-click='editing=false; showWarning = false; notEditing=true' class="btn btn-warning marginal">Cancel</button>
   </div>
   <br><br>
 
@@ -171,7 +174,7 @@
 
    <button ng-show='editClue' ng-disabled="addClueForm.$invalid" ng-click='updateOne(id); editClue = false' type="submit" class="btn btn-primary marginal">Update Clue</button>
  -->
-  <button ng-show='editClue' ng-click='editClue=false; showWarning = false' class="btn btn-warning marginal">Cancel</button>
+  <button ng-show='editClue' ng-click='editClue=false; showWarning = false; notEditing=false' class="btn btn-warning marginal">Cancel</button>
   </div>
   <br><br>
 

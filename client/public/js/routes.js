@@ -33,7 +33,7 @@ app.config(['$routeProvider', function($routeProvider) {
      .when('/start', {
       templateUrl: '../views/start.html',
       controller: 'MainController',
-      access: {restricted: true}
+      access: {restricted: false}
     })
      .when('/showClues', {
       templateUrl: '../views/showClues.html',

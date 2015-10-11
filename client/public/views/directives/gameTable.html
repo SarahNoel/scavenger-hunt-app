@@ -1,0 +1,23 @@
+<table class='table table-bordered' ng-hide='editing'>
+    <thead>
+      <th> Game Name</th>
+      <th> Play Password</th>
+      <th> Edit Options</th>
+
+    </thead>
+    <tbody>
+      <tr ng-repeat = 'game in allGamesData track by $index'>
+      <td>{{game.name}}</td>
+      <td>{{game.playPassword}}</td>
+      <td>
+
+        <div class= 'edit-buttons'>
+          <button ng-hide='editing' class ='btn btn-warning btn-edit' ng-click= "showOneGame(game._id); showGameClues(game._id)"><span class="glyphicon glyphicon-pencil"></span></button>
+
+          <button class ='btn-edit btn btn-danger' ng-click = 'deleteOneGame(game._id, "5617ef66267102313f4da6b2")'><span class="glyphicon glyphicon-trash"></span></button>
+        </div>
+
+      </td>
+      </tr>
+    </tbody>
+  </table>

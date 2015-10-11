@@ -21,9 +21,24 @@ router.get('/clue/:id', function(req, res, next) {
   });
 });
 
+// //get one Clue by game and order number
+// router.get('/game/clueNum/:gameid/:order', function(req, res, next) {
+//   var
+//   var query = {order: req.params.order};
+//   Clue.findOne(query, function(err, clue){
+//     res.json(clue);
+//   });
+// });
+
+
+
+
+
+
+
 //get one Clue by order number
-router.get('/clueNum/:id', function(req, res, next) {
-  var query = {order: req.params.id};
+router.get('/clueNum/:order', function(req, res, next) {
+  var query = {order: req.params.order};
   Clue.findOne(query, function(err, clue){
     res.json(clue);
   });
@@ -77,12 +92,14 @@ router.delete('/game/:gameid', function(req, res, next){
   });
 });
 
-//get one Game
-router.get('/game/:id', function(req, res, next) {
-  Game.findById(req.params.id, function(err, game){
+//get one Game by Name
+router.get('/game/name/:name', function(req, res, next) {
+  var query = {name: req.params.name};
+  Game.findOne(query, function(err, game){
     res.json(game);
   });
 });
+
 
 //put-update one Game
 router.put('/game/:id', function(req, res, next) {
@@ -97,8 +114,6 @@ router.put('/game/:id', function(req, res, next) {
 
 //get all games from a user
 router.get('/game/user/:userid', function(req, res, next){
-  console.log('hiiiii');
-  console.log(req.user);
  User.findById(req.params.userid)
   .populate('games')
   .exec(function(err, games){
