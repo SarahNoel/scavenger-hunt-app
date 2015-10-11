@@ -141,6 +141,16 @@ ul{
   margin-bottom: 50px;
 }
 
+.picture-box{
+  height: 160px;
+  margin: auto;
+}
+
+.selfie{
+  height: 100%;
+  border: thin white solid;
+}
+
 /*zig-zag border*/
 
 
