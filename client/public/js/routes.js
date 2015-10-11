@@ -40,8 +40,13 @@ app.config(['$routeProvider', function($routeProvider) {
       controller: 'ClueController',
       access: {restricted: true}
     })
-     .when('/gamedash', {
-      templateUrl: '../views/gamedash.html',
+    //  .when('/gamedash', {
+    //   templateUrl: '../views/gamedash.html',
+    //   controller: 'ClueController',
+    //   access: {restricted: true}
+    // })
+    .when('/gamedash', {
+      templateUrl: '../views/editByGame.html',
       controller: 'ClueController',
       access: {restricted: true}
     })

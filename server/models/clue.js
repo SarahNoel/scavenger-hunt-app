@@ -16,6 +16,7 @@ var Clue = new Schema({
 var Game = new Schema({
   name: {type: String, unique:true},
   playPassword: String,
+  editPassword: String,
   clues: [{type: Schema.Types.ObjectId, ref:'clues'}]
 });
 
