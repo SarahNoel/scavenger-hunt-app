@@ -39,6 +39,17 @@ input{
   margin-top: 100px;
 }
 
+.info-box{
+  margin-top: 60px;
+
+}
+
+.pic{
+  height: 260px;
+  border: thin white solid;
+}
+
+
 .img-box img {
   height: 100%
 }

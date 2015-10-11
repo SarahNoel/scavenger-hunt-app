@@ -11,6 +11,7 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
   $scope.begin = false;
   $scope.hintsUsed = 0;
   $scope.giveUps = 0;
+  $scope.addErrorMessage = '';
 
 
   //user logout
@@ -115,6 +116,7 @@ app.controller('ClueController',['$scope', '$location', '$http', 'MapServices', 
   $scope.notEditing = true;
   $scope.editGameInput = {};
   $scope.editGameData = {};
+  $scope.newGameForm = {};
 
   $scope.gameLogin = function(){
     var loginGame = $scope.editGameInput;
@@ -145,6 +147,7 @@ app.controller('ClueController',['$scope', '$location', '$http', 'MapServices', 
     });
   };
 
+  //game update without users
   $scope.updateOneGameNoUser = function(id){
     $scope.showMessage = false;
     $http.put('/game/' + id, $scope.editGameData)
@@ -220,7 +223,7 @@ app.controller('ClueController',['$scope', '$location', '$http', 'MapServices', 
           });
       });
     $scope.formInput = '';
-    $scope.hideForm = $scope.showWarning = false;
+    $scope.hideForm = $scope.showWarning = $scope.updateClue = false;
     $scope.showAll = true;
   };
 
@@ -230,9 +233,32 @@ app.controller('ClueController',['$scope', '$location', '$http', 'MapServices', 
     .then(function(data){
       $http.get('/gameclues/'+gameid)
       .then(function(data){
-        $scope.allCluesData =  data.data;
+        $scope.editGameClues =  data.data;
       });
     });
+  };
+
+
+  // make new Game
+  $scope.makeGame = function(){
+    $scope.addErrorMessage = '';
+    var addGame = $scope.newGameInput;
+    if(addGame.editPassword === addGame.playPassword){
+      $scope.addErrorMessage = "Error! Edit and play passwords must be different.";
+    }
+    else{
+    $http.post('/games', $scope.newGameInput)
+    .then(function(data){
+      console.log(data.data);
+      if(data.data === ''){
+        $scope.addErrorMessage = "Sorry, that game name already exists.  Please try a different name.";
+      }
+      else{
+      $scope.editGameData = data.data;
+      $scope.editing = true;
+      }
+    });
+  }
   };
 
   // add new game to user
@@ -262,7 +288,8 @@ app.controller('ClueController',['$scope', '$location', '$http', 'MapServices', 
 
     //get one clue
     $scope.getOne= function(id){
-      $scope.editClue = true;
+      $scope.editClue = $scope.updateClue = true;
+      $scope.newClue = false;
       $http.get('/clue/' + id)
       .then(function(data) {
         var clue = data.data;
@@ -286,9 +313,10 @@ app.controller('ClueController',['$scope', '$location', '$http', 'MapServices', 
       var newClue = $scope.formInput;
       $http.post('/clues/'+ gameid, newClue)
       .then(function(data){
-        $http.get('/clues')
+        $http.get('/gameclues/' +gameid)
         .then(function(data){
-          $scope.allCluesData =  data.data;
+          $scope.editGameClues = data.data;
+          $scope.editClue = $scope.newClue = false;
         });
       });
       $scope.formInput = $scope.place = '';

@@ -1,7 +1,7 @@
 <div class="container">
+  <div ng-hide ='gameLogged'>
   <h2>Login to an Existing Game</h2>
   <hr>
-  <div ng-hide ='gameLogged'>
   <form name='editGameLogin'>
   <div class='form'>
     <div class='form-group'>
@@ -21,14 +21,51 @@
     <br>
     <button class='btn btn-primary' ng-disabled="editGameLogin.$invalid" ng-click="gameLogin()">Login</button>
   </form>
+
+  <br>
+  <br>
+  <span class='btn btn-warning' ng-click="makeNew=true; gameLogged = true; makeNew=true">Make New Game</span>
+
+</div>
+</div>
+<!--Make New Game-->
+
+<div ng-show = 'makeNew'>
+<!-- <div ng-hide ='gameLogged'> -->
+  <h2>Make a New Game</h2>
+  <hr>
+  <form name='newGameForm'>
+  <div class='form'>
+    <div class='form-group'>
+      <label>Game Name<br>(Game Names are case sensitive)</label>
+      <input type="text" class="form-control small-input" placeholder="My Scavenger Hunt" ng-model="newGameInput.name" required>
+    </div>
+
+    <div class='form-group'>
+      <label>Editing Password</label>
+      <input type="text" class="form-control small-input" placeholder="Password for editing" ng-model="newGameInput.editPassword" required>
+    </div>
+
+    <div class='form-group'>
+      <label>Playing Password</label>
+      <input type="text" class="form-control small-input" placeholder="Password for playing" ng-model="newGameInput.playPassword" required>
+    </div>
+
+
+  </form>
+  {{addErrorMessage}}
+  <br>
+  <br>
+  <button class='btn btn-success' ng-disabled="newGameForm.$invalid" ng-click="makeGame()">Make New Game</button>
+
+  <span class='btn btn-warning' ng-click="makeNew = false; gameLogged = false">Cancel</span>
 </div>
 
 <br>
 
-    <button ng-hide='editing' class='btn btn-warning'>Create New Game</button>
-
 </div>
 
+</div>
 </div>
 <!--Update Game-->
 
@@ -62,13 +99,13 @@
 
 </form>
 
- <button ng-show='editing' ng-hide='notEditing' ng-disabled="editGameForm.$invalid" ng-click='updateOneGameNoUser(editGameData._id)' type="submit" class="btn btn-primary marginal">Update Game</button>
+ <button ng-show='editing' ng-hide='notEditing' ng-disabled="editGameForm.$invalid" ng-click='updateOneGameNoUser(editGameData._id)' type="submit" class="btn btn-primary marginal">Update Game Details</button>
 
 
 </div>
 
 <div class= 'container' ng-show='editing' >
-<h3>Your Clues</h3>
+<h3>Edit Your Clues</h3>
 <hr>
   <table class='table table-bordered'>
     <thead>
@@ -91,20 +128,18 @@
         <div class= 'edit-buttons'>
           <button class ='btn btn-success btn-edit' ng-click= "getOne(clue._id); "><span class="glyphicon glyphicon-pencil"></span></button>
 
-          <button class ='btn-edit btn btn-danger' ng-click = 'deleteOneNoUser(clue._id, editGameData._id)'><span class="glyphicon glyphicon-trash"></span></button>
+          <button class ='btn-edit btn btn-danger' ng-click = 'deleteOne(clue._id, editGameData._id)'><span class="glyphicon glyphicon-trash"></span></button>
         </div>
       </td>
       </tr>
     </tbody>
   </table>
 </div>
-
+</div>
 <br>
 
-  <button ng-hide='notEditing' type="submit" class="btn btn-primary marginal">Add New Clue</button>
+  <button ng-show='editing' type="submit" class="btn btn-primary marginal"ng-click='editClue = true; newClue=true'>Add New Clue</button>
 
-  <button ng-hide='notEditing' ng-click='editing=false; showWarning = false; notEditing=true' class="btn btn-warning marginal">Cancel</button>
-  </div>
   <br><br>
 
 </div>
@@ -114,7 +149,9 @@
 
 <div class='container'>
 
-<h3 ng-show='editClue'> Edit Your Clue</h3>
+<h3 ng-show='updateClue'> Edit Your Clue</h3>
+<h3 ng-show='newClue'> Add a Clue</h3>
+
   <br>
 
 <!--edit one clue-->
@@ -161,6 +198,8 @@
 
     <p ng-show='showWarning'> If this isn't the correct location, be more specific in your search (add city, zipcode, etc). </p>
 
+    <h3 ng-hide='editClue'> Where will adventure take you?</h3>
+
     <div id="map"></div>
 
     <div class="form-group" ng-show='editClue'>
@@ -177,7 +216,11 @@
 
   <div>
 
-   <button ng-show='editClue' ng-disabled="addClueForm.$invalid" ng-click='updateOne(id, editGameData._id); editClue = false' type="submit" class="btn btn-primary marginal">Update Clue</button>
+
+   <span ng-show='newClue' ng-disabled="addClueForm.$invalid" ng-click='addNewClue(editGameData._id)'  class="btn btn-primary marginal">Add Clue</span>
+
+
+   <button ng-show='updateClue' ng-disabled="addClueForm.$invalid" ng-click='updateOne(id, editGameData._id); editClue = false' class="btn btn-primary marginal">Update Clue</button>
 
   <button ng-show='editClue' ng-click='editClue=false; showWarning = false; notEditing=false' class="btn btn-warning marginal">Cancel</button>
   </div>

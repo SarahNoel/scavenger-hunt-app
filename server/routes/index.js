@@ -31,11 +31,6 @@ router.get('/clue/:id', function(req, res, next) {
 // });
 
 
-
-
-
-
-
 //get one Clue by order number
 router.get('/clueNum/:order', function(req, res, next) {
   var query = {order: req.params.order};
@@ -62,9 +57,17 @@ router.delete('/clue/:id', function(req, res, next){
   });
 });
 
-
-
                         ///GAMES///
+
+//make new game
+router.post('/games', function(req, res, next) {
+  var newGame = new Game(req.body);
+  newGame.save(function(err, game){
+  res.json(game);
+  });
+});
+
+
 
 //save new game to user
 router.post('/game/:userid', function(req, res, next) {
