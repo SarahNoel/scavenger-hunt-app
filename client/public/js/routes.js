@@ -6,7 +6,7 @@ app.config(['$routeProvider', function($routeProvider) {
       access: {restricted: false}
     })
     .when('/newgame', {
-      templateUrl: '../views/practice.html',
+      templateUrl: '../views/newGame.html',
       controller: 'MainController',
       access: {restricted: true}
     })
@@ -27,7 +27,7 @@ app.config(['$routeProvider', function($routeProvider) {
     })
     .when('/newclue', {
       templateUrl: '../views/addClue.html',
-      controller: 'MainController',
+      controller: 'ClueController',
       access: {restricted: true}
     })
      .when('/start', {
@@ -37,22 +37,22 @@ app.config(['$routeProvider', function($routeProvider) {
     })
      .when('/showClues', {
       templateUrl: '../views/showClues.html',
-      controller: 'MainController',
+      controller: 'ClueController',
       access: {restricted: true}
     })
      .when('/gamedash', {
       templateUrl: '../views/gamedash.html',
-      controller: 'MainController',
+      controller: 'ClueController',
       access: {restricted: true}
     })
      .when('/gameedit', {
       templateUrl: '../views/gameEdit.html',
-      controller: 'MainController',
+      controller: 'ClueController',
       access: {restricted: true}
     })
       .when('/addClues', {
       templateUrl: '../views/addClue.html',
-      controller: 'MainController',
+      controller: 'ClueController',
       access: {restricted: true}
     })
      .otherwise('/');

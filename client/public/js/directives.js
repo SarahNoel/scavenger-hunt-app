@@ -10,6 +10,126 @@ app.directive('headerDetails', function() {
   };
 });
 
+app.directive('updateClueDetails', function() {
+  return {
+    restrict:'E',
+    templateUrl: 'views/directives/updateClueForm.html',
+    controller: ['$scope', '$location', '$http', 'MapServices' , function($scope, $location, $http, MapServices) {
+
+     //show game specific clues
+      $scope.showUserClues = function(gameid){
+        $http.get('/game/'+gameid);
+      };
+
+     //show all clues
+      $scope.showAllClues = function(){
+        $http.get('/clues')
+        .then(function(data){
+          $scope.allCluesData =  data.data;
+        });
+      };
+
+      //get one clue
+      $scope.getOne= function(id){
+        $scope.editClue = true;
+        $http.get('/clue/' + id)
+        .then(function(data) {
+          var clue = data.data;
+          $scope.formInput = clue;
+          $scope.id = clue._id;
+        });
+      };
+
+      // //delete one clue
+      // $scope.deleteOne = function(id){
+      //   $http.delete('/clue/'+id)
+      //   .then(function(data){
+      //     $http.get('/clues')
+      //     .then(function(data){
+      //       $scope.allCluesData =  data.data;
+      //     });
+      //   });
+      // };
+
+      //update a single clue
+      $scope.updateOne = function(id){
+        var updatedClue= $scope.formInput;
+        $http.put('/clue/' + this.id, updatedClue)
+          .then(function(data){
+            $http.get('/clues')
+              .then(function(data){
+                $scope.allCluesData =  data.data;
+              });
+          });
+        $scope.formInput = '';
+        $scope.editing = $scope.hideForm = false;
+        $scope.showAll = true;
+      };
+
+      //add a new clue
+      $scope.addNewClue = function(gameid){
+        $scope.showAll = true;
+        $scope.showWarning = $scope.hideForm = false;
+        $scope.formInput.hints = $scope.formInput.hints.split(',');
+        for (var i = 0; i < $scope.formInput.hints.length; i++) {$scope.formInput.hints[i] = $scope.formInput.hints[i].trim();
+        }
+        $scope.formInput.answer = $scope.formInput.answer.split(',');
+        for (var j = 0; j < $scope.formInput.answer.length; j++) {$scope.formInput.answer[j] = $scope.formInput.answer[j].trim();
+        }
+        var newClue = $scope.formInput;
+        $http.post('/clues/'+ gameid, newClue)
+        .then(function(data){
+          $http.get('/clues')
+          .then(function(data){
+            $scope.allCluesData =  data.data;
+          });
+        });
+        $scope.formInput = $scope.place = '';
+      };
+      //find lat and long based on user input
+      $scope.search = function() {
+        $scope.showWarning = true;
+        $scope.apiError = false;
+        MapServices.search($scope.formInput.location)
+        .then(
+            function(res) {
+                MapServices.addMarker(res);
+                $scope.formInput.latitude = res.geometry.location.lat();
+                $scope.formInput.longitude = res.geometry.location.lng();
+        });
+      };
+
+      //on-load functions
+      MapServices.init();
+      // $scope.showAllClues();
+    }]
+  };
+});
+
+
+
+
+
+app.directive('addGameDetails', function() {
+  return {
+    restrict:'E',
+    templateUrl: 'views/directives/addGameForm.html',
+    controller: ['$scope', '$location', '$http', function($scope, $location, $http) {
+     // add new game to user
+      $scope.addNewGame = function(id){
+        $scope.gameError = '';
+        $http.post('/game/' + id, $scope.gameInput)
+        .catch(function(){
+          $scope.gameError = "Error!";})
+        .then(function(data){
+          $location.path('/gamedash');
+        });
+      };
+    }]
+  };
+});
+
+
 app.directive('registerDetails', function() {
   return {
     restrict:'E',
@@ -91,13 +211,13 @@ app.directive('addClue', function() {
       $scope.place = {};
       $scope.gameInput = {};
 
-      //show all game clues
-      $scope.showGameClues = function(gameid){
-        $http.get('/gameclues/'+ gameid)
-        .then(function(data){
-          $scope.gameClues =  data.data;
-        });
-      };
+      // //show all game clues
+      // $scope.showGameClues = function(gameid){
+      //   $http.get('/gameclues/'+ gameid)
+      //   .then(function(data){
+      //     $scope.gameClues =  data.data;
+      //   });
+      // };
 
       //get one clue
       $scope.getOne= function(id){

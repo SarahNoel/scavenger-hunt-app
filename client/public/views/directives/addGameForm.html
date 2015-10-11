@@ -1,7 +1,4 @@
-<div class='container'>
-  <h3> Let's Make a New Game!</h3>
-  <br>
-  <form name= 'addGameForm'>
+<form name= 'addGameForm'>
     <div class="form-group">
       <label for="order">Game Name</label>
       <input ng-model='gameInput.name' type="text" class="form-control small-input" placeholder="My Treasure Hunt!" required>
@@ -20,11 +17,3 @@
   <button ng-click='addNewGame("5617ef66267102313f4da6b2")' ng-disabled="addGameForm.$invalid" type="submit" class="btn btn-primary marginal">Create New Game</button>
   <br>
 </form>
-
-<br>
-<a href = '/#/loginPage'> <button class='btn btn-warning'>Login to Existing Game</button></a>
-
-<br>
-<br>
-<br>
-

@@ -152,7 +152,7 @@ app.service('MapServices', function($q) {
             disableDefaultUI: true
         };
         this.map = new google.maps.Map(
-            document.getElementById("map"), options
+            document.getElementById('map'), options
         );
         this.places = new google.maps.places.PlacesService(this.map);
     };

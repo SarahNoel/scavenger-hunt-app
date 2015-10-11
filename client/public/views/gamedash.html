@@ -7,7 +7,6 @@
     <thead>
       <th> Game Name</th>
       <th> Play Password</th>
-      <th> Number of Clues</th>
       <th> Edit Options</th>
 
     </thead>
@@ -15,7 +14,6 @@
       <tr ng-repeat = 'game in allGamesData track by $index'>
       <td>{{game.name}}</td>
       <td>{{game.playPassword}}</td>
-      <td> {{game.clues.length}}</td>
       <td>
 
         <div class= 'edit-buttons'>
@@ -81,7 +79,7 @@
         <div class= 'edit-buttons'>
           <button class ='btn btn-success btn-edit' ng-click= "getOne(clue._id); "><span class="glyphicon glyphicon-pencil"></span></button>
 
-          <button class ='btn-edit btn btn-danger' ng-click = 'deleteOne(clue._id)'><span class="glyphicon glyphicon-trash"></span></button>
+          <button class ='btn-edit btn btn-danger' ng-click = 'deleteOne(clue._id, "56181b16d08168f25297ddd8")'><span class="glyphicon glyphicon-trash"></span></button>
         </div>
       </td>
       </tr>
@@ -105,8 +103,14 @@
 
 
 <div class='container'>
-  <h3 ng-show='editClue'> Edit Your Clue</h3>
+
+<h3 ng-show='editClue'> Edit Your Clue</h3>
   <br>
+
+<!--edit one clue-->
+<update-clue-details></update-clue-details>
+
+<!--
   <form name= 'addClueForm' ng-show='editClue'>
     <div class="form-group">
       <label for="order">Order Number</label>
@@ -130,10 +134,10 @@
 
 </form>
 
-</div>
+</div> -->
 
 <!--Update Form-->
-<br>
+<!-- <br>
 <div class="container">
 
     <form name="searchForm" novalidate
@@ -166,7 +170,7 @@
   <div>
 
    <button ng-show='editClue' ng-disabled="addClueForm.$invalid" ng-click='updateOne(id); editClue = false' type="submit" class="btn btn-primary marginal">Update Clue</button>
-
+ -->
   <button ng-show='editClue' ng-click='editClue=false; showWarning = false' class="btn btn-warning marginal">Cancel</button>
   </div>
   <br><br>
