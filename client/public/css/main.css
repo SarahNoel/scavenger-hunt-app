@@ -151,39 +151,6 @@ ul{
   border: thin white solid;
 }
 
-/*zig-zag border*/
-
-
-.zigzag-edges {
-    position: relative;
-    background: #105b63;
-}
-
-.zigzag-edges:after {
-    content: ' ';
-    display: block;
-    height: 14px;
-    position: absolute;
-    left: 0;
-    right: 0;
-
-}
-
-.zigzag-edges:after{
-    bottom: -14px;
-
-    background:
-linear-gradient(135deg, #105b63 25%, transparent 25%),
-linear-gradient(225deg, #105b63 25%, transparent 25%),
-linear-gradient(315deg, #105b63 25%, transparent 25%) -7px 0,
-linear-gradient(45deg, #105b63 25%, transparent 25%) -7px 0;
-    background-size: 14px 14px;
-    background-color: #DCDCDB;
-
-}
-
-
-
 /*Map stuff*/
 
 #map {

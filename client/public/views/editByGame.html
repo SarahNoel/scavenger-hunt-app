@@ -5,7 +5,7 @@
   <form name='editGameLogin'>
   <div class='form'>
     <div class='form-group'>
-      <label>Game Name<br>(Game Names are case sensitive)</label>
+      <label>Game Name<br>(Game names are case sensitive)</label>
       <input type="text" class="form-control small-input" placeholder="My Scavenger Hunt" ng-model="editGameInput.name" required>
     </div>
 
@@ -19,14 +19,14 @@
     </div>
 
     <br>
-    <button class='btn btn-primary' ng-disabled="editGameLogin.$invalid" ng-click="gameLogin()">Login</button>
+    <button class='btn btn-primary' ng-disabled="editGameLogin.$invalid" ng-click="editGameLogin()">Login</button>
   </form>
 
   <br>
   <br>
   <span class='btn btn-warning' ng-click="makeNew=true; gameLogged = true; makeNew=true">Make New Game</span>
 
-</div>
+  </div>
 </div>
 <!--Make New Game-->
 
@@ -34,8 +34,8 @@
 <!-- <div ng-hide ='gameLogged'> -->
   <h2>Make a New Game</h2>
   <hr>
-  <form name='newGameForm'>
   <div class='form'>
+  <form name='newGameForm'>
     <div class='form-group'>
       <label>Game Name<br>(Game Names are case sensitive)</label>
       <input type="text" class="form-control small-input" placeholder="My Scavenger Hunt" ng-model="newGameInput.name" required>
@@ -50,8 +50,6 @@
       <label>Playing Password</label>
       <input type="text" class="form-control small-input" placeholder="Password for playing" ng-model="newGameInput.playPassword" required>
     </div>
-
-
   </form>
   {{addErrorMessage}}
   <br>
@@ -75,32 +73,33 @@
 
   <br>
     <form name= 'editGameForm'>
-    <div class="form-group">
-      <label>Game Name</label>
-      <input ng-model='editGameData.name' type="text" class="form-control small-input" placeholder="My Treasure Hunt!" required>
-    </div>
+      <div class="form-group">
+        <label>Game Name</label>
+        <input ng-model='editGameData.name' type="text" class="form-control small-input" placeholder="My Treasure Hunt!" required>
+      </div>
 
-    <div class="form-group">
-      <label>Password for Players</label>
-      <input ng-model='editGameData.playPassword' type="text" class="form-control small-input" placeholder="Use this password to play" required>
-    </div>
+      <div class="form-group">
+        <label>Password for Players</label>
+        <input ng-model='editGameData.playPassword' type="text" class="form-control small-input" placeholder="Use this password to play" required>
+      </div>
 
-    <div class="form-group">
-      <label for="clueName">Password for Editing</label>
-      <input ng-model='editGameData.editPassword' type="text" class="form-control small-input" placeholder="Use this password to make changes" required>
-    </div>
+      <div class="form-group">
+        <label for="clueName">Password for Editing</label>
+        <input ng-model='editGameData.editPassword' type="text" class="form-control small-input" placeholder="Use this password to make changes" required>
+      </div>
 
 
-    <div ng-show = 'showMessage'>
-    <h5>{{updateMessage}}</h5>
-    </div>
+      <div ng-show = 'showMessage'>
+      <h5>{{updateMessage}}</h5>
+      </div>
 
-    <br>
+      <br>
 
-</form>
+    </form>
 
- <button ng-show='editing' ng-hide='notEditing' ng-disabled="editGameForm.$invalid" ng-click='updateOneGameNoUser(editGameData._id)' type="submit" class="btn btn-primary marginal">Update Game Details</button>
+  <button ng-show='editing' ng-hide='notEditing' ng-disabled="editGameForm.$invalid" ng-click='updateOneGameNoUser(editGameData._id)' type="submit" class="btn btn-primary marginal">Update Game Details</button>
 
+  <button ng-show='editing' ng-hide='notEditing' ng-disabled="editGameForm.$invalid" ng-click='deleteOneGame(editGameData._id)'  class="btn btn-danger marginal">Delete Game</button>
 
 </div>
 
@@ -143,14 +142,12 @@
   <br><br>
 
 </div>
-
                   <!--edit clues area-->
-
 
 <div class='container'>
 
-<h3 ng-show='updateClue'> Edit Your Clue</h3>
-<h3 ng-show='newClue'> Add a Clue</h3>
+  <h3 ng-show='updateClue'> Edit Your Clue</h3>
+  <h3 ng-show='newClue'> Add a Clue</h3>
 
   <br>
 
@@ -177,7 +174,7 @@
       <input ng-model='formInput.answer' type="text" class="form-control" placeholder="Dog, a dog, puppy, a puppy, puppies" required>
     </div>
 
-</form>
+  </form>
 
 </div>
 
@@ -185,46 +182,43 @@
 <br>
 <div class="container">
 
-    <form name="searchForm" novalidate
-    ng-submit="search()" ng-show='editClue'>
-        <div class="input-group">
-            <input name="place" type="text" class="form-control" placeholder="Washington Park"
-            ng-model="formInput.location" required autofocus />
-            <span class="input-group-btn">
-                <button class="btn btn-success">Verify Location</button>
-            </span>
-        </div>
-    </form>
+  <form name="searchForm" novalidate
+  ng-submit="search()" ng-show='editClue'>
+      <div class="input-group">
+          <input name="place" type="text" class="form-control" placeholder="Washington Park"
+          ng-model="formInput.location" required autofocus />
+          <span class="input-group-btn">
+              <button class="btn btn-success">Verify Location</button>
+          </span>
+      </div>
+  </form>
 
-    <p ng-show='showWarning'> If this isn't the correct location, be more specific in your search (add city, zipcode, etc). </p>
+  <p ng-show='showWarning'> If this isn't the correct location, be more specific in your search (add city, zipcode, etc). </p>
 
-    <h3 ng-hide='editClue'> Where will adventure take you?</h3>
+  <h3 ng-hide='editClue'> Where will adventure take you?</h3>
 
-    <div id="map"></div>
+  <div id="map"></div>
 
-    <div class="form-group" ng-show='editClue'>
-        <label for="resLat">Latitude</label>
-        <input name="resLat" class="form-control" ng-model="formInput.latitude" required />
+  <div class="form-group" ng-show='editClue'>
+      <label for="resLat">Latitude</label>
+      <input name="resLat" class="form-control" ng-model="formInput.latitude" required />
 
-    </div>
-    <div class="form-group" ng-show='editClue'>
-        <label for="resLng">Longitude</label>
-        <input name="resLng" class="form-control" ng-model="formInput.longitude" required />
-        </div>
-    </div>
-</div>
-
-  <div>
-
-
-   <span ng-show='newClue' ng-disabled="addClueForm.$invalid" ng-click='addNewClue(editGameData._id)'  class="btn btn-primary marginal">Add Clue</span>
-
-
-   <button ng-show='updateClue' ng-disabled="addClueForm.$invalid" ng-click='updateOne(id, editGameData._id); editClue = false' class="btn btn-primary marginal">Update Clue</button>
-
-  <button ng-show='editClue' ng-click='editClue=false; showWarning = false; notEditing=false' class="btn btn-warning marginal">Cancel</button>
   </div>
-  <br><br>
+  <div class="form-group" ng-show='editClue'>
+      <label for="resLng">Longitude</label>
+      <input name="resLng" class="form-control" ng-model="formInput.longitude" required />
+      </div>
+  </div>
+</div>
+<div>
+<span ng-show='newClue' ng-disabled="addClueForm.$invalid" ng-click='addNewClue(editGameData._id)'  class="btn btn-primary marginal">Add Clue</span>
+
+
+<button ng-show='updateClue' ng-disabled="addClueForm.$invalid" ng-click='updateOne(id, editGameData._id); editClue = false' class="btn btn-primary marginal">Update Clue</button>
+
+<button ng-show='editClue' ng-click='editClue=false; showWarning = false; notEditing=false' class="btn btn-warning marginal">Cancel</button>
+</div>
+<br><br>
 
 </div>
 
