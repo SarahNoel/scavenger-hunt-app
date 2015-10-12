@@ -13,6 +13,16 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
   $scope.giveUps = 0;
   $scope.addErrorMessage = '';
 
+  //user logout
+  $scope.logout = function () {
+    // call logout from service
+    LoginServices.logout()
+      .then(function () {
+        $location.path('/loginPage');
+        $scope.error = true;
+        $scope.errorMessage = "Successfully logged out!";
+      });
+  };
   $scope.gameLogin = function(){
     $scope.loggedIn= false;
     var loginGame = $scope.gameLoginInput;
@@ -102,7 +112,31 @@ app.controller('ClueController',['$scope', '$location', '$http', 'MapServices', 
   $scope.editGameData = {};
   $scope.newGameForm = {};
 
-  $scope.editGameLogin = function(){
+  // add new game to user
+  $scope.addNewGame = function(){
+    $scope.gameError = '';
+     $http.post('/makegame', $scope.gameInput)
+      .catch(function(){
+        $scope.gameError = "Error!";})
+      .then(function(data){
+       console.log(data);
+         // $location.path('/gamedash');
+    });
+  };
+
+
+  //show games by user
+  $scope.showUserGames = function(){
+    $http.get('/usergames')
+      .catch(function(){
+        $scope.gameError = "Error!";})
+      .then(function(data){
+        console.log(data);
+        $scope.allGamesData = data.data.games;
+      });
+  };
+
+  $scope.loginGame = function(){
     var loginGame = $scope.editGameInput;
     $scope.showLoginError = false;
     $http.get('/game/name/' + loginGame.name)
@@ -207,37 +241,36 @@ app.controller('ClueController',['$scope', '$location', '$http', 'MapServices', 
 
   // make new Game
   $scope.makeGame = function(){
-    $scope.addErrorMessage = '';
+    $scope.gameError = '';
     var addGame = $scope.newGameInput;
     if(addGame.editPassword === addGame.playPassword){
       $scope.addErrorMessage = "Error! Edit and play passwords must be different.";
     }
     else{
-    $http.post('/games', $scope.newGameInput)
-      .then(function(data){
+    $http.post('/makegame', addGame)
+    .then(function(data){
         if(data.data === ''){
           $scope.addErrorMessage = "Sorry, that game name already exists.  Please try a different name.";
         }
         else{
           $scope.editGameData = data.data;
-          $scope.editing = true;
-          $scope.makeNew = false;
+          $scope.addingGame = false;
         }
       });
     }
   };
 
-  // add new game to user
-  $scope.addNewGame = function(id){
-    $scope.gameError = '';
-    $http.post('/game/' + id, $scope.gameInput)
-    .catch(function(){
-      $scope.gameError = "Error!";})
-    .then(function(data){
-      $location.path('/gamedash');
-
-    });
-  };
+  // // add new game to user
+  // $scope.addNewGame = function(){
+  //   $scope.gameError = '';
+  //    $http.post('/makegame', $scope.gameInput)
+  //     .catch(function(){
+  //       $scope.gameError = "Error!";})
+  //     .then(function(data){
+  //      console.log(data);
+  //        // $location.path('/gamedash');
+  //   });
+  // };
 
  //show all clues
   $scope.showAllClues = function(){
@@ -295,5 +328,6 @@ app.controller('ClueController',['$scope', '$location', '$http', 'MapServices', 
 
   //on-load functions
   MapServices.init();
-
+  //show games by user
+  $scope.showUserGames();
 }]);

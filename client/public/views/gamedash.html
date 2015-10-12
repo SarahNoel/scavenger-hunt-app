@@ -30,15 +30,51 @@
   </table>
 <!-- </div> -->
 
-<a ng-hide='editing' href = '/#/newgame' ><button ng-hide='editing' class='btn btn-success'>Add a New Game </button></a>
+<button ng-hide='editing' ng-click= 'addingGame = true' class='btn btn-success'>Add a New Game </button>
 <div>
+
+<!-- ADD GAME FORM -->
+<div ng-show = 'addingGame'>
+<!-- <div ng-hide ='gameLogged'> -->
+  <h2>Make a New Game</h2>
+  <hr>
+  <div class='form'>
+  <form name='newGameForm'>
+    <div class='form-group'>
+      <label>Game Name<br>(Game Names are case sensitive)</label>
+      <input type="text" class="form-control small-input" placeholder="My Scavenger Hunt" ng-model="newGameInput.name" required>
+    </div>
+
+    <div class='form-group'>
+      <label>Editing Password</label>
+      <input type="text" class="form-control small-input" placeholder="Password for editing" ng-model="newGameInput.editPassword" required>
+    </div>
+
+    <div class='form-group'>
+      <label>Playing Password</label>
+      <input type="text" class="form-control small-input" placeholder="Password for playing" ng-model="newGameInput.playPassword" required>
+    </div>
+  </form>
+  {{addErrorMessage}}
+  <br>
+  <br>
+  <button class='btn btn-success' ng-disabled="newGameForm.$invalid" ng-click="makeGame()">Make New Game</button>
+
+  <span class='btn btn-warning' ng-click="makeNew = false; gameLogged = false">Cancel</span>
+</div>
+</div>
+
+
+<!-- END GAME FORM -->
+
+
 
 <!--Update Game-->
 
 <div class='container' ng-hide='notEditing'>
   <h3> Edit Your Game</h3>
   <br>
-    <form name= 'editGameForm'>
+    <form name= 'editGameForm1'>
     <div class="form-group">
       <label>Game Name</label>
       <input ng-model='editGameInput.name' type="text" class="form-control small-input" placeholder="My Treasure Hunt!" required>
@@ -117,9 +153,8 @@
   <br>
 
 <!--edit one clue-->
-<update-clue-details></update-clue-details>
 
-<!--
+
   <form name= 'addClueForm' ng-show='editClue'>
     <div class="form-group">
       <label for="order">Order Number</label>
@@ -143,13 +178,13 @@
 
 </form>
 
-</div> -->
+</div>
 
 <!--Update Form-->
-<!-- <br>
+<br>
 <div class="container">
 
-    <form name="searchForm" novalidate
+    <form name="searchForm1" novalidate
     ng-submit="search()" ng-show='editClue'>
         <div class="input-group">
             <input name="place" type="text" class="form-control" placeholder="Washington Park"
@@ -179,7 +214,7 @@
   <div>
 
    <button ng-show='editClue' ng-disabled="addClueForm.$invalid" ng-click='updateOne(id); editClue = false' type="submit" class="btn btn-primary marginal">Update Clue</button>
- -->
+
   <button ng-show='editClue' ng-click='editClue=false; showWarning = false; notEditing=false' class="btn btn-warning marginal">Cancel</button>
   </div>
   <br><br>

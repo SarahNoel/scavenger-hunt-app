@@ -60,35 +60,31 @@ app.factory('LoginServices', [ '$http','$q', function($http, $q) {
     },
 
     register: function(username, password){
-      // create a new instance of deferred
+   // create a new instance of deferred
       var deferred = $q.defer();
+
       // send a post request to the server
-      $http.post('/user/register', {username:username, password:password})
-      // handle success
-      .success(function (data, status) {
-        if(status === 200 && data.status){
-          $http.post('/user/login', {username: username, password: password})
-            // handle success
-            .success(function (data, status) {
-              if(status === 200 && data.status){
-                user = true;
-                console.log(user);
-                deferred.resolve();
-              }
-          });
-        } else {
+      $http.post('/user/register', {username: username, password: password})
+        // handle success
+        .success(function (data, status) {
+          if(status === 200 && data.status){
+            // console.log(data)
+            deferred.resolve(data);
+          } else {
+            deferred.reject();
+          }
+        })
+        // handle error
+        .error(function (data) {
           deferred.reject();
-        }
-      })
-      // handle error
-      .error(function (data) {
-        deferred.reject();
-      });
-    // return promise object
-    return deferred.promise;
+        });
+
+      // return promise object
+      return deferred.promise;
   },
 
     login: function(username, password){
+
       // create a new instance of deferred
       var deferred = $q.defer();
 
@@ -96,14 +92,12 @@ app.factory('LoginServices', [ '$http','$q', function($http, $q) {
       $http.post('/user/login', {username: username, password: password})
         // handle success
         .success(function (data, status) {
+          console.log('just logged in')
           if(status === 200 && data.status){
             user = true;
-            console.log(user);
-            deferred.resolve();
+            deferred.resolve(data);
           } else {
             user = false;
-            console.log(user);
-
             deferred.reject();
           }
         })

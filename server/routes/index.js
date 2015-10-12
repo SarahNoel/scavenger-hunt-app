@@ -21,24 +21,6 @@ router.get('/clue/:id', function(req, res, next) {
   });
 });
 
-// //get one Clue by game and order number
-// router.get('/game/clueNum/:gameid/:order', function(req, res, next) {
-//   var
-//   var query = {order: req.params.order};
-//   Clue.findOne(query, function(err, clue){
-//     res.json(clue);
-//   });
-// });
-
-
-//get one Clue by order number
-router.get('/clueNum/:order', function(req, res, next) {
-  var query = {order: req.params.order};
-  Clue.findOne(query, function(err, clue){
-    res.json(clue);
-  });
-});
-
 //put-update one Clue
 router.put('/clue/:id', function(req, res, next) {
   var query = {'_id':req.params.id};
@@ -68,12 +50,12 @@ router.post('/games', function(req, res, next) {
 });
 
 
-
+//req.session.user
 //save new game to user
-router.post('/game/:userid', function(req, res, next) {
+router.post('/makegame', function(req, res, next) {
   var newGame = new Game(req.body);
   newGame.save();
-  var id = req.params.userid;
+  var id = req.session.user._id;
   var update = {$push:{games : newGame}};
   var options = {new:true};
   User.findByIdAndUpdateQ(id, update, options)
@@ -116,15 +98,18 @@ router.put('/game/:id', function(req, res, next) {
 
 
 //get all games from a user
-router.get('/game/user/:userid', function(req, res, next){
- User.findById(req.params.userid)
+router.get('/usergames', function(req, res, next){
+ User.findById(req.session.user._id, function(err, user){
+  console.log(user);
+ })
   .populate('games')
-  .exec(function(err, games){
+  .exec(function(err, user){
     if(err){
       res.json(err);
     }
     else{
-      res.json(games);
+      console.log(user);
+      res.json(user);
     }
   });
 });

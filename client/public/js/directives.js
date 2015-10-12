@@ -174,14 +174,16 @@ app.directive('addGameDetails', function() {
     restrict:'E',
     templateUrl: 'views/directives/addGameForm.html',
     controller: ['$scope', '$location', '$http', function($scope, $location, $http) {
+
      // add new game to user
-      $scope.addNewGame = function(id){
+      $scope.addNewGame = function(){
         $scope.gameError = '';
-        $http.post('/game/' + id, $scope.gameInput)
+        $http.post('/makegame', $scope.gameInput)
         .catch(function(){
           $scope.gameError = "Error!";})
         .then(function(data){
-          $location.path('/gamedash');
+          console.log(data);
+          // $location.path('/gamedash');
         });
       };
     }]
@@ -196,23 +198,26 @@ app.directive('registerDetails', function() {
     controller: ['$scope', '$location', 'LoginServices', function($scope, $location, LoginServices) {
         $scope.error = false;
         //register User
+
         $scope.register = function () {
         // initial values
         $scope.error = false;
         // call register from service
         LoginServices.register($scope.registerForm.username, $scope.registerForm.password)
-          // handle success
-          .then(function () {
-            $location.path('/');
-            $scope.registerForm = {};
-            // Map.init();
-          })
-          // handle error
-          .catch(function () {
-            $scope.error = true;
-            $scope.errorMessage = "Something went wrong!";
-            $scope.registerForm = {};
-          });
+          .then(function(){
+          console.log('WHY WONT YOU FIND MEEEEE')
+        });
+          $scope.error = true;
+          $scope.errorMessage = "Registered!  Please login.";
+          $scope.registering = false;
+        // LoginServices.login($scope.registerForm.username, $scope.registerForm.password)
+        //   // handle success
+        //   .then(function (data) {
+        //     $rootScope.userid = data.user._id;
+        //     $scope.showUser = data.user.username;
+        //     $location.path('/gamedash');
+        //     $scope.registerForm = {};
+        //   });
         };
 
     }]
@@ -224,7 +229,7 @@ app.directive('loginDetails', function() {
   return {
     restrict:'E',
     templateUrl: 'views/directives/loginForm.html',
-    controller: ['$scope', '$location', '$http', 'LoginServices', function($scope, $location, $http, LoginServices) {
+    controller: ['$rootScope', '$scope', '$location', '$http', 'LoginServices', function($rootScope, $scope, $location, $http, LoginServices) {
       $scope.loginForm = {};
       $scope.register = {};
 
@@ -238,14 +243,11 @@ app.directive('loginDetails', function() {
         // call login from service
         LoginServices.login($scope.loginForm.username, $scope.loginForm.password)
           // handle success
-          .then(function () {
-            var userName = $scope.loginForm.username;
+          .then(function (data) {
+            $rootScope.userid = data.user._id;
+            $scope.showUser = data.user.username;
             $location.path('/gamedash');
-            $scope.disabled = false;
-            $scope.userName = userName;
             $scope.loginForm = {};
-            // Map.init();
-
           })
           // handle error
           .catch(function () {

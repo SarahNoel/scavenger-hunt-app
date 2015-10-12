@@ -21,7 +21,7 @@ var Game = new Schema({
 });
 
 var User = new Schema({
-  username: String,
+  username: {type: String, unique:true},
   password: String,
   games: [{type: Schema.Types.ObjectId, ref:'games'}]
 });

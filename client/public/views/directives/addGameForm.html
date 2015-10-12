@@ -1,3 +1,4 @@
+{{showUser}}
 <form name= 'addGameForm'>
     <div class="form-group">
       <label for="order">Game Name</label>
@@ -17,7 +18,7 @@
 <h5>{{gameError}}</h5>
 
 <br>
-  <button ng-click='addNewGameNoUser()' ng-disabled="addGameForm.$invalid" type="submit" class="btn btn-primary marginal">Create New Game</button>
+  <button ng-click='addNewGame()' ng-disabled="addGameForm.$invalid" type="submit" class="btn btn-primary marginal">Create New Game</button>
   <br>
 
 </form>
