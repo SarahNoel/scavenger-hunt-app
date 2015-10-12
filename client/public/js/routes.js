@@ -22,7 +22,7 @@ app.config(['$routeProvider', function($routeProvider) {
     })
     .when('/gameedit', {
       templateUrl: '../views/editByGame.html',
-      controller: 'ClueController',
+      controller: 'EditNoUserController',
       access: {restricted: false}
     })
       .when('/addClues', {

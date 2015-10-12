@@ -68,7 +68,6 @@ app.factory('LoginServices', [ '$http','$q', function($http, $q) {
         // handle success
         .success(function (data, status) {
           if(status === 200 && data.status){
-            // console.log(data)
             deferred.resolve(data);
           } else {
             deferred.reject();
@@ -92,7 +91,6 @@ app.factory('LoginServices', [ '$http','$q', function($http, $q) {
       $http.post('/user/login', {username: username, password: password})
         // handle success
         .success(function (data, status) {
-          console.log('just logged in')
           if(status === 200 && data.status){
             user = true;
             deferred.resolve(data);

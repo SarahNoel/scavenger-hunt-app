@@ -85,6 +85,14 @@ router.get('/game/name/:name', function(req, res, next) {
   });
 });
 
+//get one Game by ID
+router.get('/game/:id', function(req, res, next) {
+  var query = {'_id': req.params.id};
+  Game.findOne(query, function(err, game){
+    res.json(game);
+  });
+});
+
 
 //put-update one Game
 router.put('/game/:id', function(req, res, next) {
@@ -135,14 +143,14 @@ router.post('/clues/:gameid', function(req, res,next){
   var id = req.params.gameid;
   var update = {$push:{clues : newClue}};
   var options = {new:true};
-  Game.findByIdAndUpdate(id, update, options)
-    .then(function(data){
-      res.json(data);
-    })
-    .catch(function(err){
-      res.send({'Error!' : err});
-    })
-      .done();
+  Game.findByIdAndUpdate(id, update, options ,function(err, clue){
+    if(err){
+      res.json({'Error!' : err});
+    }
+    else{
+      res.json(clue);
+    }
   });
+});
 
 module.exports = router;

@@ -1,13 +1,13 @@
 <div class = 'container' ng-hide='editing'>
 <h3>Your Games</h3>
 
-<!-- <button class= 'btn btn-default' ng-click ='showUserGames("5617ef66267102313f4da6b2")'>Show all Games</button> -->
 <hr>
 
 <!-- <user-game-table></user-game-table> -->
   <table class='table table-bordered' ng-hide='editing'>
     <thead>
       <th> Game Name</th>
+      <th> Edit Password</th>
       <th> Play Password</th>
       <th> Edit Options</th>
 
@@ -15,13 +15,14 @@
     <tbody>
       <tr ng-repeat = 'game in allGamesData track by $index'>
       <td>{{game.name}}</td>
+      <td>{{game.editPassword}}</td>
       <td>{{game.playPassword}}</td>
       <td>
 
         <div class= 'edit-buttons'>
           <button ng-hide='editing' class ='btn btn-warning btn-edit' ng-click= "showOneGame(game._id); showGameClues(game._id)"><span class="glyphicon glyphicon-pencil"></span></button>
 
-          <button class ='btn-edit btn btn-danger' ng-click = 'deleteOneGame(game._id, "5617ef66267102313f4da6b2")'><span class="glyphicon glyphicon-trash"></span></button>
+          <button class ='btn-edit btn btn-danger' ng-click = 'deleteOneGame(game._id); showUserGames();'><span class="glyphicon glyphicon-trash"></span></button>
         </div>
 
       </td>
@@ -58,7 +59,7 @@
   {{addErrorMessage}}
   <br>
   <br>
-  <button class='btn btn-success' ng-disabled="newGameForm.$invalid" ng-click="makeGame()">Make New Game</button>
+  <button class='btn btn-success' ng-disabled="newGameForm.$invalid" ng-click="makeGame(); showUserGames()">Make New Game</button>
 
   <span class='btn btn-warning' ng-click="makeNew = false; gameLogged = false">Cancel</span>
 </div>
@@ -81,14 +82,15 @@
     </div>
 
     <div class="form-group">
+      <label for="clueName">Password for Editing</label>
+      <input ng-model='editGameInput.editPassword' type="text" class="form-control small-input" placeholder="Use this password to make changes" required>
+    </div>
+
+    <div class="form-group">
       <label>Password for Players</label>
       <input ng-model='editGameInput.playPassword' type="text" class="form-control small-input" placeholder="Use this password to play" required>
     </div>
 
-    <div class="form-group">
-      <label for="clueName">Password for Editing</label>
-      <input ng-model='gameInput.editPassword' type="text" class="form-control small-input" placeholder="Use this password to make changes" required>
-    </div>
 
 
 <h5>{{gameError}}</h5>
@@ -97,7 +99,10 @@
 
 </form>
 
- <button ng-hide='notEditing' ng-disabled="editGameForm.$invalid" ng-click='updateOneGame(editGameInput._id, "5617ef66267102313f4da6b2"); editing = false' type="submit" class="btn btn-primary marginal">Update Game</button>
+  {{updateMessage}}
+  <br>
+  <br>
+ <button ng-hide='notEditing' ng-disabled="editGameForm.$invalid" ng-click='updateOneGame(editGameInput._id); editing = false; showUserGames()' type="submit" class="btn btn-primary marginal">Update Game Details</button>
 
 
 </div>
@@ -124,9 +129,9 @@
 
       <td>
         <div class= 'edit-buttons'>
-          <button class ='btn btn-success btn-edit' ng-click= "getOne(clue._id); "><span class="glyphicon glyphicon-pencil"></span></button>
+          <button class ='btn btn-success btn-edit' ng-click= "getOne(clue._id); updateClue = true"><span class="glyphicon glyphicon-pencil"></span></button>
 
-          <button class ='btn-edit btn btn-danger' ng-click = 'deleteOne(clue._id, "56181b16d08168f25297ddd8")'><span class="glyphicon glyphicon-trash"></span></button>
+          <button class ='btn-edit btn btn-danger' ng-click = 'deleteOne(clue._id, editGameInput._id)'><span class="glyphicon glyphicon-trash"></span></button>
         </div>
       </td>
       </tr>
@@ -136,9 +141,9 @@
 
 <br>
 
-  <a href = '/#/newclue'><button ng-hide='notEditing' type="submit" class="btn btn-primary marginal">Add New Clue</button></a>
+  <button ng-click = 'editClue=true; addNew = true' ng-hide='notEditing' type="submit" class="btn btn-primary marginal">Add New Clue</button>
 
-  <button ng-hide='notEditing' ng-click='editing=false; showWarning = false; notEditing=true' class="btn btn-warning marginal">Cancel</button>
+  <button ng-hide='notEditing' ng-click='editing=false; showWarning = false; notEditing=true; updateClue = false; addNew = false' class="btn btn-warning marginal">Cancel</button>
   </div>
   <br><br>
 
@@ -212,10 +217,15 @@
 </div>
 
   <div>
+  <div ng-hide = 'updateClue'>
+  <button ng-show='addNew' ng-disabled="addClueForm.$invalid" ng-click='addNewClue(editGameInput._id);showGameClues(editGameInput._id); ' type="submit" class="btn btn-primary marginal">Add New Clue</button>
+  </div>
 
-   <button ng-show='editClue' ng-disabled="addClueForm.$invalid" ng-click='updateOne(id); editClue = false' type="submit" class="btn btn-primary marginal">Update Clue</button>
+  <div ng-show = 'updateClue'>
+    <button ng-hide='addNew' ng-disabled="addClueForm.$invalid" ng-click='updateOne(formInput._id, editGameInput._id); showGameClues(editGameInput._id)' type="submit" class="btn btn-primary marginal">Update Clue</button>
+  </div>
 
-  <button ng-show='editClue' ng-click='editClue=false; showWarning = false; notEditing=false' class="btn btn-warning marginal">Cancel</button>
+  <button ng-show='editClue' ng-click='editClue=false; showWarning = false; notEditing=false; updateClue = false; addNew = false' class="btn btn-warning marginal">Cancel</button>
   </div>
   <br><br>
 
