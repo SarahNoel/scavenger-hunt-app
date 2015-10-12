@@ -6,7 +6,7 @@
     "start": "node ./server/bin/www"
   },
   "dependencies": {
-       "angular-file-upload": "^2.1.4",
+    "angular-file-upload": "^2.1.4",
     "angular-google-maps": "^2.2.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.13.2",
@@ -26,6 +26,7 @@
     "mongoose": "^4.1.7",
     "mongoose-q": "^0.1.0",
     "morgan": "~1.6.1",
+    "multer": "^1.0.6",
     "ng-file-upload": "^9.0.7",
     "node-mysql": "^0.4.2",
     "passport": "^0.3.0",

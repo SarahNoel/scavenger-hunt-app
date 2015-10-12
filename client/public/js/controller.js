@@ -112,6 +112,7 @@ app.controller('ClueController',['$scope', '$location', '$http', 'MapServices', 
   $scope.editGameData = {};
   $scope.newGameForm = {};
   $scope.updateMessage = "";
+
   //show games by user
   $scope.showUserGames = function(){
     $http.get('/usergames')
@@ -151,10 +152,16 @@ app.controller('ClueController',['$scope', '$location', '$http', 'MapServices', 
   //update one game
   $scope.updateOneGame = function(id, userid){
     $scope.updateMessage = "";
-    $http.put('/game/'+ id, $scope.editGameInput)
-      .then(function(data){
-        $scope.updateMessage = "Game details updated!";
-    });
+    var updateGame = $scope.editGameInput;
+    if(updateGame.editPassword === updateGame.playPassword){
+      $scope.updateMessage = "Error! Edit and play passwords must be different.";
+    }
+    else{
+      $http.put('/game/'+ id, updateGame)
+        .then(function(data){
+          $scope.updateMessage = "Game details updated!";
+      });
+    }
   };
 
   //update a single clue
