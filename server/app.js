@@ -13,8 +13,8 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var expressSession = require('express-session');
 // seed database
-// var databaseSeed = require('../seed');
-// databaseSeed();
+var databaseSeed = require('../seed');
+databaseSeed();
 
 var User = mongoose.model('users');
 

@@ -77,20 +77,24 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
     $http.get('/gameclues/' + gameid)
     .then(function(data){
       var length = data.data.length;
-      if(num === length){
+      if(num++ === length){
         $scope.results = true;
         $scope.startSearch = false;
       }
       else{
-        console.log(data.data);
-        $scope.currentClue = data.data[num];
+        var cluesArray = data.data;
+        for (var i = 0; i < cluesArray.length; i++) {
+          console.log(num, cluesArray[i].order);
+          if(cluesArray[i].order === num)
+            $scope.currentClue = data.data[i];
+          }
+        }
         $scope.zoom = '14';
-      }
     });
   };
 
 $scope.useHint = function(hints, index){
- var hintsArray = [];
+  var hintsArray = [];
   if (index <= hints.length) {
     for (var i = 1; i < index; i++) {
       hintsArray.push(hints[i]);

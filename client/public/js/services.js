@@ -3,7 +3,7 @@ app.factory('ClueServices', ['$http', '$q', function($http, $q){
     guessAnswer: function(userAnswer, answerArray){
       var correct = false;
       for (var i = 0; i < answerArray.length; i++) {
-        if(userAnswer.toLowerCase().trim()===answerArray[i].trim()){
+        if(userAnswer.toLowerCase().trim()===answerArray[i].trim().toLowerCase()){
           correct = true;
           break;
         }
