@@ -12,32 +12,7 @@ app.factory('ClueServices', ['$http', '$q', function($http, $q){
         }
       }
       return correct;
-    },
-
-
-    // progressClue: function(results){
-    // $http.get('/clues')
-    //   .then(function(data){
-    //     var length = data.data.length;
-    //     if(num === length){
-    //       $scope.results = true;
-    //       $scope.startSearch = false;
-
-    //   }
-    //   else{
-    //     num++;
-    //     $http.get('/clueNum/'+num)
-    //     .then(function(data){
-    //       $scope.currentClue = data.data;
-    //       $scope.lat = data.data.latitude;
-    //       $scope.long = data.data.longitude;
-    //       $scope.zoom = '14';
-    //     });
-    //   }
-    // }
-
-
-    // }
+    }
   };
 }]);
 

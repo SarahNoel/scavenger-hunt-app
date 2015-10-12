@@ -25,25 +25,11 @@ app.config(['$routeProvider', function($routeProvider) {
       controller: 'EditNoUserController',
       access: {restricted: false}
     })
-      .when('/addClues', {
-      templateUrl: '../views/addClue.html',
-      controller: 'ClueController',
-      access: {restricted: true}
-    })
-      .when('/newclue', {
-      templateUrl: '../views/addClue.html',
-      controller: 'ClueController',
-      access: {restricted: true}
-    })
-      .when('/showClues', {
-      templateUrl: '../views/showClues.html',
-      controller: 'ClueController',
-      access: {restricted: true}
-    })
-       .when('/newgame', {
-      templateUrl: '../views/newGame.html',
+    .when('/logoutpage', {
+      templateUrl: '../views/logoutPage.html',
       controller: 'MainController',
       access: {restricted: true}
     })
+
      .otherwise('/');
 }]);
