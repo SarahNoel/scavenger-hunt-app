@@ -71,7 +71,6 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
 
   //move on to next question
   $scope.progressClue = function(num, gameid){
-    console.log(num);
     $scope.allHints = $scope.userAnswer = $scope.userResults =  '';
     $scope.noHints = false;
     $http.get('/gameclues/' + gameid)
@@ -84,7 +83,6 @@ app.controller('MainController',['$scope', '$location', '$http', 'ClueServices',
       else{
         var cluesArray = data.data;
         for (var i = 0; i < cluesArray.length; i++) {
-          console.log(num, cluesArray[i].order);
           if(cluesArray[i].order === num)
             $scope.currentClue = data.data[i];
           }
@@ -128,7 +126,6 @@ app.controller('ClueController',['$scope', '$location', '$http', 'MapServices', 
     $http.get('/game/name/' + loginGame.name)
     .then(function(data){
       var game = data.data;
-      console.log(game);
       if(game === null){
         $scope.showLoginError = true;
         $scope.loginError = "Sorry, game not found.";
@@ -137,7 +134,6 @@ app.controller('ClueController',['$scope', '$location', '$http', 'MapServices', 
         $scope.editGameData = game;
         $http.get('/gameclues/' + game._id)
         .then(function(data){
-          console.log(data.data);
           $scope.editGameClues = data.data;
         });
         $scope.editing = true;
@@ -159,7 +155,6 @@ app.controller('ClueController',['$scope', '$location', '$http', 'MapServices', 
 
     })
     .then(function(data){
-      console.log(data.data);
       $scope.showMessage = true;
       $scope.updateMessage = "Game Updated!";
     });
@@ -217,7 +212,6 @@ app.controller('ClueController',['$scope', '$location', '$http', 'MapServices', 
 
   //update a single clue
   $scope.updateOne = function(id, gameid){
-    console.log(gameid);
     var updatedClue= $scope.formInput;
     $http.put('/clue/' + this.id, updatedClue)
       .then(function(data){
@@ -253,7 +247,6 @@ app.controller('ClueController',['$scope', '$location', '$http', 'MapServices', 
     else{
     $http.post('/games', $scope.newGameInput)
     .then(function(data){
-      console.log(data.data);
       if(data.data === ''){
         $scope.addErrorMessage = "Sorry, that game name already exists.  Please try a different name.";
       }
@@ -340,32 +333,5 @@ app.controller('ClueController',['$scope', '$location', '$http', 'MapServices', 
 
     //on-load functions
     MapServices.init();
-    // $scope.showAllClues();
-
-// $scope.showUserGames("5617ef66267102313f4da6b2");
 
 }]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
