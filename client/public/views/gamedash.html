@@ -61,7 +61,7 @@
   <br>
   <button class='btn btn-success' ng-disabled="newGameForm.$invalid" ng-click="makeGame(); showUserGames()">Make New Game</button>
 
-  <span class='btn btn-warning' ng-click="makeNew = false; gameLogged = false">Cancel</span>
+  <span class='btn btn-warning' ng-click="cancelAddGame()">Cancel</span>
 </div>
 </div>
 
@@ -143,7 +143,7 @@
 
   <button ng-click = 'editClue=true; addNew = true' ng-hide='notEditing' type="submit" class="btn btn-primary marginal">Add New Clue</button>
 
-  <button ng-hide='notEditing' ng-click='editing=false; showWarning = false; notEditing=true; updateClue = false; addNew = false' class="btn btn-warning marginal">Cancel</button>
+  <button ng-hide='notEditing' ng-click='cancelEditGame()' class="btn btn-warning marginal">Cancel</button>
   </div>
   <br><br>
 
@@ -225,7 +225,7 @@
     <button ng-hide='addNew' ng-disabled="addClueForm.$invalid" ng-click='updateOne(formInput._id, editGameInput._id); showGameClues(editGameInput._id)' type="submit" class="btn btn-primary marginal">Update Clue</button>
   </div>
 
-  <button ng-show='editClue' ng-click='editClue=false; showWarning = false; notEditing=false; updateClue = false; addNew = false' class="btn btn-warning marginal">Cancel</button>
+  <button ng-show='editClue' ng-click='cancelClueEdit()' class="btn btn-warning marginal">Cancel</button>
   </div>
   <br><br>
 

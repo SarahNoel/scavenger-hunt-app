@@ -113,6 +113,22 @@ app.controller('ClueController',['$scope', '$location', '$http', 'MapServices', 
   $scope.newGameForm = {};
   $scope.updateMessage = "";
 
+  $scope.cancelAddGame = function(){
+    $scope.makeNew = $scope.gameLogged = $scope.addingGame =false;
+    $scope.newGameInput = {};
+  };
+
+  $scope.cancelEditGame = function(){
+    $scope.editing = $scope.showWarning = $scope.updateClue = $scope.addNew = $scope.editClue = $scope.notEditing=  false;
+    $scope.notEditing=true;
+  };
+
+  $scope.cancelClueEdit = function(){
+    $scope.editClue = $scope.showWarning = $scope.notEditing= $scope.updateClue = $scope.addNew = false;
+    $scope.formInput = {};
+  };
+
+
   //show games by user
   $scope.showUserGames = function(){
     $http.get('/usergames')
@@ -281,6 +297,10 @@ app.controller('EditNoUserController',['$scope', '$location', '$http', 'MapServi
   $scope.editGameData = {};
   $scope.newGameForm = {};
 
+  $scope.cancelAll = function(){
+    $scope.editClue = $scope.showWarning = $scope.notEditing= $scope.newClue = $scope.updateClue = false;
+    $scope.formInput = {};
+  };
 
   $scope.loginGame = function(){
       var loginGame = $scope.editGameInput;
