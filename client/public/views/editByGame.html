@@ -3,25 +3,8 @@
   <h2>Login to an Existing Game</h2>
   <hr>
 
-  <form name='editGameLogin'>
-  <div class='form'>
-    <div class='form-group'>
-      <label>Game Name<br>(Game names are case sensitive)</label>
-      <input type="text" class="form-control small-input" placeholder="My Scavenger Hunt" ng-model="editGameInput.name" required>
-    </div>
+  <game-login-details></game-login-details>
 
-    <div class='form-group'>
-      <label>Editing Password</label>
-      <input type="password" class="form-control small-input" placeholder="password" ng-model="editGameInput.password" required>
-    </div>
-
-    <div ng-show = 'showLoginError'>
-    {{loginError}}
-    </div>
-
-    <br>
-  </form>
-    <span class='btn btn-primary' ng-disabled="editGameLogin.$invalid" ng-click="loginGame()">Login</span>
 
   <br>
   <br>
@@ -37,6 +20,7 @@
 </div>
 <!--Update Game-->
 
+
 <div class='container' ng-hide='notEditing' ng-show='editing'>
   <h3> {{editGameData.name}}</h3>
   <hr>
@@ -48,33 +32,9 @@
 <div class= 'container' ng-show='editing' >
 <h4>Edit Your Clues</h4>
 <hr>
-  <table class='table table-bordered'>
-    <thead>
-      <th> Order</th>
-      <th> Name</th>
-      <th> Location</th>
-      <th> Hints</th>
-      <th> Answer</th>
-      <th> Options</th>
-    </thead>
-    <tbody>
-      <tr ng-repeat = 'clue in editGameClues | orderBy:"order"'>
-      <td> {{clue.order}} </td>
-      <td> {{clue.name}} </td>
-      <td> {{clue.location}} </td>
-      <td> {{clue.hints | arrayFilter}} </td>
-      <td> {{clue.answer | arrayFilter}} </td>
 
-      <td>
-        <div class= 'edit-buttons'>
-          <button class ='btn btn-success btn-edit' ng-click= "getOne(clue._id); "><span class="glyphicon glyphicon-pencil"></span></button>
+<show-clues-details></show-clues-details>
 
-          <button class ='btn-edit btn btn-danger' ng-click = 'deleteOne(clue._id, editGameData._id)'><span class="glyphicon glyphicon-trash"></span></button>
-        </div>
-      </td>
-      </tr>
-    </tbody>
-  </table>
 </div>
 </div>
 <br>
@@ -95,45 +55,7 @@
 
 <!--edit one clue-->
 
-  <form name= 'addClueForm' ng-show='editClue'>
-    <div class="form-group">
-      <label for="order">Order Number</label>
-      <input ng-model='formInput.order' type="number" class="form-control" placeholder="1" min = '1' required>
-    </div>
-
-    <div class="form-group">
-      <label for="clueName">Clue Title</label>
-      <input ng-model='formInput.name' type="text" class="form-control" placeholder="Furry Friend" required>
-    </div>
-
-    <div class="form-group">
-      <label for="hint">Hints (separated by commas)</label>
-      <input ng-model='formInput.hints' type="text" class="form-control" placeholder="It's furry, it barks, it should be on a leash" required>
-    </div>
-
-    <div class="form-group">
-      <label for="answer">Answer (give similar acceptable answers, separated by commas)</label>
-      <input ng-model='formInput.answer' type="text" class="form-control" placeholder="Dog, a dog, puppy, a puppy, puppies" required>
-    </div>
-
-  </form>
-
-</div>
-
-<!--Update Form-->
-<br>
-<div class="container">
-
-  <form name="searchForm" novalidate
-  ng-submit="search()" ng-show='editClue'>
-      <div class="input-group">
-          <input name="place" type="text" class="form-control" placeholder="Washington Park"
-          ng-model="formInput.location" required autofocus />
-          <span class="input-group-btn">
-              <button class="btn btn-success">Verify Location</button>
-          </span>
-      </div>
-  </form>
+<edit-clue-details></edit-clue-details>
 
   <p ng-show='showWarning'> If this isn't the correct location, be more specific in your search (add city, zipcode, etc). <br>You can also change the name of the location once the latitude and longitude are found, <br>just don't click "Verify Location" again!</p>
 

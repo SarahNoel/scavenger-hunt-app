@@ -10,6 +10,7 @@ var expect = chai.expect;
 var Clue = require("../server/models/clue");
 
 var should = chai.should();
+
 chai.use(chaiHttp);
 
 describe('Compare Numbers', function() {

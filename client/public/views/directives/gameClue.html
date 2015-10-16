@@ -1,0 +1,69 @@
+<h1 ng-show='startSearch' >Clue #{{currentClue.order}}</h1>
+
+    <hr ng-show= 'startSearch' class="soften"/>
+
+    <h2 ng-show='startSearch' >{{currentClue.name}}</h2>
+
+    <div class ='col-sm-5'>
+      <div ng-hide = 'begin' class = 'info-box'>
+        <img class = 'pic' src = '/img/adventure.jpg'>
+      </div>
+
+      <div ng-hide= 'startSearch'>
+        <div ng-show= 'begin'>
+          <h2>Are you ready?</h2>
+          <hr>
+          <h4>Remember, it's a competition, so use your best sleuth skills!</h4>
+
+          <button ng-disabled = '!loggedIn' class= 'btn btn-success' ng-click = 'index = 1; startSearch = true; progressClue(0, playGame._id);'>Begin!</button>
+        </div>
+      </div>
+
+      <h3 class='locale' ng-show='startSearch' >Location:
+        <br>
+       {{currentClue.location}}</h3>
+      <br>
+
+      <ul ng-show='startSearch'><span class='bigger'>Hint:</span>
+        <li class ='biggish'>{{currentClue.hints[0]}}
+        <li class ='biggish'ng-repeat='hint in allHints'>{{hint}}</li>
+      </ul>
+
+      <button ng-disabled="noHints" ng-show='startSearch' class = 'btn btn-warning locale' ng-click ='index = index + 1; useHint(currentClue.hints, index)'>Need another Hint?</button>
+        <br>
+        <br>
+      <button ng-click='gaveup(); quit = true' class= 'btn btn-danger locale' ng-show = 'hint'>Give Up?</button>
+      <div ng-show='startSearch' class= 'locale'>
+        <br>
+        <br>
+      <input  ng-hide='quit' ng-model='userAnswer' placeholder='Submit Answer'>
+        <br>
+        <br>
+      <button  ng-hide='quit' class= 'btn btn-success' ng-click='guessAnswer(currentClue.answer)'>Submit Answer</button>
+      </div>
+    </div>
+
+    <div class='col-sm-5'>
+      <br>
+      <br>
+      <map center="{{currentClue.latitude}}, {{currentClue.longitude}}" zoom="{{zoom}}" style="display:block; width: 100%; height:100%">
+        <marker position = '[{{currentClue.latitude}}, {{currentClue.longitude}}]'/>
+      </map>
+      <br>
+    </div>
+  </div>
+
+  <div ng-show='startSearch'  class = 'bottom-clue'>
+
+    <h3 ng-show = 'quit'>You were looking for {{currentClue.answer[0]}}</h3>
+
+  </div>
+</div>
+
+
+<div ng-show='userGuessed'>
+  <h3> {{userResults}} </h3>
+</div>
+
+<br>
+<button class= 'btn btn-primary' ng-show = 'quit' ng-click='progressClue(currentClue.order, playGame._id); quit = false; hint=false; index = 1'>Next Question</button>

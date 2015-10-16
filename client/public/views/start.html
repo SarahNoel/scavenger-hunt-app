@@ -1,158 +1,26 @@
 <div ng-hide='results' class= 'container'>
   <div class ='row-fluid'>
 
-<div ng-hide='begin'>
-  <h2>Login to Play!</h2>
-  <hr>
-  <form name='gameLoginForm'>
-  <div class='form'>
-    <div class='form-group'>
-      <label>Game Name<br>(Game names are case sensitive)</label>
-      <input type="text" class="form-control small-input" placeholder="My Scavenger Hunt" ng-model="gameLoginInput.name" required>
-    </div>
+    <div ng-hide='begin'>
+      <h2>Login to Play!</h2>
+      <hr>
 
-    <div class='form-group'>
-      <label>Password</label>
-      <input type="password" class="form-control small-input" placeholder="password" ng-model="gameLoginInput.password" required>
-    </div>
-
-    <div ng-show = 'showLoginError'>
-    {{loginError}}
-
-    </div>
-
-    <br>
-    <button class='btn btn-primary' ng-disabled="gameLoginForm.$invalid" ng-click="gameLogin()">Login</button>
-  </form>
-
-</div>
-</div>
-
-
-<!--     <div class='img-box' ng-hide = 'startSearch' ><img src = '../img/guy.jpg'></div> -->
-    <h1 ng-show='startSearch' >Clue #{{currentClue.order}}</h1>
-
-    <hr ng-show= 'startSearch' class="soften"/>
-
-    <h2 ng-show='startSearch' >{{currentClue.name}}</h2>
-
-    <div class ='col-sm-5'>
-      <div ng-hide = 'begin' class = 'info-box'>
-        <img class = 'pic' src = '/img/adventure.jpg'>
-
-        <!-- <h3> Where will <br> adventure <br>take you?</h3> -->
-
-      </div>
-
-      <div ng-hide= 'startSearch'>
-        <div ng-show= 'begin'>
-        <h2>Are you ready?</h2>
-        <hr>
-        <h4>Remember, it's a competition, so use your best sleuth skills!</h4>
-
-        <button ng-disabled = '!loggedIn' class= 'btn btn-success' ng-click = 'index = 1; startSearch = true; progressClue(0, playGame._id);'>Begin!</button>
-      </div>
-      </div>
-
-      <h3 class='locale' ng-show='startSearch' >Location:
-      <br>
-       {{currentClue.location}}</h3>
-      <br>
-
-      <ul ng-show='startSearch'><span class='bigger'>Hint:</span>
-        <li class ='biggish'>{{currentClue.hints[0]}}
-        <li class ='biggish'ng-repeat='hint in allHints'>{{hint}}</li>
-      </ul>
-
-      <button ng-disabled="noHints" ng-show='startSearch' class = 'btn btn-warning locale' ng-click ='index = index + 1; useHint(currentClue.hints, index)'>Need another Hint?</button>
-      <br>
-      <br>
-      <button ng-click='gaveup(); quit = true' class= 'btn btn-danger locale' ng-show = 'hint'>Give Up?</button>
-      <div ng-show='startSearch' class= 'locale'>
-        <br>
-        <br>
-        <input  ng-hide='quit' ng-model='userAnswer' placeholder='Submit Answer'>
-        <br>
-        <br>
-        <button  ng-hide='quit' class= 'btn btn-success' ng-click='guessAnswer(currentClue.answer)'>Submit Answer</button>
-      </div>
-    </div>
-
-    <div class='col-sm-5'>
-      <br>
-      <br>
-      <map center="{{currentClue.latitude}}, {{currentClue.longitude}}" zoom="{{zoom}}" style="display:block; width: 100%; height:100%">
-        <marker position = '[{{currentClue.latitude}}, {{currentClue.longitude}}]'/>
-      </map>
-      <br>
-    </div>
-  </div>
-
-  <div ng-show='startSearch'  class = 'bottom-clue'>
-
-    <h3 ng-show = 'quit'>You were looking for {{currentClue.answer[0]}}</h3>
+    <!--game login form-->
+      <play-game-login-details></play-game-login-details>
 
   </div>
 </div>
 
+<!-- shows clues -->
+<game-clue-details></game-clue-details>
 
-<div ng-show='userGuessed'>
-  <h3> {{userResults}} </h3>
-</div>
-
-<br>
-<button class= 'btn btn-primary' ng-show = 'quit' ng-click='progressClue(currentClue.order, playGame._id); quit = false; hint=false; index = 1'>Next Question</button>
 <div ng-show='results' class='container'>
 
-  <h3>Congratulations, you finished!</h3>
-  <hr>
-  <h4> You used {{hintsUsed}} hints.</h4>
-  <h5>Compare with your friends and see how they fared on your adventure.</h5>
-  <br>
-  <br>
-
-  <div class = 'picture-box'>
-  <img class='selfie' src = '/img/groupselfie.jpg'>
-  </div>
- <!--  <h4> You gave up <span ng-model = 'counts'> {{giveUps}}</span><ng-pluralize count = 'counts' when = "{'0': '  times!  Good job!',
-      '1': ' time.  Not bad!',
-      'other': ' times.'}"></ng-pluralize></h4> -->
-  <br>
-  <a href= '/#/start'><button class='btn btn-primary' ng-click='results=false; begin=false'>Play Another Game</button></a> &nbsp&nbsp
-
-  <a href= '/#/gamedash'><button class='btn btn-warning'>Edit/Make a Game</button></a>
-  <br><br>
-
+<!--shows results-->
+  <game-results-details></game-results-details>
 
 </div>
 
 <!--uploader-->
-
-<div ng-show='startSearch' ng-show='results' class="container bottom" flow-init="{target: '/upload'}"
-     flow-files-submitted="$flow.upload()"
-     flow-file-success="$file.msg = $message">
-  <h3>Upload a Picture</h3>
-  <hr class="soften"/>
-
-  <div>
-    <div class="thumbnail" ng-hide="$flow.files.length">
-      <img src="/img/placeholder.png" />
-    </div>
-      <div class="drop" flow-drop ng-class="dropClass">
-    <div class="thumbnail" ng-show="$flow.files.length">
-      <img flow-img="$flow.files[0]" />
-    </div>
-    <div>
-      <br>
-      <span ng-hide='hasPic' class="btn btn-primary" flow-btn ng-click='hasPic = true'>Upload Image</span>
-    </div>
-      <span class="btn btn-warning" ng-show="$flow.files.length" flow-btn flow-attrs="{accept:'image/*'}">Change</span>
-      <span class="btn btn-danger" ng-show="$flow.files.length"
-         ng-click="$flow.cancel(); hasPic = false">
-        Remove
-      </span>
-    </div>
-
-  </div>
-</div>
+<photo-uploader-details></photo-uploader-details>
 

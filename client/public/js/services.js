@@ -17,47 +17,30 @@ app.factory('ClueServices', ['$http', '$q', function($http, $q){
 }]);
 
 
-app.factory('LoginServices', [ '$http','$q', function($http, $q) {
+app.factory('LoginServices', [ '$http','$q', '$rootScope', function($http, $q, $rootScope) {
   var user = null;
 
-  return {
-    isLoggedIn: function(){
+  return {isLoggedIn: isLoggedIn,
+          getUserStatus: getUserStatus,
+          login: login,
+          logout: logout,
+          register: register};
+
+
+    function isLoggedIn(){
       if (user){
         return true;
       }
       else {
         return false;
       }
-    },
+    }
 
-    getUserStatus: function(){
+    function getUserStatus(){
       return user;
-    },
+    }
 
-    register: function(username, password){
-   // create a new instance of deferred
-      var deferred = $q.defer();
-
-      // send a post request to the server
-      $http.post('/user/register', {username: username, password: password})
-        // handle success
-        .success(function (data, status) {
-          if(status === 200 && data.status){
-            deferred.resolve(data);
-          } else {
-            deferred.reject();
-          }
-        })
-        // handle error
-        .error(function (data) {
-          deferred.reject();
-        });
-
-      // return promise object
-      return deferred.promise;
-  },
-
-    login: function(username, password){
+    function login (username, password){
 
       // create a new instance of deferred
       var deferred = $q.defer();
@@ -82,9 +65,9 @@ app.factory('LoginServices', [ '$http','$q', function($http, $q) {
 
       // return promise object
       return deferred.promise;
-    },
+    }
 
-    logout: function() {
+    function logout() {
       // create a new instance of deferred
       var deferred = $q.defer();
 
@@ -104,7 +87,32 @@ app.factory('LoginServices', [ '$http','$q', function($http, $q) {
       return deferred.promise;
     }
 
-  }; //end return
+    function register(username, password){
+   // create a new instance of deferred
+      var deferred = $q.defer();
+
+      // send a post request to the server
+      $http.post('/user/register', {username: username, password: password})
+        // handle success
+        .success(function (data, status) {
+          if(status === 200 && data.status){
+            login(username, password);
+            // user = true;
+            // $rootScope.user = username;
+
+            deferred.resolve(data);
+          } else {
+            deferred.reject();
+          }
+        })
+        // handle error
+        .error(function (data) {
+          deferred.reject(data);
+        });
+
+      // return promise object
+      return deferred.promise;
+  }
 
 }]); //end login services
 

@@ -56,6 +56,8 @@ router.post('/makegame', function(req, res, next) {
   var newGame = new Game(req.body);
   newGame.save();
   var id = req.session.user._id;
+  console.log("current id ", id);
+  console.log('other?? ', req.session.passport.user);
   var update = {$push:{games : newGame}};
   var options = {new:true};
   User.findByIdAndUpdateQ(id, update, options)

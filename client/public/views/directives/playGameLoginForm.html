@@ -1,26 +1,20 @@
-<div class="container">
-  <h2>Login to an Existing Game</h2>
-  <hr>
   <form name='gameLoginForm'>
   <div class='form'>
     <div class='form-group'>
-      <label>Game Name<br>(Game Names are case sensitive)</label>
+      <label>Game Name<br>(Game names are case sensitive)</label>
       <input type="text" class="form-control small-input" placeholder="My Scavenger Hunt" ng-model="gameLoginInput.name" required>
     </div>
 
     <div class='form-group'>
-      <label>Password<br> (either play or edit)</label>
+      <label>Password</label>
       <input type="password" class="form-control small-input" placeholder="password" ng-model="gameLoginInput.password" required>
     </div>
 
+    <div ng-show = 'showLoginError'>
     {{loginError}}
+
+    </div>
+
     <br>
     <button class='btn btn-primary' ng-disabled="gameLoginForm.$invalid" ng-click="gameLogin()">Login</button>
   </form>
-</div>
-
-<br>
-
-</div>
-
-

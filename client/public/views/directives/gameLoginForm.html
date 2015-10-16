@@ -1,0 +1,19 @@
+<form name='editGameLogin'>
+  <div class='form'>
+    <div class='form-group'>
+      <label>Game Name<br>(Game names are case sensitive)</label>
+      <input type="text" class="form-control small-input" placeholder="My Scavenger Hunt" ng-model="editGameInput.name" required>
+    </div>
+
+    <div class='form-group'>
+      <label>Editing Password</label>
+      <input type="password" class="form-control small-input" placeholder="password" ng-model="editGameInput.password" required>
+    </div>
+
+    <div ng-show = 'showLoginError'>
+    <h3>{{loginError}}</h3>
+    </div>
+
+    <br>
+  </form>
+    <span class='btn btn-primary' ng-disabled="editGameLogin.$invalid" ng-click="loginGame()">Login</span>

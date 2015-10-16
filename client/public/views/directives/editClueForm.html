@@ -1,0 +1,39 @@
+  <form name= 'addClueForm' ng-show='editClue'>
+    <div class="form-group">
+      <label for="order">Order Number</label>
+      <input ng-model='formInput.order' type="number" class="form-control" placeholder="1" min = '1' required>
+    </div>
+
+    <div class="form-group">
+      <label for="clueName">Clue Title</label>
+      <input ng-model='formInput.name' type="text" class="form-control" placeholder="Furry Friend" required>
+    </div>
+
+    <div class="form-group">
+      <label for="hint">Hints (separated by commas)</label>
+      <input ng-model='formInput.hints' type="text" class="form-control" placeholder="It's furry, it barks, it should be on a leash" required>
+    </div>
+
+    <div class="form-group">
+      <label for="answer">Answer (give similar acceptable answers, separated by commas)</label>
+      <input ng-model='formInput.answer' type="text" class="form-control" placeholder="Dog, a dog, puppy, a puppy, puppies" required>
+    </div>
+
+  </form>
+
+</div>
+
+<!--Update Form-->
+<br>
+<div class="container">
+
+  <form name="searchForm" novalidate
+  ng-submit="search()" ng-show='editClue'>
+      <div class="input-group">
+          <input name="place" type="text" class="form-control" placeholder="Washington Park"
+          ng-model="formInput.location" required autofocus />
+          <span class="input-group-btn">
+              <button class="btn btn-success">Verify Location</button>
+          </span>
+      </div>
+  </form>
