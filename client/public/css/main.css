@@ -13,6 +13,9 @@ input{
   background-color: whitesmoke;
 }
 
+.navbar:active{
+  background-color: black;
+}
 .centered{
   display: table;
   margin: auto;

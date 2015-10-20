@@ -11,6 +11,7 @@
       <input type="password" class="form-control small-input" placeholder="password" ng-model="loginForm.password" required>
     </div>
 
+  <div ng-show='error'><h4>{{errorMessage}}</h4></div>
 </form>
 
 <button ng-disabled="loginFormName.$invalid" class='btn btn-primary' ng-click="login()">Login</button>
