@@ -217,7 +217,7 @@ app.controller('ClueController',['$scope', '$location', '$http', 'MapServices', 
     else{
     $http.post('/makegame', addGame)
     .then(function(data){
-        if(data.data === ''){
+        if(data.data === null){
           $scope.addErrorMessage = "Sorry, that game name already exists.  Please try a different name.";
         }
         else{

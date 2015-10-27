@@ -45,7 +45,10 @@ router.delete('/clue/:id', function(req, res, next){
 router.post('/games', function(req, res, next) {
   var newGame = new Game(req.body);
   newGame.save(function(err, game){
-  res.json(game);
+    if(err){
+      res.json(err);
+    }
+    res.json(game);
   });
 });
 
@@ -54,20 +57,26 @@ router.post('/games', function(req, res, next) {
 //save new game to user
 router.post('/makegame', function(req, res, next) {
   var newGame = new Game(req.body);
-  newGame.save();
-  var id = req.session.user._id;
-  console.log("current id ", id);
-  console.log('other?? ', req.session.passport.user);
-  var update = {$push:{games : newGame}};
-  var options = {new:true};
-  User.findByIdAndUpdateQ(id, update, options)
-    .then(function(data){
-      res.json(data);
-    })
-    .catch(function(err){
-      res.send({'Error!' : err});
-    })
-      .done();
+  newGame.save(function(err, game){
+    console.log('err ', err);
+    console.log('game ', game);
+    if(err){
+      res.send(err);
+    }
+    else{
+      var id = req.session.user._id;
+      var update = {$push:{games : newGame}};
+      var options = {new:true};
+      User.findByIdAndUpdateQ(id, update, options)
+        .then(function(data){
+          res.json(data);
+        })
+        .catch(function(err){
+          res.json(err);
+        })
+          .done();
+        }
+      });
   });
 
 
@@ -110,7 +119,6 @@ router.put('/game/:id', function(req, res, next) {
 //get all games from a user
 router.get('/usergames', function(req, res, next){
  User.findById(req.session.user._id, function(err, user){
-  console.log(user);
  })
   .populate('games')
   .exec(function(err, user){
@@ -118,7 +126,6 @@ router.get('/usergames', function(req, res, next){
       res.json(err);
     }
     else{
-      console.log(user);
       res.json(user);
     }
   });
