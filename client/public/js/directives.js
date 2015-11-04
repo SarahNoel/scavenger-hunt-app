@@ -35,21 +35,21 @@ app.directive('registerDetails', function() {
         //register User
 
         $scope.register = function () {
-        // initial values
-        $scope.error = false;
-        // call register from service
-        LoginServices.register($scope.registerForm.username, $scope.registerForm.password)
-          .then(function(data){
-            console.log(data);
-            $rootScope.userid = data.user._id;
-            $scope.showUser = data.user.username;
-            $scope.registering = false;
-            $location.path('/gamedash');
-        }).catch(function (data){
-          $scope.error = true;
-          $scope.errorMessage = data.err.message;
-          });
-      };
+          // initial values
+          $scope.error = false;
+          // call register from service
+          LoginServices.register($scope.registerForm.username, $scope.registerForm.password)
+            .then(function(data){
+              console.log(data);
+              $rootScope.userid = data.user._id;
+              $scope.showUser = data.user.username;
+              $scope.registering = false;
+              $location.path('/gamedash');
+          }).catch(function (data){
+            $scope.error = true;
+            $scope.errorMessage = data.err.message;
+            });
+        };
     }]
   };
 });

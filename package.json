@@ -28,6 +28,7 @@
     "morgan": "~1.6.1",
     "multer": "^1.0.6",
     "ng-file-upload": "^9.0.7",
+    "ng-image-upload": "^0.1.0",
     "node-mysql": "^0.4.2",
     "passport": "^0.3.0",
     "passport-local": "^1.0.0",
